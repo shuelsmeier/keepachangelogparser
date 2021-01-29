@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>KeepAChangelogParser</id>
+    <version>1.0.0</version>
+    <title>KeepAChangelogParser</title>
+    <authors>Steven Huelsmeier</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>http://project_url_here_or_delete_this_line/</projectUrl>
+    <!--<icon>http://icon_url_here_or_delete_this_line/</icon>-->
+    <description>Parser for keep a changelog changelogs.</description>
+    <releaseNotes>Initial Release.</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>keep a changelog, parser</tags>
+    <dependencies>
+      <group targetFramework="net5.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\bin\Release\net5.0\*.dll" target="lib\net5.0" />
+    <file src=".\bin\Release\net5.0\*.pdb" target="lib\net5.0" />
+  </files>
+</package>

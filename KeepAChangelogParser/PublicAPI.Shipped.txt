@@ -1,0 +1,48 @@
+﻿#nullable enable
+KeepAChangelogParser.ChangelogParser
+KeepAChangelogParser.ChangelogParser.ChangelogParser() -> void
+KeepAChangelogParser.ChangelogParser.Parse(string! text) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
+KeepAChangelogParser.IChangelogParser
+KeepAChangelogParser.IChangelogParser.Parse(string! text) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
+KeepAChangelogParser.Models.Changelog
+KeepAChangelogParser.Models.Changelog.Changelog() -> void
+KeepAChangelogParser.Models.Changelog.MarkdownText.get -> string!
+KeepAChangelogParser.Models.Changelog.MarkdownText.set -> void
+KeepAChangelogParser.Models.Changelog.MarkdownTitle.get -> string!
+KeepAChangelogParser.Models.Changelog.MarkdownTitle.set -> void
+KeepAChangelogParser.Models.Changelog.SectionCollection.get -> KeepAChangelogParser.Models.ChangelogSectionCollection!
+KeepAChangelogParser.Models.Changelog.SectionUnreleased.get -> KeepAChangelogParser.Models.ChangelogSectionUnreleased!
+KeepAChangelogParser.Models.ChangelogSection
+KeepAChangelogParser.Models.ChangelogSection.ChangelogSection() -> void
+KeepAChangelogParser.Models.ChangelogSection.MarkdownDate.get -> string!
+KeepAChangelogParser.Models.ChangelogSection.MarkdownDate.set -> void
+KeepAChangelogParser.Models.ChangelogSection.MarkdownVersion.get -> string!
+KeepAChangelogParser.Models.ChangelogSection.MarkdownVersion.set -> void
+KeepAChangelogParser.Models.ChangelogSection.SubSectionCollection.get -> KeepAChangelogParser.Models.ChangelogSubSectionCollection!
+KeepAChangelogParser.Models.ChangelogSectionCollection
+KeepAChangelogParser.Models.ChangelogSectionCollection.ChangelogSectionCollection() -> void
+KeepAChangelogParser.Models.ChangelogSectionUnreleased
+KeepAChangelogParser.Models.ChangelogSectionUnreleased.ChangelogSectionUnreleased() -> void
+KeepAChangelogParser.Models.ChangelogSectionUnreleased.MarkdownTitle.get -> string!
+KeepAChangelogParser.Models.ChangelogSectionUnreleased.MarkdownTitle.set -> void
+KeepAChangelogParser.Models.ChangelogSectionUnreleased.SubSectionCollection.get -> KeepAChangelogParser.Models.ChangelogSubSectionCollection!
+KeepAChangelogParser.Models.ChangelogSubSection
+KeepAChangelogParser.Models.ChangelogSubSection.ChangelogSubSection() -> void
+KeepAChangelogParser.Models.ChangelogSubSection.ItemCollection.get -> KeepAChangelogParser.Models.ChangelogSubSectionItemCollection!
+KeepAChangelogParser.Models.ChangelogSubSection.Type.get -> KeepAChangelogParser.Models.ChangelogSubSectionType
+KeepAChangelogParser.Models.ChangelogSubSection.Type.set -> void
+KeepAChangelogParser.Models.ChangelogSubSectionCollection
+KeepAChangelogParser.Models.ChangelogSubSectionCollection.ChangelogSubSectionCollection() -> void
+KeepAChangelogParser.Models.ChangelogSubSectionItem
+KeepAChangelogParser.Models.ChangelogSubSectionItem.ChangelogSubSectionItem() -> void
+KeepAChangelogParser.Models.ChangelogSubSectionItem.MarkdownText.get -> string!
+KeepAChangelogParser.Models.ChangelogSubSectionItem.MarkdownText.set -> void
+KeepAChangelogParser.Models.ChangelogSubSectionItemCollection
+KeepAChangelogParser.Models.ChangelogSubSectionItemCollection.ChangelogSubSectionItemCollection() -> void
+KeepAChangelogParser.Models.ChangelogSubSectionType
+KeepAChangelogParser.Models.ChangelogSubSectionType.Added = 0 -> KeepAChangelogParser.Models.ChangelogSubSectionType
+KeepAChangelogParser.Models.ChangelogSubSectionType.Changed = 1 -> KeepAChangelogParser.Models.ChangelogSubSectionType
+KeepAChangelogParser.Models.ChangelogSubSectionType.Deprecated = 2 -> KeepAChangelogParser.Models.ChangelogSubSectionType
+KeepAChangelogParser.Models.ChangelogSubSectionType.Fixed = 4 -> KeepAChangelogParser.Models.ChangelogSubSectionType
+KeepAChangelogParser.Models.ChangelogSubSectionType.Removed = 3 -> KeepAChangelogParser.Models.ChangelogSubSectionType
+KeepAChangelogParser.Models.ChangelogSubSectionType.Security = 5 -> KeepAChangelogParser.Models.ChangelogSubSectionType
