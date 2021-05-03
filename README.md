@@ -1,6 +1,4 @@
-# keepachangelogparser
-
-[![Build Status](https://dev.azure.com/nakrul0789/KeepAChangelogParser/_apis/build/status/shuelsmeier.keepachangelogparser?branchName=main)](https://dev.azure.com/nakrul0789/KeepAChangelogParser/_build/latest?definitionId=1&branchName=main) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/shuelsmeier/keepachangelogparser/blob/master/LICENSE)   
+# keepachangelogparser [![NuGet](https://img.shields.io/nuget/v/KeepAChangeLogParser.svg)](https://www.nuget.org/packages/KeepAChangeLogParser/) [![NuGet](https://img.shields.io/nuget/dt/KeepAChangeLogParser.svg)](https://www.nuget.org/packages/KeepAChangeLogParser/) [![Build Status](https://dev.azure.com/nakrul0789/KeepAChangelogParser/_apis/build/status/shuelsmeier.keepachangelogparser?branchName=main)](https://dev.azure.com/nakrul0789/KeepAChangelogParser/_build/latest?definitionId=1&branchName=main) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/shuelsmeier/keepachangelogparser/blob/master/LICENSE) 
 
 keepachangelogparser is a parser for changelogs defined by the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
 
