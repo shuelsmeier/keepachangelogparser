@@ -97,12 +97,25 @@ namespace KeepAChangelogParser.Services
         }
       }
 
+#if NETCOREAPP || NET5_0
+
+      tokenCollection.Add(
+        new ChangelogToken(
+          ChangelogTokenType.NewLine,
+          Environment.NewLine,
+          lineCollection.Count,
+          lineCollection[^1].Length));
+
+#else
+
       tokenCollection.Add(
         new ChangelogToken(
           ChangelogTokenType.NewLine,
           Environment.NewLine,
           lineCollection.Count,
           lineCollection[lineCollection.Count - 1].Length));
+
+#endif
 
       tokenCollection.Add(
         new ChangelogToken(

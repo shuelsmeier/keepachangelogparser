@@ -26,7 +26,7 @@ namespace KeepAChangelogParser.Tests.Comparer
       object? y
     )
     {
-      if (!(x is Result<T>))
+      if (x is not Result<T>)
       {
         string message =
           string.Format(
@@ -37,7 +37,7 @@ namespace KeepAChangelogParser.Tests.Comparer
         throw new ArgumentException(message, nameof(x));
       }
 
-      if (!(y is Result<T>))
+      if (y is not Result<T>)
       {
         string message =
           string.Format(

@@ -27,7 +27,7 @@ namespace KeepAChangelogParser.Tests.Comparer
       object? y
     )
     {
-      if (!(x is ChangelogSectionUnreleased))
+      if (x is not ChangelogSectionUnreleased)
       {
         string message =
           string.Format(
@@ -38,7 +38,7 @@ namespace KeepAChangelogParser.Tests.Comparer
         throw new ArgumentException(message, nameof(x));
       }
 
-      if (!(y is ChangelogSectionUnreleased))
+      if (y is not ChangelogSectionUnreleased)
       {
         string message =
           string.Format(

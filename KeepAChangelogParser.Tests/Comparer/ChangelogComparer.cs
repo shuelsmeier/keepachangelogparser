@@ -27,7 +27,7 @@ namespace KeepAChangelogParser.Tests.Comparer
       object? y
     )
     {
-      if (!(x is Changelog))
+      if (x is not Changelog)
       {
         string message =
           string.Format(
@@ -38,7 +38,7 @@ namespace KeepAChangelogParser.Tests.Comparer
         throw new ArgumentException(message, nameof(x));
       }
 
-      if (!(y is Changelog))
+      if (y is not Changelog)
       {
         string message =
           string.Format(
