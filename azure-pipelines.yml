@@ -17,6 +17,13 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
 
+- task: UseDotNet@2
+  displayName: 'Use .NET 6 Core sdk'
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
+    includePreviewVersions: true
+
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
@@ -36,7 +43,7 @@ steps:
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2:
-      '.\KeepAChangelogParser.Tests\bin\Debug\net5.0\KeepAChangelogParser.Tests.dll'
+      '.\KeepAChangelogParser.Tests\bin\Debug\net6.0\KeepAChangelogParser.Tests.dll'
       #'**\KeepAChangelogParser.Tests.dll'
     vstestLocationMethod: 'version'
     vsTestVersion: 'toolsInstaller'
