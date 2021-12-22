@@ -98,7 +98,7 @@ namespace KeepAChangelogParser.Services
         }
       }
 
-#if NETCOREAPP || NET5_0
+#if NETCOREAPP || NET5_0 || NET6_0
 
       tokenCollection.Add(
         new ChangelogToken(
