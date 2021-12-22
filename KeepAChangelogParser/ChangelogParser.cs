@@ -12,22 +12,29 @@ namespace KeepAChangelogParser
   public class ChangelogParser :
     IChangelogParser
   {
+    private readonly INewLineService newLineService = new NewLineService();
+    private readonly IChangelogTokenizer changelogTokenizer = new ChangelogTokenizer();
 
     public Result<Changelog> Parse(
       string text
     )
     {
-      Result<Changelog> changelogResult =
-        Result.Success(new Changelog());
+      Result<string> determineLineEndingsResult =
+        this.determineLineEndings(text);
 
-      IChangelogTokenizer changelogTokenizer =
-        new ChangelogTokenizer();
+      if (determineLineEndingsResult.IsFailure)
+      {
+        return Result.Failure<Changelog>(determineLineEndingsResult.Error);
+      }
 
       IEnumerable<ChangelogToken> tokenCollection =
-        changelogTokenizer.Tokenize(text);
+        this.changelogTokenizer.Tokenize(text, determineLineEndingsResult.Value);
 
       Stack<ChangelogToken> tokenStack =
         new Stack<ChangelogToken>(tokenCollection.Reverse());
+
+      Result<Changelog> changelogResult =
+        Result.Success(new Changelog());
 
       changelogResult = parseHeadingOne(changelogResult, tokenStack);
       changelogResult = parseSpace(changelogResult, tokenStack);
@@ -237,6 +244,38 @@ namespace KeepAChangelogParser
               MarkdownText += token.Value;
 
       return changelogResult;
+    }
+
+    private Result<string> determineLineEndings(
+      string text
+    )
+    {
+      Result<string> determineLineEndingsResult =
+        this.newLineService.DetermineLineEndings(text);
+
+      string newLine = string.Empty;
+      if (determineLineEndingsResult.IsFailure)
+      {
+        bool hasNoLineEndings =
+          string.Equals(
+            determineLineEndingsResult.Error,
+            NewLineService.NoLineEndingsError,
+            StringComparison.Ordinal);
+
+        if (!hasNoLineEndings)
+        {
+          return determineLineEndingsResult;
+        }
+
+        newLine = Environment.NewLine;
+      }
+
+      if (determineLineEndingsResult.IsSuccess)
+      {
+        newLine = determineLineEndingsResult.Value;
+      }
+
+      return Result.Success(newLine);
     }
 
     private static bool isHeadingOneTextOrNewLine(

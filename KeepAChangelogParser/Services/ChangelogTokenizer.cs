@@ -30,7 +30,8 @@ namespace KeepAChangelogParser.Services
       };
 
     public IEnumerable<ChangelogToken> Tokenize(
-      string text
+      string text,
+      string newLine
     )
     {
       if (string.IsNullOrEmpty(text))
@@ -43,7 +44,7 @@ namespace KeepAChangelogParser.Services
 
       List<string> lineCollection =
         text.
-          Split(new[] { Environment.NewLine }, StringSplitOptions.None).
+          Split(new[] { newLine }, StringSplitOptions.None).
           ToList();
 
       for (int lineNumber = 1; lineNumber <= lineCollection.Count; lineNumber++)
@@ -53,7 +54,7 @@ namespace KeepAChangelogParser.Services
           ChangelogToken token =
             new ChangelogToken(
               ChangelogTokenType.NewLine,
-              Environment.NewLine,
+              newLine,
               lineNumber,
               lineCollection[lineNumber - 1].Length);
 
@@ -102,7 +103,7 @@ namespace KeepAChangelogParser.Services
       tokenCollection.Add(
         new ChangelogToken(
           ChangelogTokenType.NewLine,
-          Environment.NewLine,
+          newLine,
           lineCollection.Count,
           lineCollection[^1].Length));
 
@@ -111,7 +112,7 @@ namespace KeepAChangelogParser.Services
       tokenCollection.Add(
         new ChangelogToken(
           ChangelogTokenType.NewLine,
-          Environment.NewLine,
+          newLine,
           lineCollection.Count,
           lineCollection[lineCollection.Count - 1].Length));
 

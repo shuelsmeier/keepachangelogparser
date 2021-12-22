@@ -8,7 +8,8 @@ namespace KeepAChangelogParser.Contracts
   {
 
     IEnumerable<ChangelogToken> Tokenize(
-      string text
+      string text,
+      string newLine
     );
 
   }
