@@ -22,7 +22,7 @@
     <PackageReference Include="KeepAChangeLogParser" Version="1.2.2" />
     <PackageReference Include="Markdig.Wpf" Version="0.5.0.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    <PackageReference Include="SimpleInjector" Version="5.3.2" />
+    <PackageReference Include="SimpleInjector" Version="5.3.3" />
   </ItemGroup>
 
   <ItemGroup>
