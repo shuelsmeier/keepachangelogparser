@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.3] - 2022-06-25
 
 ### Changed
+- Upgrade target framework .NET 4.5.2 to .NET 4.6.2
 - Bump SimpleInjector from 5.3.2 to 5.3.3
 - Bump coverlet.collector from 3.1.0 to 3.1.2
 - Bump MSTest.TestFramework from 2.2.8 to 2.2.10
