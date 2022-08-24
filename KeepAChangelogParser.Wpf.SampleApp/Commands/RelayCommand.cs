@@ -59,8 +59,8 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
   public class RelayCommand<T> :
     ICommand
   {
-    private readonly Action<T?> _execute;
-    private readonly Predicate<T?>? _canExecute;
+    private readonly Action<T?> execute;
+    private readonly Predicate<T?>? canExecute;
 
     public RelayCommand(
       Action<T?> execute
@@ -76,8 +76,8 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
     {
       Guard.Against.Null(execute, nameof(execute));
 
-      this._execute = execute;
-      this._canExecute = canExecute;
+      this.execute = execute;
+      this.canExecute = canExecute;
     }
 
     [DebuggerStepThrough]
@@ -85,8 +85,8 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
       object? parameter
     )
     {
-      return this._canExecute == null
-          || this._canExecute((T?)parameter);
+      return this.canExecute == null
+          || this.canExecute((T?)parameter);
     }
 
     public event EventHandler? CanExecuteChanged
@@ -99,7 +99,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
       object? parameter
     )
     {
-      this._execute((T?)parameter);
+      this.execute((T?)parameter);
     }
 
   }
