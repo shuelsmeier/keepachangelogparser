@@ -102,7 +102,7 @@ namespace KeepAChangelogParser.Tests.Extensions
             Enumerable.
               Range(0, lines.Count() - 1).
               ToList().
-              ForEach(y => actualJsonStringCollection.Insert(x.Index + 1, ""));
+              ForEach(_ => actualJsonStringCollection.Insert(x.Index + 1, ""));
           }
         }
 

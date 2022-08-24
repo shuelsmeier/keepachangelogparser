@@ -28,8 +28,8 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
       {
         this.releaseNotesWindowClosedEventRelayCommand ??=
             new RelayCommand<CancelEventArgs>(
-              param => this.releaseNotesWindowClosedEventCommand.ExecuteClosed(),
-              param => this.releaseNotesWindowClosedEventCommand.CanExecuteClosed()
+              _ => this.releaseNotesWindowClosedEventCommand.ExecuteClosed(),
+              _ => this.releaseNotesWindowClosedEventCommand.CanExecuteClosed()
           );
 
         return this.releaseNotesWindowClosedEventRelayCommand;
@@ -55,7 +55,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
       {
         this.releaseNotesWindowClickOkRelayCommand ??=
             new RelayCommand<IReleaseNotesWindowView>(
-              param => this.releaseNotesWindowClickOkCommand.ExecuteClick(this)
+              _ => this.releaseNotesWindowClickOkCommand.ExecuteClick(this)
           );
 
         return this.releaseNotesWindowClickOkRelayCommand;
