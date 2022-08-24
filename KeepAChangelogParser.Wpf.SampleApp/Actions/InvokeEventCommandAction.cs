@@ -17,7 +17,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Actions
       {
         ICommand? command = this.resolveCommand();
 
-        if ((command != null) && command.CanExecute(parameter))
+        if (command?.CanExecute(parameter) == true)
         {
           command.Execute(parameter);
         }
