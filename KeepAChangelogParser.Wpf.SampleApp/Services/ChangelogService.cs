@@ -24,7 +24,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       string filePath
     )
     {
-      Guard.Against.NullOrWhiteSpace(filePath, nameof(filePath));
+      _ = Guard.Against.NullOrWhiteSpace(filePath, nameof(filePath));
 
       Result<ReadChangelogContext> readChangelogContextResult =
         createReadChangelogContext(
@@ -75,7 +75,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
     {
       if (readChangelogContextResult.IsFailure) { return readChangelogContextResult; }
 
-      Guard.Against.Null(readChangelogContextResult.Value.Text, nameof(readChangelogContextResult.Value.Text));
+      _ = Guard.Against.Null(readChangelogContextResult.Value.Text, nameof(readChangelogContextResult.Value.Text));
 
       Result<Changelog> parseResult =
         this.changelogParser.Parse(
@@ -101,7 +101,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
         return Result.Failure<Changelog>(readChangelogContextResult.Error);
       }
 
-      Guard.Against.Null(readChangelogContextResult.Value.Changelog, nameof(readChangelogContextResult.Value.Changelog));
+      _ = Guard.Against.Null(readChangelogContextResult.Value.Changelog, nameof(readChangelogContextResult.Value.Changelog));
 
       return Result.Success(readChangelogContextResult.Value.Changelog);
     }

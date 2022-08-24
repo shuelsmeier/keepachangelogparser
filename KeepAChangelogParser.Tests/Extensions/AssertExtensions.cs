@@ -24,7 +24,7 @@ namespace KeepAChangelogParser.Tests.Extensions
       IComparer comparer
     )
     {
-      Guard.Against.Null(comparer, nameof(comparer));
+      _ = Guard.Against.Null(comparer, nameof(comparer));
 
       int compareResult =
         comparer.Compare(

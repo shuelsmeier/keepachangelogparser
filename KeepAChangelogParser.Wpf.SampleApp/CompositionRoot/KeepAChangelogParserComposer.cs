@@ -9,7 +9,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.CompositionRoot
       this Container container
     )
     {
-      Guard.Against.Null(container, nameof(container));
+      _ = Guard.Against.Null(container, nameof(container));
 
       container.Register(typeof(IChangelogParser), typeof(ChangelogParser), Lifestyle.Singleton);
     }

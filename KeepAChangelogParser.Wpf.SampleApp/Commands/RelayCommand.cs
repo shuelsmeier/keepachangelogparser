@@ -25,7 +25,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
       Predicate<object?>? canExecute
     )
     {
-      Guard.Against.Null(execute, nameof(execute));
+      _ = Guard.Against.Null(execute, nameof(execute));
 
       this.execute = execute;
       this.canExecute = canExecute;
@@ -72,7 +72,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
       Predicate<T?>? canExecute
     )
     {
-      Guard.Against.Null(execute, nameof(execute));
+      _ = Guard.Against.Null(execute, nameof(execute));
 
       this.execute = execute;
       this.canExecute = canExecute;

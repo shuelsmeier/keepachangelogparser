@@ -772,7 +772,7 @@ namespace KeepAChangelogParser
     {
       if (changelogResult.IsFailure) { return changelogResult; }
 
-      tokenStack.Pop();
+      _ = tokenStack.Pop();
 
       int sectionCollectionCount =
         changelogResult.Value.
@@ -791,7 +791,7 @@ namespace KeepAChangelogParser
       Stack<ChangelogToken> tokenStack
     )
     {
-      tokenStack.Pop();
+      _ = tokenStack.Pop();
 
       return changelogResult;
     }
@@ -1081,7 +1081,7 @@ namespace KeepAChangelogParser
     {
       if (changelogResult.IsFailure) { return changelogResult; }
 
-      tokenStack.Pop();
+      _ = tokenStack.Pop();
 
       changelogResult.Value.
         SectionUnreleased.

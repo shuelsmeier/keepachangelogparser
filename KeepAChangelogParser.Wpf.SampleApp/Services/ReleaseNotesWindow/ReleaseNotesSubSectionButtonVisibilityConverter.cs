@@ -17,7 +17,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
       CultureInfo culture
     )
     {
-      Guard.Against.Null(value, nameof(value));
+      _ = Guard.Against.Null(value, nameof(value));
 
       ChangelogSubSectionType changelogSubSectionType =
         (ChangelogSubSectionType)value;

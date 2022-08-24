@@ -19,7 +19,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
       IReleaseNotesWindowViewModel releaseNotesWindowViewModel
     )
     {
-      Guard.Against.Null(releaseNotesWindowViewModel, nameof(releaseNotesWindowViewModel));
+      _ = Guard.Against.Null(releaseNotesWindowViewModel, nameof(releaseNotesWindowViewModel));
 
       this.releaseNotesWindow.Close();
     }

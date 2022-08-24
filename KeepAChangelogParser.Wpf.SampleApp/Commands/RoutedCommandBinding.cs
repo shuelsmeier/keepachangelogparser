@@ -32,7 +32,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
           this.handleExecuted,
           this.handleCanExecute);
 
-      this.AssociatedObject.CommandBindings.Add(binding);
+      _ = this.AssociatedObject.CommandBindings.Add(binding);
     }
 
     private void handleCanExecute(
