@@ -1,14 +1,23 @@
 ﻿namespace KeepAChangelogParser.Models
 {
 
+  /// <summary>
+  /// Specifies the changelog sub section type used in the changelog sub section.
+  /// </summary>
   public enum ChangelogSubSectionType
   {
-    Added, // for new features
-    Changed, // for changes in existing functionality
-    Deprecated, // for soon-to-be removed features
-    Removed, // for now removed features
-    Fixed, // for any bug fixes
-    Security, // in case of vulnerabilities
+    /// <summary>For new features</summary>
+    Added,
+    /// <summary>For changes in existing functionality</summary>
+    Changed,
+    /// <summary>For soon-to-be removed features</summary>
+    Deprecated,
+    /// <summary>For now removed features</summary>
+    Removed,
+    /// <summary>For any bug fixes</summary>
+    Fixed,
+    /// <summary>In case of vulnerabilities</summary>
+    Security,
   }
 
 }

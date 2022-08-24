@@ -10,12 +10,14 @@ using System.Linq;
 namespace KeepAChangelogParser
 {
 
+  /// <inheritdoc cref="IChangelogParser"/>
   public class ChangelogParser :
     IChangelogParser
   {
     private readonly INewLineService newLineService = new NewLineService();
     private readonly IChangelogTokenizer changelogTokenizer = new ChangelogTokenizer();
 
+    /// <inheritdoc/>
     public Result<Changelog> Parse(
       string text
     )
