@@ -47,7 +47,7 @@ namespace KeepAChangelogParser.Tests.Extensions
         actualJsonStringCollection.
           Max(x => x.Length);
 
-      int chunkSize = 80;
+      const int chunkSize = 80;
 
       bool isCutLength =
            expectedMaxStringLength > chunkSize
