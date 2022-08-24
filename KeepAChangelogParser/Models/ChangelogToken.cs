@@ -2,11 +2,9 @@
 
 namespace KeepAChangelogParser.Models
 {
-
   [DebuggerDisplay("{debuggerDisplay,nq}")]
   internal class ChangelogToken
   {
-
     public ChangelogTokenType Type { get; }
 
     public int LineNumber { get; }
@@ -55,7 +53,5 @@ namespace KeepAChangelogParser.Models
         return debuggerDisplay;
       }
     }
-
   }
-
 }

@@ -6,7 +6,6 @@ using System.Windows.Input;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Commands
 {
-
   public class RelayCommand :
     IRelayCommand,
     ICommand
@@ -53,7 +52,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
     {
       this.execute(parameter);
     }
-
   }
 
   public class RelayCommand<T> :
@@ -101,7 +99,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
     {
       this.execute((T?)parameter);
     }
-
   }
-
 }

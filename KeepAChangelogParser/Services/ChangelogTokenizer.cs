@@ -7,11 +7,9 @@ using System.Text.RegularExpressions;
 
 namespace KeepAChangelogParser.Services
 {
-
   internal class ChangelogTokenizer :
     IChangelogTokenizer
   {
-
     private readonly List<ChangelogTokenDefinition> tokenDefinitionCollection =
       new List<ChangelogTokenDefinition>()
       {
@@ -171,7 +169,5 @@ namespace KeepAChangelogParser.Services
 
       return tokenMatchCollection;
     }
-
   }
-
 }

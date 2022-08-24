@@ -7,11 +7,9 @@ using System;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogContainsADescriptionAndAnUnreleasedSectionWithTwoIdenticalTypes
   {
-
     [TestMethod]
     public void WhenTheChangelogContainsADescriptionAndAnUnreleasedSectionWithTwoIdenticalTypes_ThenTheResultIsFailureSubsectionTypeAlreadyExists()
     {
@@ -67,7 +65,5 @@ namespace KeepAChangelogParser.Tests
 
       return expectedParseResult;
     }
-
   }
-
 }

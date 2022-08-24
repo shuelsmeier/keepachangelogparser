@@ -2,10 +2,8 @@
 
 namespace KeepAChangelogParser.Wpf.SampleApp.CompositionRoot
 {
-
   public static class ComposerManager
   {
-
     public static Container Container { get; set; } = new Container();
 
     public static void Compose()
@@ -24,7 +22,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.CompositionRoot
     {
       Container.Verify();
     }
-
   }
-
 }

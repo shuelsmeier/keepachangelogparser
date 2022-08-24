@@ -1,6 +1,5 @@
 ﻿namespace KeepAChangelogParser.Models
 {
-
   internal enum ChangelogTokenType
   {
     CloseParenthesis,
@@ -18,5 +17,4 @@
     Text,
     Version
   }
-
 }

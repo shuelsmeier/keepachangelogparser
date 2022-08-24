@@ -7,11 +7,9 @@ using System;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowService :
     IReleaseNotesWindowService
   {
-
     private readonly IReleaseNotesWindowViewModel releaseNotesWindowViewModel;
     private readonly IChangelogService changelogService;
 
@@ -25,7 +23,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
       this.releaseNotesWindowViewModel = releaseNotesWindowViewModel;
       this.changelogService = changelogService;
     }
-
 
     public Result Initialize()
     {
@@ -121,7 +118,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
 
       return Result.Success();
     }
-
   }
-
 }

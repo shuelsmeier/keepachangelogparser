@@ -7,11 +7,9 @@ using System.Windows;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Services
 {
-
   public class StartupService :
     IStartupService
   {
-
     public void Execute(
       StartupEventArgs startupEventArgs
     )
@@ -76,7 +74,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       return onStartupContextResult;
     }
 
-
     private static Result<OnStartupContext> showReleaseNotesWindowViewModel(
       Result<OnStartupContext> onStartupContextResult
     )
@@ -104,7 +101,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
 
     private class OnStartupContext
     {
-
       public OnStartupContext(
         string[] startupEventArgs
       )
@@ -113,9 +109,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       }
 
       public string[] StartupEventArgs { get; }
-
     }
-
   }
-
 }

@@ -5,11 +5,9 @@ using System.Globalization;
 
 namespace KeepAChangelogParser.Tests.Comparer
 {
-
   public class ChangelogComparer :
     IComparer<Changelog>
   {
-
     private readonly IComparer<ChangelogSectionCollection> changelogSectionCollectionComparer;
     private readonly IComparer<ChangelogSectionUnreleased> changelogSectionUnreleasedComparer;
 
@@ -127,7 +125,5 @@ namespace KeepAChangelogParser.Tests.Comparer
 
       return 0;
     }
-
   }
-
 }

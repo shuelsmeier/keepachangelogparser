@@ -3,13 +3,11 @@ using KeepAChangelogParser.Models;
 
 namespace KeepAChangelogParser
 {
-
   /// <summary>
   /// Parser for keepachangelog markdown texts.
   /// </summary>
   public interface IChangelogParser
   {
-
     /// <summary>
     /// Parses and returns the changelog specified by the keepachangelog markdown text.
     /// </summary>
@@ -19,7 +17,5 @@ namespace KeepAChangelogParser
     Result<Changelog> Parse(
       string text
     );
-
   }
-
 }

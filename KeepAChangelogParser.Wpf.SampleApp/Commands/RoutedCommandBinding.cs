@@ -4,11 +4,9 @@ using System.Windows.Input;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Commands
 {
-
   public class RoutedCommandBinding :
     Behavior<FrameworkElement>
   {
-
     public static readonly DependencyProperty CommandProperty =
       DependencyProperty.Register(
         "Command",
@@ -57,7 +55,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
 
       executedRoutedEventArgs.Handled = true;
     }
-
   }
-
 }

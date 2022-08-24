@@ -9,11 +9,9 @@ using KeepAChangelogParser.Wpf.SampleApp.Contracts.ReleaseNotesWindow;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowClickHyperlinkCommand :
     IReleaseNotesWindowClickHyperlinkCommand
   {
-
     public void ExecuteClick(
       object? param
     )
@@ -77,8 +75,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
         }
       }
     }
-
   }
-
 }
-

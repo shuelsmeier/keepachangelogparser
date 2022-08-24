@@ -6,12 +6,10 @@ using System.Globalization;
 
 namespace KeepAChangelogParser.Tests.Comparer
 {
-
   public class ChangelogSubSectionItemComparer :
     IComparer,
     IComparer<ChangelogSubSectionItem>
   {
-
     public int Compare(
       object? x,
       object? y
@@ -82,7 +80,5 @@ namespace KeepAChangelogParser.Tests.Comparer
     {
       return string.Compare(x, y, StringComparison.Ordinal);
     }
-
   }
-
 }

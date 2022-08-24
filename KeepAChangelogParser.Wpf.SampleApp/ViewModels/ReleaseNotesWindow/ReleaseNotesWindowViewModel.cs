@@ -7,7 +7,6 @@ using System.Windows.Input;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowViewModel :
     BaseViewModel,
     IReleaseNotesWindowViewModel
@@ -82,7 +81,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
       this.releaseNotesWindowClickHyperlinkCommand = releaseNotesWindowClickHyperlinkCommand;
       this.releaseNotesWindowClickOkCommand = releaseNotesWindowClickOkCommand;
     }
-
   }
-
 }

@@ -6,11 +6,9 @@ using System.Windows.Input;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Actions
 {
-
   public class InvokeEventCommandAction :
     TriggerAction<DependencyObject>
   {
-
     protected override void Invoke(
       object parameter
     )
@@ -81,7 +79,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Actions
         typeof(ICommand),
         typeof(InvokeEventCommandAction),
         new UIPropertyMetadata(null));
-
   }
-
 }

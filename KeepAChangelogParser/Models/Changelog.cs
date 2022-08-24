@@ -1,12 +1,10 @@
 ﻿namespace KeepAChangelogParser.Models
 {
-
   /// <summary>
   /// Represents a keepachangelog changelog.
   /// </summary>
   public class Changelog
   {
-
     /// <summary>
     /// Gets or sets the markdown title.
     /// </summary>
@@ -38,7 +36,5 @@
     /// The section collection.
     /// </value>
     public ChangelogSectionCollection SectionCollection { get; } = new ChangelogSectionCollection();
-
   }
-
 }

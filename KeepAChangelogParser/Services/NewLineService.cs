@@ -3,7 +3,6 @@ using KeepAChangelogParser.Contracts;
 
 namespace KeepAChangelogParser.Services
 {
-
   internal class NewLineService :
     INewLineService
   {
@@ -72,7 +71,5 @@ namespace KeepAChangelogParser.Services
 
       return Result.Failure<string>(NoLineEndingsError);
     }
-
   }
-
 }

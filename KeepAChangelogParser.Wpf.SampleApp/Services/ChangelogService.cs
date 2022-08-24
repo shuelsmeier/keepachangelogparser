@@ -5,7 +5,6 @@ using KeepAChangelogParser.Wpf.SampleApp.Contracts;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Services
 {
-
   public class ChangelogService :
     IChangelogService
   {
@@ -109,7 +108,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
 
     private class ReadChangelogContext
     {
-
       public string FilePath { get; }
 
       public string? Text { get; set; } = null;
@@ -122,9 +120,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       {
         this.FilePath = filePath;
       }
-
     }
-
   }
-
 }

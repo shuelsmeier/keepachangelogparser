@@ -5,11 +5,9 @@ using System.Collections.ObjectModel;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowMockViewModel :
     IReleaseNotesWindowViewModel
   {
-
     public ObservableCollection<ReleaseNotesDetail> DataGridItemsSourceCollection
     {
       get
@@ -105,7 +103,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
               "...",
         };
 
-
       releaseNotesDetailObservableCollection[0].
         SectionCollection[0].
           SubSectionCollection.
@@ -117,7 +114,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
     )
     {
     }
-
   }
-
 }

@@ -1,6 +1,5 @@
 ﻿namespace KeepAChangelogParser.Models
 {
-
   /// <summary>
   /// Specifies the changelog sub section type used in the changelog sub section.
   /// </summary>
@@ -19,5 +18,4 @@
     /// <summary>In case of vulnerabilities</summary>
     Security,
   }
-
 }

@@ -2,10 +2,8 @@
 
 namespace KeepAChangelogParser.Models
 {
-
   internal class ChangelogTokenDefinition
   {
-
     public Regex Regex { get; }
 
     public ChangelogTokenType Type { get; }
@@ -22,7 +20,5 @@ namespace KeepAChangelogParser.Models
       this.Regex = new Regex(regexPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
       this.Precedence = precedence;
     }
-
   }
-
 }

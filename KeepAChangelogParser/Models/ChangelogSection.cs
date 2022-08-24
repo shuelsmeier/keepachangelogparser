@@ -1,12 +1,10 @@
 ﻿namespace KeepAChangelogParser.Models
 {
-
   /// <summary>
   /// Represents a changelog section
   /// </summary>
   public class ChangelogSection
   {
-
     /// <summary>
     /// Gets or sets the markdown version.
     /// </summary>
@@ -30,7 +28,5 @@
     /// The sub section collection.
     /// </value>
     public ChangelogSubSectionCollection SubSectionCollection { get; } = new ChangelogSubSectionCollection();
-
   }
-
 }

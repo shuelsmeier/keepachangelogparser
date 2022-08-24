@@ -2,7 +2,6 @@
 
 namespace KeepAChangelogParser.Models
 {
-
   /// <summary>
   /// Represents a list of <see cref="ChangelogSection"/> objects.
   /// </summary>
@@ -10,5 +9,4 @@ namespace KeepAChangelogParser.Models
     List<ChangelogSection>
   {
   }
-
 }

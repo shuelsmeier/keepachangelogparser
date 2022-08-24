@@ -9,7 +9,6 @@ using System.Linq;
 
 namespace KeepAChangelogParser
 {
-
   /// <inheritdoc cref="IChangelogParser"/>
   public class ChangelogParser :
     IChangelogParser
@@ -1309,7 +1308,5 @@ namespace KeepAChangelogParser
 
       return changelogResult;
     }
-
   }
-
 }

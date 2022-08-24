@@ -3,10 +3,8 @@ using SimpleInjector;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.CompositionRoot
 {
-
   public static class KeepAChangelogParserComposer
   {
-
     public static void ComposeKeepAChangelogParser(
       this Container container
     )
@@ -15,7 +13,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.CompositionRoot
 
       container.Register(typeof(IChangelogParser), typeof(ChangelogParser), Lifestyle.Singleton);
     }
-
   }
-
 }

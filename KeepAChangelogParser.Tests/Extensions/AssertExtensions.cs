@@ -11,7 +11,6 @@ using System.Text;
 
 namespace KeepAChangelogParser.Tests.Extensions
 {
-
   public static class AssertExtensions
   {
     [SuppressMessage(
@@ -233,7 +232,5 @@ namespace KeepAChangelogParser.Tests.Extensions
       public string Element { get; set; } = string.Empty;
       public int Index { get; set; } = 0;
     }
-
   }
-
 }
