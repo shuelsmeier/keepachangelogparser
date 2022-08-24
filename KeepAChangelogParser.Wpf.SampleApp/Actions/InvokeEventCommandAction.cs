@@ -13,7 +13,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Actions
       object parameter
     )
     {
-      if (base.AssociatedObject != null)
+      if (this.AssociatedObject != null)
       {
         ICommand? command = this.resolveCommand();
 
@@ -33,13 +33,13 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Actions
         return this.Command;
       }
 
-      if (base.AssociatedObject != null)
+      if (this.AssociatedObject != null)
       {
-        foreach (PropertyInfo info in base.AssociatedObject.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        foreach (PropertyInfo info in this.AssociatedObject.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
           if (typeof(ICommand).IsAssignableFrom(info.PropertyType) && string.Equals(info.Name, this.CommandName, StringComparison.Ordinal))
           {
-            command = (ICommand?)info.GetValue(base.AssociatedObject, null);
+            command = (ICommand?)info.GetValue(this.AssociatedObject, null);
           }
         }
       }
@@ -53,16 +53,16 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Actions
     {
       get
       {
-        base.ReadPreamble();
+        this.ReadPreamble();
         return this.commandName;
       }
       set
       {
         if (this.CommandName != value)
         {
-          base.WritePreamble();
+          this.WritePreamble();
           this.commandName = value;
-          base.WritePostscript();
+          this.WritePostscript();
         }
       }
     }
