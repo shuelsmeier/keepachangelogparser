@@ -899,8 +899,8 @@ namespace KeepAChangelogParser
       {
         ChangelogToken token = tokenStack.Peek();
 
-        if (first == false && token.Type == ChangelogTokenType.NewLine) { break; }
-        if (first == false && token.Type == ChangelogTokenType.SequenceTerminator) { break; }
+        if (!first && token.Type == ChangelogTokenType.NewLine) { break; }
+        if (!first && token.Type == ChangelogTokenType.SequenceTerminator) { break; }
 
         first = false;
 
@@ -979,7 +979,7 @@ namespace KeepAChangelogParser
       {
         ChangelogToken token = tokenStack.Peek();
 
-        if (first == false && token.Type == ChangelogTokenType.NewLine) { break; }
+        if (!first && token.Type == ChangelogTokenType.NewLine) { break; }
 
         first = false;
 
@@ -1104,8 +1104,8 @@ namespace KeepAChangelogParser
       {
         ChangelogToken token = tokenStack.Peek();
 
-        if (first == false && token.Type == ChangelogTokenType.NewLine) { break; }
-        if (first == false && token.Type == ChangelogTokenType.SequenceTerminator) { break; }
+        if (!first && token.Type == ChangelogTokenType.NewLine) { break; }
+        if (!first && token.Type == ChangelogTokenType.SequenceTerminator) { break; }
 
         first = false;
 
@@ -1164,7 +1164,7 @@ namespace KeepAChangelogParser
       {
         ChangelogToken token = tokenStack.Peek();
 
-        if (first == false && token.Type == ChangelogTokenType.NewLine) { break; }
+        if (!first && token.Type == ChangelogTokenType.NewLine) { break; }
 
         first = false;
 
