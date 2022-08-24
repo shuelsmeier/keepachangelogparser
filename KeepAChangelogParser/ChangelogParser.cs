@@ -4,6 +4,7 @@ using KeepAChangelogParser.Models;
 using KeepAChangelogParser.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace KeepAChangelogParser
@@ -299,10 +300,21 @@ namespace KeepAChangelogParser
           {
             return true;
           }
-        default:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Version:
           {
             return false;
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
     }
 
@@ -321,10 +333,27 @@ namespace KeepAChangelogParser
           {
             return true;
           }
-        default:
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Dash:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Text:
+        case ChangelogTokenType.Version:
           {
             return false;
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
     }
 
@@ -369,10 +398,20 @@ namespace KeepAChangelogParser
           {
             return true;
           }
-        default:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Version:
           {
             return false;
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
     }
 
@@ -413,10 +452,20 @@ namespace KeepAChangelogParser
           {
             return true;
           }
-        default:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Version:
           {
             return false;
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
     }
 
@@ -435,10 +484,27 @@ namespace KeepAChangelogParser
           {
             return true;
           }
-        default:
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Dash:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Text:
+        case ChangelogTokenType.Version:
           {
             return false;
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
     }
 
@@ -457,10 +523,27 @@ namespace KeepAChangelogParser
           {
             return true;
           }
-        default:
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Dash:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Text:
+        case ChangelogTokenType.Version:
           {
             return false;
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
     }
 
@@ -482,10 +565,21 @@ namespace KeepAChangelogParser
           {
             return true;
           }
-        default:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Version:
           {
             return false;
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
     }
 
@@ -510,11 +604,21 @@ namespace KeepAChangelogParser
           {
             return true;
           }
-
-        default:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Version:
           {
             return false;
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
     }
 
@@ -567,15 +671,29 @@ namespace KeepAChangelogParser
       switch (token.Type)
       {
         case ChangelogTokenType.Dash:
-          {
-          }
           break;
-
-        default:
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Text:
+        case ChangelogTokenType.Version:
           {
             return Result.Failure<Changelog>(
               $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
 
       return changelogResult;
@@ -603,12 +721,28 @@ namespace KeepAChangelogParser
                 MarkdownDate = token.Value;
           }
           break;
-
-        default:
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Dash:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Text:
+        case ChangelogTokenType.Version:
           {
             return Result.Failure<Changelog>(
               $"No date. Error parsing text in line {token.LineNumber} / index {token.Index}.");
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
 
       return changelogResult;
@@ -789,12 +923,22 @@ namespace KeepAChangelogParser
               if (changelogResult.IsFailure) { return changelogResult; }
             }
             break;
-
-          default:
+          case ChangelogTokenType.Date:
+          case ChangelogTokenType.HeadingOne:
+          case ChangelogTokenType.HeadingTwo:
+          case ChangelogTokenType.HeadingThree:
+          case ChangelogTokenType.NewLine:
+          case ChangelogTokenType.SequenceTerminator:
+          case ChangelogTokenType.Version:
             {
               return Result.Failure<Changelog>(
                 $"Invalid text. Error parsing text in line {token.LineNumber} / index {token.Index}.");
             }
+          default:
+            throw new InvalidEnumArgumentException(
+              nameof(token.Type),
+              (int)token.Type,
+              typeof(ChangelogTokenType));
         }
       }
 
@@ -858,12 +1002,22 @@ namespace KeepAChangelogParser
               if (changelogResult.IsFailure) { return changelogResult; }
             }
             break;
-
-          default:
+          case ChangelogTokenType.Date:
+          case ChangelogTokenType.HeadingOne:
+          case ChangelogTokenType.HeadingTwo:
+          case ChangelogTokenType.HeadingThree:
+          case ChangelogTokenType.NewLine:
+          case ChangelogTokenType.SequenceTerminator:
+          case ChangelogTokenType.Version:
             {
               return Result.Failure<Changelog>(
                 $"Invalid title. Error parsing text in line {token.LineNumber} / index {token.Index}.");
             }
+          default:
+            throw new InvalidEnumArgumentException(
+              nameof(token.Type),
+              (int)token.Type,
+              typeof(ChangelogTokenType));
         }
       }
 
@@ -892,12 +1046,28 @@ namespace KeepAChangelogParser
             changelogResult.Value.SectionUnreleased.MarkdownTitle = token.Value;
           }
           break;
-
-        default:
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Dash:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Version:
           {
             return Result.Failure<Changelog>(
               $"Invalid text. Error parsing text in line {token.LineNumber} / index {token.Index}.");
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
 
       return changelogResult;
@@ -958,12 +1128,22 @@ namespace KeepAChangelogParser
               if (changelogResult.IsFailure) { return changelogResult; }
             }
             break;
-
-          default:
+          case ChangelogTokenType.Date:
+          case ChangelogTokenType.HeadingOne:
+          case ChangelogTokenType.HeadingTwo:
+          case ChangelogTokenType.HeadingThree:
+          case ChangelogTokenType.NewLine:
+          case ChangelogTokenType.SequenceTerminator:
+          case ChangelogTokenType.Version:
             {
               return Result.Failure<Changelog>(
                 $"Invalid text. Error parsing text in line {token.LineNumber} / index {token.Index}.");
             }
+          default:
+            throw new InvalidEnumArgumentException(
+              nameof(token.Type),
+              (int)token.Type,
+              typeof(ChangelogTokenType));
         }
       }
 
@@ -1007,12 +1187,22 @@ namespace KeepAChangelogParser
               if (changelogResult.IsFailure) { return changelogResult; }
             }
             break;
-
-          default:
+          case ChangelogTokenType.Date:
+          case ChangelogTokenType.HeadingOne:
+          case ChangelogTokenType.HeadingTwo:
+          case ChangelogTokenType.HeadingThree:
+          case ChangelogTokenType.NewLine:
+          case ChangelogTokenType.SequenceTerminator:
+          case ChangelogTokenType.Version:
             {
               return Result.Failure<Changelog>(
                 $"Invalid title. Error parsing text in line {token.LineNumber} / index {token.Index}.");
             }
+          default:
+            throw new InvalidEnumArgumentException(
+              nameof(token.Type),
+              (int)token.Type,
+              typeof(ChangelogTokenType));
         }
       }
 
@@ -1045,12 +1235,28 @@ namespace KeepAChangelogParser
                 MarkdownVersion = token.Value;
           }
           break;
-
-        default:
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Dash:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Text:
           {
             return Result.Failure<Changelog>(
               $"Invalid version. Error parsing text in line {token.LineNumber} / index {token.Index}.");
           }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
       }
 
       return changelogResult;
