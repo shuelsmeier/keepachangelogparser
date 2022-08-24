@@ -69,8 +69,8 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Actions
 
     public ICommand Command
     {
-      get { return (ICommand)this.GetValue(CommandProperty); }
-      set { this.SetValue(CommandProperty, value); }
+      get => (ICommand)this.GetValue(CommandProperty);
+      set => this.SetValue(CommandProperty, value);
     }
 
     public static readonly DependencyProperty CommandProperty =

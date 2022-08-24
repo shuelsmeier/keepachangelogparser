@@ -16,8 +16,8 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
 
     public ICommand Command
     {
-      get { return (ICommand)this.GetValue(CommandProperty); }
-      set { this.SetValue(CommandProperty, value); }
+      get => (ICommand)this.GetValue(CommandProperty);
+      set => this.SetValue(CommandProperty, value);
     }
 
     public ICommand? RoutedCommand { get; set; }
