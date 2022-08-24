@@ -81,7 +81,7 @@ namespace KeepAChangelogParser.Tests.Comparer
       string y
     )
     {
-      return string.Compare(x, y, StringComparison.Ordinal);
+      return string.CompareOrdinal(x, y);
     }
 
     private static int compare(
