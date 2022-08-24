@@ -55,10 +55,10 @@ namespace KeepAChangelogParser.Tests
         /* 15 */ "- New visual identity by[@tylerfortune8](https://github.com/tylerfortune8)." + Environment.NewLine +
         /* 16 */ "- Version navigation." + Environment.NewLine +
         /* 17 */ "" + Environment.NewLine;
-    }   
-        
+    }
+
     private static Result<Changelog> createExpectedParseResult()
-    {   
+    {
       Result<Changelog> expectedParseResult =
         Result.Failure<Changelog>(
           "Subsection type already exists. Error parsing text in line 14 / index 5.");
