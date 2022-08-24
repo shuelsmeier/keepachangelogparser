@@ -33,7 +33,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels
       }
     }
 
-    protected virtual bool ThrowOnInvalidPropertyName { get; private set; }
+    protected virtual bool ThrowOnInvalidPropertyName { get; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
