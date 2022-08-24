@@ -15,7 +15,11 @@ namespace KeepAChangelogParser.Tests.Extensions
   {
     [SuppressMessage(
       "Style",
-      "IDE0060:Nicht verwendete Parameter entfernen",
+      "IDE0060:Remove unused parameter",
+      Justification = "Suppress message for necessary assert extension parameter.")]
+    [SuppressMessage(
+      "Roslynator",
+      "RCS1175:Unused this parameter.",
       Justification = "Suppress message for necessary assert extension parameter.")]
     public static void AreEqual<T>(
       this Assert assert,
