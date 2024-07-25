@@ -19,8 +19,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
     private ICommand? releaseNotesWindowClickHyperlinkRelayCommand = null;
     private ICommand? releaseNotesWindowClickOkRelayCommand = null;
 
-    public ObservableCollection<ReleaseNotesDetail> DataGridItemsSourceCollection { get; } =
-      new ObservableCollection<ReleaseNotesDetail>();
+    public ObservableCollection<ReleaseNotesDetail> DataGridItemsSourceCollection { get; } = [];
 
     public ICommand ClosedEventCommand
     {
