@@ -42,7 +42,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
       {
         this.releaseNotesWindowClickHyperlinkRelayCommand ??=
             new RelayCommand<object>(
-              param => this.releaseNotesWindowClickHyperlinkCommand.ExecuteClick(param)
+              this.releaseNotesWindowClickHyperlinkCommand.ExecuteClick
           );
 
         return this.releaseNotesWindowClickHyperlinkRelayCommand;
