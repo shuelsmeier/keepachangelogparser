@@ -6,11 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogContainsNothingWithInvalidHeadingOne
   {
-
     [TestMethod]
     public void WhenTheChangelogContainsNothingWithInvalidHeadingOne_ThenTheResultIsFailure()
     {
@@ -50,7 +48,5 @@ namespace KeepAChangelogParser.Tests
 
       return expectedParseResult;
     }
-
   }
-
 }

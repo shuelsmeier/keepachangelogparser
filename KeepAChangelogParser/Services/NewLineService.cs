@@ -3,8 +3,7 @@ using KeepAChangelogParser.Contracts;
 
 namespace KeepAChangelogParser.Services
 {
-
-  internal class NewLineService :
+  internal sealed class NewLineService :
     INewLineService
   {
     public const string MixedLineEndingsCRAndLFError = "Text contains mixed line endings CR and LF.";
@@ -72,7 +71,5 @@ namespace KeepAChangelogParser.Services
 
       return Result.Failure<string>(NoLineEndingsError);
     }
-
   }
-
 }

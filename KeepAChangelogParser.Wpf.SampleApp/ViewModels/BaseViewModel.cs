@@ -4,12 +4,10 @@ using System.Diagnostics;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels
 {
-
   public abstract class BaseViewModel :
     INotifyPropertyChanged,
     IDisposable
   {
-
     private bool isDisposed;
 
     protected BaseViewModel()
@@ -35,7 +33,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels
       }
     }
 
-    protected virtual bool ThrowOnInvalidPropertyName { get; private set; }
+    protected virtual bool ThrowOnInvalidPropertyName { get; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -48,7 +46,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels
       PropertyChangedEventHandler? handler = this.PropertyChanged;
       if (handler != null)
       {
-        var e = new PropertyChangedEventArgs(propertyName);
+        PropertyChangedEventArgs e = new PropertyChangedEventArgs(propertyName);
         handler(this, e);
       }
     }
@@ -74,7 +72,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels
 
       this.isDisposed = true;
     }
-
   }
-
 }

@@ -7,11 +7,9 @@ using System.Text.RegularExpressions;
 
 namespace KeepAChangelogParser.Services
 {
-
-  internal class ChangelogTokenizer :
+  internal sealed class ChangelogTokenizer :
     IChangelogTokenizer
   {
-
     private readonly List<ChangelogTokenDefinition> tokenDefinitionCollection =
       new List<ChangelogTokenDefinition>()
       {
@@ -42,10 +40,8 @@ namespace KeepAChangelogParser.Services
       List<ChangelogToken> tokenCollection =
         new List<ChangelogToken>();
 
-      List<string> lineCollection =
-        text.
-          Split(new[] { newLine }, StringSplitOptions.None).
-          ToList();
+      List<string> lineCollection = [..
+        text.Split(new[] { newLine }, StringSplitOptions.None)];
 
       for (int lineNumber = 1; lineNumber <= lineCollection.Count; lineNumber++)
       {
@@ -72,11 +68,10 @@ namespace KeepAChangelogParser.Services
               lineCollection[lineNumber - 1],
               startIndex);
 
-          List<IGrouping<int, ChangelogTokenMatch>> tokenMatchByStartIndexCollection =
+          List<IGrouping<int, ChangelogTokenMatch>> tokenMatchByStartIndexCollection = [..
             tokenMatchCollection.
               GroupBy(x => x.StartIndex).
-              OrderBy(x => x.Key).
-              ToList();
+              OrderBy(x => x.Key)];
 
           ChangelogTokenMatch tokenMatch =
             tokenMatchByStartIndexCollection[0].
@@ -171,7 +166,5 @@ namespace KeepAChangelogParser.Services
 
       return tokenMatchCollection;
     }
-
   }
-
 }

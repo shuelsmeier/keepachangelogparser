@@ -2,14 +2,13 @@
 using KeepAChangelogParser.Wpf.SampleApp.Contracts.ReleaseNotesWindow;
 using KeepAChangelogParser.Wpf.SampleApp.Models.ReleaseNotesWindow;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowMockViewModel :
     IReleaseNotesWindowViewModel
   {
-
     public ObservableCollection<ReleaseNotesDetail> DataGridItemsSourceCollection
     {
       get
@@ -78,7 +77,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
           Type =
             changelogSubSectionType,
           MarkdownTitle =
-            changelogSubSectionType.ToString().ToUpper(),
+            changelogSubSectionType.ToString().ToUpper(CultureInfo.InvariantCulture),
           MarkdownText =
             "...",
         };
@@ -100,11 +99,10 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
           Type =
             changelogSubSectionType,
           MarkdownTitle =
-            changelogSubSectionType.ToString().ToUpper(),
+            changelogSubSectionType.ToString().ToUpper(CultureInfo.InvariantCulture),
           MarkdownText =
               "...",
         };
-
 
       releaseNotesDetailObservableCollection[0].
         SectionCollection[0].
@@ -117,7 +115,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
     )
     {
     }
-
   }
-
 }

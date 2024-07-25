@@ -10,12 +10,11 @@ namespace KeepAChangelogParser.Wpf.SampleApp
   public partial class App :
     Application
   {
-
     protected override void OnStartup(
       StartupEventArgs startupEventArgs
     )
     {
-      Guard.Against.Null(startupEventArgs, nameof(startupEventArgs));
+      _ = Guard.Against.Null(startupEventArgs, nameof(startupEventArgs));
 
       base.OnStartup(startupEventArgs);
 
@@ -26,11 +25,9 @@ namespace KeepAChangelogParser.Wpf.SampleApp
       ExitEventArgs exitEventArgs
     )
     {
-      Guard.Against.Null(exitEventArgs, nameof(exitEventArgs));
+      _ = Guard.Against.Null(exitEventArgs, nameof(exitEventArgs));
 
       base.OnExit(exitEventArgs);
     }
-
   }
-
 }

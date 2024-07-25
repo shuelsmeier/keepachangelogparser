@@ -7,7 +7,6 @@ using System.Windows.Input;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowViewModel :
     BaseViewModel,
     IReleaseNotesWindowViewModel
@@ -20,21 +19,17 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
     private ICommand? releaseNotesWindowClickHyperlinkRelayCommand = null;
     private ICommand? releaseNotesWindowClickOkRelayCommand = null;
 
-    public ObservableCollection<ReleaseNotesDetail> DataGridItemsSourceCollection { get; } =
-      new ObservableCollection<ReleaseNotesDetail>();
+    public ObservableCollection<ReleaseNotesDetail> DataGridItemsSourceCollection { get; } = [];
 
     public ICommand ClosedEventCommand
     {
       get
       {
-        if (this.releaseNotesWindowClosedEventRelayCommand == null)
-        {
-          this.releaseNotesWindowClosedEventRelayCommand =
+        this.releaseNotesWindowClosedEventRelayCommand ??=
             new RelayCommand<CancelEventArgs>(
-              param => this.releaseNotesWindowClosedEventCommand.ExecuteClosed(),
-              param => this.releaseNotesWindowClosedEventCommand.CanExecuteClosed()
+              _ => this.releaseNotesWindowClosedEventCommand.ExecuteClosed(),
+              _ => this.releaseNotesWindowClosedEventCommand.CanExecuteClosed()
           );
-        }
 
         return this.releaseNotesWindowClosedEventRelayCommand;
       }
@@ -44,13 +39,10 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
     {
       get
       {
-        if (this.releaseNotesWindowClickHyperlinkRelayCommand == null)
-        {
-          this.releaseNotesWindowClickHyperlinkRelayCommand =
+        this.releaseNotesWindowClickHyperlinkRelayCommand ??=
             new RelayCommand<object>(
-              param => this.releaseNotesWindowClickHyperlinkCommand.ExecuteClick(param)
+              this.releaseNotesWindowClickHyperlinkCommand.ExecuteClick
           );
-        }
 
         return this.releaseNotesWindowClickHyperlinkRelayCommand;
       }
@@ -60,13 +52,10 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
     {
       get
       {
-        if (this.releaseNotesWindowClickOkRelayCommand == null)
-        {
-          this.releaseNotesWindowClickOkRelayCommand =
+        this.releaseNotesWindowClickOkRelayCommand ??=
             new RelayCommand<IReleaseNotesWindowView>(
-              param => this.releaseNotesWindowClickOkCommand.ExecuteClick(this)
+              _ => this.releaseNotesWindowClickOkCommand.ExecuteClick(this)
           );
-        }
 
         return this.releaseNotesWindowClickOkRelayCommand;
       }
@@ -82,7 +71,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.ViewModels.ReleaseNotesWindow
       this.releaseNotesWindowClickHyperlinkCommand = releaseNotesWindowClickHyperlinkCommand;
       this.releaseNotesWindowClickOkCommand = releaseNotesWindowClickOkCommand;
     }
-
   }
-
 }

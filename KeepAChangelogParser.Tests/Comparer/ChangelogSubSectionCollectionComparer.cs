@@ -6,12 +6,10 @@ using System.Globalization;
 
 namespace KeepAChangelogParser.Tests.Comparer
 {
-
   public class ChangelogSubSectionCollectionComparer :
     IComparer,
     IComparer<ChangelogSubSectionCollection>
   {
-
     private readonly IComparer<ChangelogSubSection> changelogSubSectionComparer;
 
     public ChangelogSubSectionCollectionComparer(
@@ -90,7 +88,5 @@ namespace KeepAChangelogParser.Tests.Comparer
     {
       return this.changelogSubSectionComparer.Compare(x, y);
     }
-
   }
-
 }
