@@ -1,15 +1,14 @@
 ﻿using KeepAChangelogParser.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace KeepAChangelogParser.Tests.Comparer
 {
-
   public class ChangelogComparer :
     IComparer<Changelog>
   {
-
     private readonly IComparer<ChangelogSectionCollection> changelogSectionCollectionComparer;
     private readonly IComparer<ChangelogSectionUnreleased> changelogSectionUnreleasedComparer;
 
@@ -57,6 +56,7 @@ namespace KeepAChangelogParser.Tests.Comparer
       return result;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     public int Compare(
       Changelog? x,
       Changelog? y
@@ -93,7 +93,7 @@ namespace KeepAChangelogParser.Tests.Comparer
       string y
     )
     {
-      return string.Compare(x, y, StringComparison.Ordinal);
+      return string.CompareOrdinal(x, y);
     }
 
     private int compare(
@@ -127,7 +127,5 @@ namespace KeepAChangelogParser.Tests.Comparer
 
       return 0;
     }
-
   }
-
 }

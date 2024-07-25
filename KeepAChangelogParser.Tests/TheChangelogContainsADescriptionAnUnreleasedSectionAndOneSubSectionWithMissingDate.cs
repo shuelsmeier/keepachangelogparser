@@ -7,11 +7,9 @@ using System;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogContainsADescriptionAnUnreleasedSectionAndOneSubSectionWithMissingDate
   {
-
     [TestMethod]
     public void WhenTheChangelogContainsADescriptionAnUnreleasedSectionAndOneSubSectionWithMissingDate_ThenTheResultIsFailureNodate()
     {
@@ -69,7 +67,5 @@ namespace KeepAChangelogParser.Tests
 
       return expectedParseResult;
     }
-
   }
-
 }

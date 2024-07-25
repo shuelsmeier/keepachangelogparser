@@ -8,11 +8,9 @@ using System.Collections.Generic;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogContainsADescriptionAnUnreleasedSectionAndOneSubSectionWithAllTypes
   {
-
     [TestMethod]
     public void WhenTheChangelogContainsADescriptionAnUnreleasedSectionAndOneSubSectionWithAllTypes_ThenTheResultIsCorrect()
     {
@@ -277,7 +275,5 @@ namespace KeepAChangelogParser.Tests
                 });
       return expectedParseResult;
     }
-
   }
-
 }

@@ -5,10 +5,8 @@ using System.Security;
 
 namespace KeepAChangelogParser.Tests.Services
 {
-
   public static class FileService
   {
-
     public static Result<string> ReadText(
       string filePath
     )
@@ -97,7 +95,5 @@ namespace KeepAChangelogParser.Tests.Services
         }
       }
     }
-
   }
-
 }

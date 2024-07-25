@@ -3,11 +3,9 @@ using System.Windows;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowClosedEventCommand :
     IReleaseNotesWindowClosedEventCommand
   {
-
     public bool CanExecuteClosed()
     {
       return true;
@@ -17,7 +15,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
     {
       Application.Current.Shutdown();
     }
-
   }
-
 }

@@ -5,11 +5,9 @@ using System.Globalization;
 
 namespace KeepAChangelogParser.Tests.Comparer
 {
-
   public class ChangelogSectionComparer :
     IComparer<ChangelogSection>
   {
-
     private readonly IComparer<ChangelogSubSectionCollection> changelogSubSectionCollectionComparer;
 
     public ChangelogSectionComparer(
@@ -89,7 +87,7 @@ namespace KeepAChangelogParser.Tests.Comparer
       string y
     )
     {
-      return string.Compare(x, y, StringComparison.Ordinal);
+      return string.CompareOrdinal(x, y);
     }
 
     private int compare(
@@ -107,7 +105,5 @@ namespace KeepAChangelogParser.Tests.Comparer
 
       return 0;
     }
-
   }
-
 }

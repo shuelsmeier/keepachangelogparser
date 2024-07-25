@@ -4,11 +4,9 @@ using System.Windows.Input;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Commands
 {
-
   public class RoutedCommandBinding :
     Behavior<FrameworkElement>
   {
-
     public static readonly DependencyProperty CommandProperty =
       DependencyProperty.Register(
         "Command",
@@ -18,8 +16,8 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
 
     public ICommand Command
     {
-      get { return (ICommand)this.GetValue(CommandProperty); }
-      set { this.SetValue(CommandProperty, value); }
+      get => (ICommand)this.GetValue(CommandProperty);
+      set => this.SetValue(CommandProperty, value);
     }
 
     public ICommand? RoutedCommand { get; set; }
@@ -34,7 +32,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
           this.handleExecuted,
           this.handleCanExecute);
 
-      this.AssociatedObject.CommandBindings.Add(binding);
+      _ = this.AssociatedObject.CommandBindings.Add(binding);
     }
 
     private void handleCanExecute(
@@ -57,7 +55,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
 
       executedRoutedEventArgs.Handled = true;
     }
-
   }
-
 }

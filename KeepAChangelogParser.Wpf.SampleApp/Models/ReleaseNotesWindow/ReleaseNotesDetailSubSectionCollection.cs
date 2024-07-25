@@ -2,10 +2,8 @@
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Models.ReleaseNotesWindow
 {
-
   public class ReleaseNotesDetailSubSectionCollection :
     List<ReleaseNotesDetailSubSection>
   {
   }
-
 }

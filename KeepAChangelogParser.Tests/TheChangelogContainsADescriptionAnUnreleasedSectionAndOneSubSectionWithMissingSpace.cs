@@ -7,11 +7,9 @@ using System;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogContainsADescriptionAnUnreleasedSectionAndOneSubSectionWithMissingSpace
   {
-
     [TestMethod]
     public void WhenTheChangelogContainsADescriptionAnUnreleasedSectionAndOneSubSectionWithMissingSpace_ThenTheResultIsFailureNoSpace()
     {
@@ -69,7 +67,5 @@ namespace KeepAChangelogParser.Tests
 
       return expectedParseResult;
     }
-
   }
-
 }

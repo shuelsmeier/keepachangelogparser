@@ -3,11 +3,9 @@ using KeepAChangelogParser.Wpf.SampleApp.Contracts.ReleaseNotesWindow;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowClickOkCommand :
     IReleaseNotesWindowClickOkCommand
   {
-
     private readonly IReleaseNotesWindowView releaseNotesWindow;
 
     public ReleaseNotesWindowClickOkCommand(
@@ -21,11 +19,9 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
       IReleaseNotesWindowViewModel releaseNotesWindowViewModel
     )
     {
-      Guard.Against.Null(releaseNotesWindowViewModel, nameof(releaseNotesWindowViewModel));
+      _ = Guard.Against.Null(releaseNotesWindowViewModel, nameof(releaseNotesWindowViewModel));
 
       this.releaseNotesWindow.Close();
     }
-
   }
-
 }

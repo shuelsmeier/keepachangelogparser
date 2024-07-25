@@ -7,11 +7,9 @@ using System;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogContainsADescriptionAnUnreleasedSectionAndOneSubSectionWithInvalidVersion
   {
-
     [TestMethod]
     public void WhenTheChangelogContainsADescriptionAnUnreleasedSectionAndOneSubSectionWithInvalidVersion_ThenTheResultIsFailureInvalidVersion()
     {
@@ -69,7 +67,5 @@ namespace KeepAChangelogParser.Tests
 
       return expectedParseResult;
     }
-
   }
-
 }

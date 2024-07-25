@@ -6,11 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogContainsNothing
   {
-
     [TestMethod]
     public void WhenTheChangelogContainsNothing_ThenTheResultIsCorrect()
     {
@@ -54,7 +52,5 @@ namespace KeepAChangelogParser.Tests
 
       return expectedParseResult;
     }
-
   }
-
 }
