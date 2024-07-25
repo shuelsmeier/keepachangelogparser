@@ -2,7 +2,7 @@
 
 namespace KeepAChangelogParser.Models
 {
-  internal class ChangelogTokenDefinition
+  internal sealed class ChangelogTokenDefinition
   {
     public Regex Regex { get; }
 

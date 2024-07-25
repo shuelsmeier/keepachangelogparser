@@ -99,7 +99,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       return onStartupContextResult;
     }
 
-    private class OnStartupContext
+    private sealed class OnStartupContext
     {
       public OnStartupContext(
         string[] startupEventArgs

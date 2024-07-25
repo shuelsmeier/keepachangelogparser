@@ -3,7 +3,7 @@
 namespace KeepAChangelogParser.Models
 {
   [DebuggerDisplay("{debuggerDisplay,nq}")]
-  internal class ChangelogToken
+  internal sealed class ChangelogToken
   {
     public ChangelogTokenType Type { get; }
 

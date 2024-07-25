@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace KeepAChangelogParser.Services
 {
-  internal class ChangelogTokenizer :
+  internal sealed class ChangelogTokenizer :
     IChangelogTokenizer
   {
     private readonly List<ChangelogTokenDefinition> tokenDefinitionCollection =

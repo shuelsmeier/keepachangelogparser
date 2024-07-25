@@ -106,7 +106,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       return Result.Success(readChangelogContextResult.Value.Changelog);
     }
 
-    private class ReadChangelogContext
+    private sealed class ReadChangelogContext
     {
       public string FilePath { get; }
 

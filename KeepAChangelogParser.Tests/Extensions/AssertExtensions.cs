@@ -231,7 +231,7 @@ namespace KeepAChangelogParser.Tests.Extensions
       return JsonStringCollection;
     }
 
-    private class CutElement
+    private sealed class CutElement
     {
       public string Element { get; set; } = string.Empty;
       public int Index { get; set; } = 0;
