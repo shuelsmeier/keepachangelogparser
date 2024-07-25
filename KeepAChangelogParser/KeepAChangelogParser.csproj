@@ -43,6 +43,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <EnablePackageValidation>true</EnablePackageValidation>
     <!-- Optional: Detect breaking changes from a previous version -->
     <!-- <PackageValidationBaselineVersion>1.0.0</PackageValidationBaselineVersion> -->
