@@ -5,6 +5,7 @@ using KeepAChangelogParser.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace KeepAChangelogParser
@@ -19,6 +20,7 @@ namespace KeepAChangelogParser
     private static readonly char[] carriageReturnLineFeedArray = ['\r', '\n'];
 
     /// <inheritdoc/>
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     public Result<Changelog> Parse(
       string text
     )
@@ -625,6 +627,7 @@ namespace KeepAChangelogParser
       }
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static bool isEmptySectionUnreleased(
       Result<Changelog> changelogResult
     )
@@ -635,6 +638,7 @@ namespace KeepAChangelogParser
         changelogResult.Value.SectionUnreleased.MarkdownTitle);
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static bool isEmptySectionCollection(
       Result<Changelog> changelogResult
     )
@@ -644,6 +648,7 @@ namespace KeepAChangelogParser
       return changelogResult.Value.SectionCollection.Count == 0;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static Result<Changelog> parseCloseSquareBracket(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack
@@ -751,6 +756,7 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static Result<Changelog> parseHeadingOne(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack
@@ -798,6 +804,7 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static Result<Changelog> parseListTextNewLine(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack
@@ -816,6 +823,7 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static Result<Changelog> parseNewLine(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack
@@ -834,6 +842,7 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static Result<Changelog> parseOpenSquareBracket(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack
@@ -852,6 +861,7 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static Result<Changelog> parseSequenceTerminator(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack
@@ -870,6 +880,7 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static Result<Changelog> parseSpace(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack
@@ -948,6 +959,7 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static Result<Changelog> parseTextNewLine(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack

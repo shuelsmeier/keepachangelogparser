@@ -1,6 +1,7 @@
 ﻿using KeepAChangelogParser.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace KeepAChangelogParser.Tests.Comparer
@@ -55,6 +56,7 @@ namespace KeepAChangelogParser.Tests.Comparer
       return result;
     }
 
+    [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     public int Compare(
       Changelog? x,
       Changelog? y
