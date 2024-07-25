@@ -7,11 +7,9 @@ using System;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogContainsADescriptionAndAnUnreleasedSectionWithTitleMissingOpenBracket
   {
-
     [TestMethod]
     public void WhenTheChangelogContainsADescriptionAndAnUnreleasedSectionWithTitleMissingOpenBracket_ThenTheResultIsFailureNoOpenSquareBracket()
     {
@@ -63,7 +61,5 @@ namespace KeepAChangelogParser.Tests
 
       return expectedParseResult;
     }
-
   }
-
 }

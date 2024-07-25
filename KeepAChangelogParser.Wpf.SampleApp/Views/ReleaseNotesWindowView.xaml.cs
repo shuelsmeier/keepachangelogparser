@@ -3,7 +3,6 @@ using System.Windows;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Views
 {
-
   /// <summary>
   /// Interaction logic for ReleaseNotesWindowView.xaml
   /// </summary>
@@ -11,12 +10,9 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Views
     Window,
     IReleaseNotesWindowView
   {
-
     public ReleaseNotesWindowView()
     {
       this.InitializeComponent();
     }
-
   }
-
 }

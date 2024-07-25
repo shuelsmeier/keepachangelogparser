@@ -7,11 +7,9 @@ using System.Windows.Data;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
 {
-
   public class ReleaseNotesSubSectionButtonVisibilityConverter :
     IValueConverter
   {
-
     public object Convert(
       object value,
       Type targetType,
@@ -19,7 +17,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
       CultureInfo culture
     )
     {
-      Guard.Against.Null(value, nameof(value));
+      _ = Guard.Against.Null(value, nameof(value));
 
       ChangelogSubSectionType changelogSubSectionType =
         (ChangelogSubSectionType)value;
@@ -51,7 +49,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
     {
       throw new NotImplementedException();
     }
-
   }
-
 }

@@ -1,9 +1,7 @@
 ﻿namespace KeepAChangelogParser.Models
 {
-
-  internal class ChangelogTokenMatch
+  internal sealed class ChangelogTokenMatch
   {
-
     public int LineNumber { get; set; }
 
     public ChangelogTokenType Type { get; set; }
@@ -15,7 +13,5 @@
     public int EndIndex { get; set; }
 
     public int Precedence { get; set; }
-
   }
-
 }

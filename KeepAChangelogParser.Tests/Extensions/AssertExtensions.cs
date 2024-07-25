@@ -11,12 +11,15 @@ using System.Text;
 
 namespace KeepAChangelogParser.Tests.Extensions
 {
-
   public static class AssertExtensions
   {
     [SuppressMessage(
-      "Style", 
-      "IDE0060:Nicht verwendete Parameter entfernen", 
+      "Style",
+      "IDE0060:Remove unused parameter",
+      Justification = "Suppress message for necessary assert extension parameter.")]
+    [SuppressMessage(
+      "Roslynator",
+      "RCS1175:Unused this parameter.",
       Justification = "Suppress message for necessary assert extension parameter.")]
     public static void AreEqual<T>(
       this Assert assert,
@@ -25,7 +28,7 @@ namespace KeepAChangelogParser.Tests.Extensions
       IComparer comparer
     )
     {
-      Guard.Against.Null(comparer, nameof(comparer));
+      _ = Guard.Against.Null(comparer, nameof(comparer));
 
       int compareResult =
         comparer.Compare(
@@ -48,7 +51,7 @@ namespace KeepAChangelogParser.Tests.Extensions
         actualJsonStringCollection.
           Max(x => x.Length);
 
-      int chunkSize = 80;
+      const int chunkSize = 80;
 
       bool isCutLength =
            expectedMaxStringLength > chunkSize
@@ -101,9 +104,9 @@ namespace KeepAChangelogParser.Tests.Extensions
           if (x.Index < actualJsonStringCollection.Count)
           {
             Enumerable.
-              Range(0, lines.Count() - 1).
+              Range(0, indexToAdd - 1).
               ToList().
-              ForEach(y => actualJsonStringCollection.Insert(x.Index + 1, ""));
+              ForEach(_ => actualJsonStringCollection.Insert(x.Index + 1, ""));
           }
         }
 
@@ -219,21 +222,18 @@ namespace KeepAChangelogParser.Tests.Extensions
 
       jsonSerializer.Serialize(jsonTextWriter, t);
 
-      List<string> JsonStringCollection =
+      List<string> JsonStringCollection = [..
         stringBuilder.
           ToString().
-          Split(Environment.NewLine).
-          ToList();
+          Split(Environment.NewLine)];
 
       return JsonStringCollection;
     }
 
-    private class CutElement
+    private sealed class CutElement
     {
       public string Element { get; set; } = string.Empty;
       public int Index { get; set; } = 0;
     }
-
   }
-
 }

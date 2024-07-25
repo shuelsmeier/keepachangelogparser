@@ -4,14 +4,13 @@ using KeepAChangelogParser.Wpf.SampleApp.Contracts;
 using KeepAChangelogParser.Wpf.SampleApp.Contracts.ReleaseNotesWindow;
 using KeepAChangelogParser.Wpf.SampleApp.Models.ReleaseNotesWindow;
 using System;
+using System.Globalization;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowService :
     IReleaseNotesWindowService
   {
-
     private readonly IReleaseNotesWindowViewModel releaseNotesWindowViewModel;
     private readonly IChangelogService changelogService;
 
@@ -25,7 +24,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
       this.releaseNotesWindowViewModel = releaseNotesWindowViewModel;
       this.changelogService = changelogService;
     }
-
 
     public Result Initialize()
     {
@@ -63,7 +61,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
                 new ReleaseNotesDetailSubSection()
                 {
                   Type = changelogSubSection.Type,
-                  MarkdownTitle = changelogSubSection.Type.ToString().ToUpper(),
+                  MarkdownTitle = changelogSubSection.Type.ToString().ToUpper(CultureInfo.InvariantCulture),
                   MarkdownText = item.MarkdownText,
                 };
 
@@ -95,7 +93,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
                 new ReleaseNotesDetailSubSection()
                 {
                   Type = changelogSubSection.Type,
-                  MarkdownTitle = changelogSubSection.Type.ToString().ToUpper(),
+                  MarkdownTitle = changelogSubSection.Type.ToString().ToUpper(CultureInfo.InvariantCulture),
                   MarkdownText = item.MarkdownText,
                 };
 
@@ -121,7 +119,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
 
       return Result.Success();
     }
-
   }
-
 }

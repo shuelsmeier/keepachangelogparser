@@ -4,11 +4,9 @@ using System.IO;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Services
 {
-
   public class FileService :
     IFileService
   {
-
     public Result<string> ReadText(
       string filePath
     )
@@ -34,7 +32,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
 
       return Result.Success(text);
     }
-
   }
-
 }

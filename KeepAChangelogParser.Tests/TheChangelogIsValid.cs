@@ -7,11 +7,9 @@ using System.IO;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogIsValid
   {
-
     [TestMethod]
     public void WhenTheChangelogIsParsed_ThenTheResultIsCorrect()
     {
@@ -52,5 +50,4 @@ namespace KeepAChangelogParser.Tests
       return FileService.ReadText(changeLogPath).Value;
     }
   }
-
 }
