@@ -4,6 +4,7 @@ using KeepAChangelogParser.Wpf.SampleApp.Contracts;
 using KeepAChangelogParser.Wpf.SampleApp.Contracts.ReleaseNotesWindow;
 using KeepAChangelogParser.Wpf.SampleApp.Models.ReleaseNotesWindow;
 using System;
+using System.Globalization;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
 {
@@ -60,7 +61,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
                 new ReleaseNotesDetailSubSection()
                 {
                   Type = changelogSubSection.Type,
-                  MarkdownTitle = changelogSubSection.Type.ToString().ToUpper(),
+                  MarkdownTitle = changelogSubSection.Type.ToString().ToUpper(CultureInfo.InvariantCulture),
                   MarkdownText = item.MarkdownText,
                 };
 
@@ -92,7 +93,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
                 new ReleaseNotesDetailSubSection()
                 {
                   Type = changelogSubSection.Type,
-                  MarkdownTitle = changelogSubSection.Type.ToString().ToUpper(),
+                  MarkdownTitle = changelogSubSection.Type.ToString().ToUpper(CultureInfo.InvariantCulture),
                   MarkdownText = item.MarkdownText,
                 };
 
