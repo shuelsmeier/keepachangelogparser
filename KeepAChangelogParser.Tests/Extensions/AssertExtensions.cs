@@ -104,7 +104,7 @@ namespace KeepAChangelogParser.Tests.Extensions
           if (x.Index < actualJsonStringCollection.Count)
           {
             Enumerable.
-              Range(0, lines.Count() - 1).
+              Range(0, indexToAdd - 1).
               ToList().
               ForEach(_ => actualJsonStringCollection.Insert(x.Index + 1, ""));
           }
@@ -222,11 +222,10 @@ namespace KeepAChangelogParser.Tests.Extensions
 
       jsonSerializer.Serialize(jsonTextWriter, t);
 
-      List<string> JsonStringCollection =
+      List<string> JsonStringCollection = [..
         stringBuilder.
           ToString().
-          Split(Environment.NewLine).
-          ToList();
+          Split(Environment.NewLine)];
 
       return JsonStringCollection;
     }
