@@ -16,6 +16,8 @@ namespace KeepAChangelogParser
     private readonly INewLineService newLineService = new NewLineService();
     private readonly IChangelogTokenizer changelogTokenizer = new ChangelogTokenizer();
 
+    private static readonly char[] carriageReturnLineFeedArray = ['\r', '\n'];
+
     /// <inheritdoc/>
     public Result<Changelog> Parse(
       string text
@@ -1304,7 +1306,7 @@ namespace KeepAChangelogParser
 
       changelogResult.Value.MarkdownText =
         changelogResult.Value.MarkdownText.
-          Trim(new char[] { '\r', '\n' });
+          Trim(carriageReturnLineFeedArray);
 
       return changelogResult;
     }
