@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Authors>Steven Huelsmeier</Authors>
-    <Copyright>Copyright © Steven Huelsmeier 2020-2021</Copyright>
+    <Copyright>Copyright © Steven Huelsmeier 2020-2024</Copyright>
     <Description>Parser Library for KeepAChangeLog</Description>
     <AssemblyName>KeepAChangeLogParser</AssemblyName>
     <AssemblyTitle>KeepAChangeLogParser</AssemblyTitle>
@@ -17,6 +17,7 @@
     <PackageReleaseNotes>https://github.com/shuelsmeier/keepachangelogparser/blob/main/CHANGELOG.md</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>KeepAChangeLog Parser</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <!-- /begin support for sourcelink -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
@@ -40,6 +41,12 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <!-- Optional: Detect breaking changes from a previous version -->
+    <!-- <PackageValidationBaselineVersion>1.0.0</PackageValidationBaselineVersion> -->
+  </PropertyGroup>
  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -50,6 +57,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -62,6 +77,10 @@
     <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MinVer" Version="5.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Roslynator.Analyzers" Version="4.12.4">
       <PrivateAssets>none</PrivateAssets>
