@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.4] - 2024-07-26
+
+### Fixed
+- Code Analysis messages
+
+### Added
+- Github workflow for automatic test, build, validate and publish 
+- Support for .NET 8.0 
+- Roslynator 
+
+### Changed
+- Bump Ardalis.GuardClauses from 4.0.1 to 4.6.0
+- Bump coverlet.collector from 3.1.2 to 6.0.2
+- Bump coverlet.msbuild from 3.1.2 to 6.0.2
+- Bump CSharpFunctionalExtensions from 2.29.4 to 2.42.5
+- Bump KeepAChangeLogParser from 1.2.2 to 1.2.3
+- Bump MSTest.TestAdapter from 2.2.10 to 3.5.0
+- Bump MSTest.TestFramework from 2.2.10 to 3.5.0
+- Bump Microsoft.CodeAnalysis.PublicApiAnalyzers from 3.3.3 to 3.3.4
+- Bump Microsoft.NET.Test.Sdk from 17.2.0 to 17.10.0
+- Bump Microsoft.SourceLink.GitHub from 1.1.1 to 8.0.0
+- Bump Microsoft.Xaml.Behaviors.Wpf from 1.1.39 to 1.1.122
+- Bump Newtonsoft.Json from 13.0.1 to 13.0.3
+- Bump ReportGenerator from 5.1.9 to 5.1.18
+- Bump Roslynator.Analyzers from 4.0.2 to 4.12.4
+- Bump Roslynator.CodeAnalysis.Analyzers from 4.0.2 to 4.12.4
+- Bump Roslynator.Formatting.Analyzers from 4.0.2 to 4.12.4
+- Bump SimpleInjector from 5.3.3 to 5.4.6
+
 ## [1.2.3] - 2022-06-25
 
 ### Changed
