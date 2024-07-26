@@ -63,8 +63,8 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
-  <Target Name="Coverage" AfterTargets="GenerateCoverageResultAfterTest">
+  <!--<Target Name="Coverage" AfterTargets="GenerateCoverageResultAfterTest">
     <ReportGenerator ReportFiles="@(CoverletReport)" TargetDirectory="../html-coverage-report" />
-  </Target>
+  </Target>-->
 
 </Project>
