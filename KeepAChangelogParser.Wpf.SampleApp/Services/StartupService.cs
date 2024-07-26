@@ -7,16 +7,14 @@ using System.Windows;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Services
 {
-
   public class StartupService :
     IStartupService
   {
-
     public void Execute(
       StartupEventArgs startupEventArgs
     )
     {
-      Guard.Against.Null(startupEventArgs, nameof(startupEventArgs));
+      _ = Guard.Against.Null(startupEventArgs, nameof(startupEventArgs));
 
       Result<OnStartupContext> onStartupContextResult =
         Result.Success(new OnStartupContext(startupEventArgs.Args));
@@ -30,7 +28,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
 
       if (onStartupContextResult.IsFailure)
       {
-        MessageBox.Show(
+        _ = MessageBox.Show(
           onStartupContextResult.Error,
           "Error",
           MessageBoxButton.OK,
@@ -76,7 +74,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       return onStartupContextResult;
     }
 
-
     private static Result<OnStartupContext> showReleaseNotesWindowViewModel(
       Result<OnStartupContext> onStartupContextResult
     )
@@ -86,7 +83,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       IReleaseNotesWindowView releaseNotesWindowView =
         ComposerManager.Container.GetInstance<IReleaseNotesWindowView>();
 
-      releaseNotesWindowView.ShowDialog();
+      _ = releaseNotesWindowView.ShowDialog();
 
       return onStartupContextResult;
     }
@@ -102,9 +99,8 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       return onStartupContextResult;
     }
 
-    private class OnStartupContext
+    private sealed class OnStartupContext
     {
-
       public OnStartupContext(
         string[] startupEventArgs
       )
@@ -113,9 +109,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services
       }
 
       public string[] StartupEventArgs { get; }
-
     }
-
   }
-
 }

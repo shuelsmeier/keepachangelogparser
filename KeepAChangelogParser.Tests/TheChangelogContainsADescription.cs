@@ -7,11 +7,9 @@ using System;
 
 namespace KeepAChangelogParser.Tests
 {
-
   [TestClass]
   public class TheChangelogContainsADescription
   {
-
     [TestMethod]
     public void WhenTheChangelogContainsADescription_ThenTheResultIsCorrect()
     {
@@ -66,7 +64,5 @@ namespace KeepAChangelogParser.Tests
 
       return expectedParseResult;
     }
-
   }
-
 }

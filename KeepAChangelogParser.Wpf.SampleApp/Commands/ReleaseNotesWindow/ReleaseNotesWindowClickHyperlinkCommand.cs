@@ -1,28 +1,26 @@
 ﻿using Ardalis.GuardClauses;
+using KeepAChangelogParser.Wpf.SampleApp.Contracts.ReleaseNotesWindow;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
-using KeepAChangelogParser.Wpf.SampleApp.Contracts.ReleaseNotesWindow;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
 {
-
   public class ReleaseNotesWindowClickHyperlinkCommand :
     IReleaseNotesWindowClickHyperlinkCommand
   {
-
     public void ExecuteClick(
       object? param
     )
     {
-      Guard.Against.Null(param, nameof(param));
+      _ = Guard.Against.Null(param, nameof(param));
 
       string? url = param.ToString();
 
-      Guard.Against.NullOrEmpty(url, nameof(url));
+      _ = Guard.Against.NullOrEmpty(url, nameof(url));
 
       openUrl(url);
     }
@@ -33,12 +31,13 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
     {
       try
       {
-        Process.Start(url);
+        _ = Process.Start(url);
       }
-      catch (Exception exception) when (
-           exception is Win32Exception
-        || exception is ObjectDisposedException
-        || exception is FileNotFoundException
+      catch (Exception exception)
+      when (exception
+        is Win32Exception
+        or ObjectDisposedException
+        or FileNotFoundException
       )
       {
         // Hack because of this: https://github.com/dotnet/corefx/issues/10361
@@ -50,7 +49,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
               "^&",
               StringComparison.Ordinal);
 
-          Process.Start(
+          _ = Process.Start(
             new ProcessStartInfo(
               "cmd",
               $"/c start {url}")
@@ -60,13 +59,13 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
-          Process.Start(
+          _ = Process.Start(
             "xdg-open",
             url);
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-          Process.Start(
+          _ = Process.Start(
             "open",
             url);
         }
@@ -77,8 +76,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands.ReleaseNotesWindow
         }
       }
     }
-
   }
-
 }
-

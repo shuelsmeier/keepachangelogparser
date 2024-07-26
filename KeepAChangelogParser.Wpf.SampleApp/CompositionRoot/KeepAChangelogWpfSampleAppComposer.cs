@@ -10,15 +10,13 @@ using SimpleInjector;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.CompositionRoot
 {
-
   public static class TimeStopperComposer
   {
-
     public static void ComposeTimeStopper(
       this Container container
     )
     {
-      Guard.Against.Null(container, nameof(container));
+      _ = Guard.Against.Null(container, nameof(container));
 
       container.Register(typeof(IReleaseNotesWindowService), typeof(ReleaseNotesWindowService), Lifestyle.Singleton);
       container.Register(typeof(IReleaseNotesWindowClosedEventCommand), typeof(ReleaseNotesWindowClosedEventCommand), Lifestyle.Singleton);
@@ -30,7 +28,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.CompositionRoot
       container.Register(typeof(IChangelogService), typeof(ChangelogService), Lifestyle.Singleton);
       container.Register(typeof(IFileService), typeof(FileService), Lifestyle.Singleton);
     }
-
   }
-
 }

@@ -5,11 +5,9 @@ using System.Windows.Data;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
 {
-
   public class ReleaseNotesColumnValueConverter :
     IValueConverter
   {
-
     public object Convert(
       object value,
       Type targetType,
@@ -28,7 +26,6 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
       return row[columnName];
     }
 
-
     public object ConvertBack(
       object value,
       Type targetType,
@@ -38,7 +35,5 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
     {
       throw new NotImplementedException();
     }
-
   }
-
 }

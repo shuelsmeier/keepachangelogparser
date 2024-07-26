@@ -6,7 +6,6 @@ using System.Windows.Input;
 
 namespace KeepAChangelogParser.Wpf.SampleApp.Commands
 {
-
   public class RelayCommand :
     IRelayCommand,
     ICommand
@@ -26,7 +25,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
       Predicate<object?>? canExecute
     )
     {
-      Guard.Against.Null(execute, nameof(execute));
+      _ = Guard.Against.Null(execute, nameof(execute));
 
       this.execute = execute;
       this.canExecute = canExecute;
@@ -43,8 +42,8 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
 
     public event EventHandler? CanExecuteChanged
     {
-      add { CommandManager.RequerySuggested += value; }
-      remove { CommandManager.RequerySuggested -= value; }
+      add => CommandManager.RequerySuggested += value;
+      remove => CommandManager.RequerySuggested -= value;
     }
 
     public void Execute(
@@ -53,14 +52,13 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
     {
       this.execute(parameter);
     }
-
   }
 
   public class RelayCommand<T> :
     ICommand
   {
-    private readonly Action<T?> _execute;
-    private readonly Predicate<T?>? _canExecute;
+    private readonly Action<T?> execute;
+    private readonly Predicate<T?>? canExecute;
 
     public RelayCommand(
       Action<T?> execute
@@ -74,10 +72,10 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
       Predicate<T?>? canExecute
     )
     {
-      Guard.Against.Null(execute, nameof(execute));
+      _ = Guard.Against.Null(execute, nameof(execute));
 
-      this._execute = execute;
-      this._canExecute = canExecute;
+      this.execute = execute;
+      this.canExecute = canExecute;
     }
 
     [DebuggerStepThrough]
@@ -85,23 +83,21 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Commands
       object? parameter
     )
     {
-      return this._canExecute == null
-          || this._canExecute((T?)parameter);
+      return this.canExecute == null
+          || this.canExecute((T?)parameter);
     }
 
     public event EventHandler? CanExecuteChanged
     {
-      add { CommandManager.RequerySuggested += value; }
-      remove { CommandManager.RequerySuggested -= value; }
+      add => CommandManager.RequerySuggested += value;
+      remove => CommandManager.RequerySuggested -= value;
     }
 
     public void Execute(
       object? parameter
     )
     {
-      this._execute((T?)parameter);
+      this.execute((T?)parameter);
     }
-
   }
-
 }
