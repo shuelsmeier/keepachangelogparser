@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.5] - 2024-12-30
+
+### Fixed
+- Version number
+
+### Changed
+- Bump Ardalis.GuardClauses from 4.6.0 to 5.0.0
+- Bump Microsoft.NET.Test.Sdk from 17.10.0 to 17.12.0
+- Bump MSTest.TestAdapter from 3.5.0 to 3.7.0
+- Bump MSTest.TestFramework from 3.5.0 to 3.7.0
+- Bump ReportGenerator from 5.3.8 to 5.4.3
+- Bump Microsoft.CodeAnalysis.NetAnalyzers from 8.0.0 to 9.0.0
+- Bump Roslynator.Analyzers from 4.12.4 to 4.12.10
+- Bump Roslynator.CodeAnalysis.Analyzers from 4.12.4 to 4.12.10
+- Bump Roslynator.Formatting.Analyzers from 4.12.4 to 4.12.10
+
 ## [1.2.4] - 2024-07-26
 
 ### Fixed
