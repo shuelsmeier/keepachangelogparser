@@ -4,7 +4,7 @@ namespace KeepAChangelogParser.Contracts
 {
   internal interface INewLineService
   {
-    Result<string> DetermineLineEndings(
+    public Result<string> DetermineLineEndings(
       string text
     );
   }

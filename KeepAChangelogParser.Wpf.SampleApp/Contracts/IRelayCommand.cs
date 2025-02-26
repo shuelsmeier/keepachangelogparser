@@ -4,10 +4,10 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Contracts
 {
   public interface IRelayCommand
   {
-    event EventHandler? CanExecuteChanged;
+    public event EventHandler? CanExecuteChanged;
 
-    bool CanExecute(object? parameter);
+    public bool CanExecute(object? parameter);
 
-    void Execute(object? parameter);
+    public void Execute(object? parameter);
   }
 }

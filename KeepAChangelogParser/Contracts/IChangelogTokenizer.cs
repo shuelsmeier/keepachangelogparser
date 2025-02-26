@@ -5,7 +5,7 @@ namespace KeepAChangelogParser.Contracts
 {
   internal interface IChangelogTokenizer
   {
-    IEnumerable<ChangelogToken> Tokenize(
+    public IEnumerable<ChangelogToken> Tokenize(
       string text,
       string newLine
     );

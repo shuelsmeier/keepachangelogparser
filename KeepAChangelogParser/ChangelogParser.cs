@@ -17,7 +17,11 @@ namespace KeepAChangelogParser
     private readonly INewLineService newLineService = new NewLineService();
     private readonly IChangelogTokenizer changelogTokenizer = new ChangelogTokenizer();
 
+#if NET8_0_OR_GREATER
     private static readonly char[] carriageReturnLineFeedArray = ['\r', '\n'];
+#else
+    private static readonly char[] carriageReturnLineFeedArray = new char[] { '\r', '\n' };
+#endif
 
     /// <inheritdoc/>
     [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
@@ -36,8 +40,10 @@ namespace KeepAChangelogParser
       IEnumerable<ChangelogToken> tokenCollection =
         this.changelogTokenizer.Tokenize(text, determineLineEndingsResult.Value);
 
+#pragma warning disable IDE0306 // Simplify collection initialization
       Stack<ChangelogToken> tokenStack =
         new Stack<ChangelogToken>(tokenCollection.Reverse());
+#pragma warning restore IDE0306 // Simplify collection initialization
 
       Result<Changelog> changelogResult =
         Result.Success(new Changelog());

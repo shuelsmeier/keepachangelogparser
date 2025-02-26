@@ -14,7 +14,7 @@ namespace KeepAChangelogParser
     /// <param name="text">The <see cref="string"/> instance that contains the keepachangelog markdown text.</param>
     /// <returns>An instance of <see cref="Result"/> class containing an instance of <see cref="Changelog"/> class,
     /// when successful; otherwise, the error message.</returns>
-    Result<Changelog> Parse(
+    public Result<Changelog> Parse(
       string text
     );
   }

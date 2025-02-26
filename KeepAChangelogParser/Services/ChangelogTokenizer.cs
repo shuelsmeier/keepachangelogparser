@@ -40,8 +40,12 @@ namespace KeepAChangelogParser.Services
       List<ChangelogToken> tokenCollection =
         new List<ChangelogToken>();
 
+#if NET8_0_OR_GREATER
       List<string> lineCollection = [..
-        text.Split(new[] { newLine }, StringSplitOptions.None)];
+        text.Split([newLine], StringSplitOptions.None)];
+#else
+      List<string> lineCollection = text.Split(new[] { newLine }, StringSplitOptions.None).ToList();
+#endif
 
       for (int lineNumber = 1; lineNumber <= lineCollection.Count; lineNumber++)
       {
@@ -68,10 +72,17 @@ namespace KeepAChangelogParser.Services
               lineCollection[lineNumber - 1],
               startIndex);
 
+#if NET8_0_OR_GREATER
           List<IGrouping<int, ChangelogTokenMatch>> tokenMatchByStartIndexCollection = [..
             tokenMatchCollection.
               GroupBy(x => x.StartIndex).
               OrderBy(x => x.Key)];
+#else
+          List<IGrouping<int, ChangelogTokenMatch>> tokenMatchByStartIndexCollection = tokenMatchCollection.
+              GroupBy(x => x.StartIndex).
+              OrderBy(x => x.Key).
+              ToList();
+#endif
 
           ChangelogTokenMatch tokenMatch =
             tokenMatchByStartIndexCollection[0].
@@ -93,24 +104,20 @@ namespace KeepAChangelogParser.Services
         }
       }
 
-#if NETCOREAPP || NET5_0 || NET6_0 || NET8_0
-
+#if NET
       tokenCollection.Add(
         new ChangelogToken(
           ChangelogTokenType.NewLine,
           newLine,
           lineCollection.Count,
           lineCollection[^1].Length));
-
 #else
-
       tokenCollection.Add(
         new ChangelogToken(
           ChangelogTokenType.NewLine,
           newLine,
           lineCollection.Count,
           lineCollection[lineCollection.Count - 1].Length));
-
 #endif
 
       tokenCollection.Add(
@@ -158,10 +165,16 @@ namespace KeepAChangelogParser.Services
 
       foreach (ChangelogTokenDefinition tokenDefinition in this.tokenDefinitionCollection)
       {
+#if NET8_0_OR_GREATER
+        tokenMatchCollection.
+          AddRange(
+            [.. findMatches(tokenDefinition, lineNumber, text, startIndex)]);
+#else
         tokenMatchCollection.
           AddRange(
             findMatches(tokenDefinition, lineNumber, text, startIndex).
             ToList());
+#endif
       }
 
       return tokenMatchCollection;
