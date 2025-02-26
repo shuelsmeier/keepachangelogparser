@@ -70,10 +70,9 @@ namespace KeepAChangelogParser.Tests.Extensions
           actualMaxStringLength;
 
         List<CutElement>? expectedJsonStringCollectionToCut =
-          expectedJsonStringCollection.
+          [.. expectedJsonStringCollection.
             Select((x, index) => new CutElement() { Element = x, Index = index }).
-            Where(x => x.Element.Length > chunkSize).
-            ToList();
+            Where(x => x.Element.Length > chunkSize)];
 
         for (int index1 = 0; index1 < expectedJsonStringCollectionToCut.Count; index1++)
         {
@@ -119,13 +118,12 @@ namespace KeepAChangelogParser.Tests.Extensions
         foreach (var x in actualJsonStringCollectionToCut)
         {
           List<string> lines =
-            Enumerable.
+            [.. Enumerable.
               Range(0, (x.Element.Length / chunkSize) + 1).
               Select(i => x.Element.
                 Substring(
                   i * chunkSize,
-                  x.Element.Length - (chunkSize * i) >= chunkSize ? chunkSize : x.Element.Length - (chunkSize * i))).
-              ToList();
+                  x.Element.Length - (chunkSize * i) >= chunkSize ? chunkSize : x.Element.Length - (chunkSize * i)))];
 
           actualJsonStringCollection.
             RemoveAt(x.Index);

@@ -5,7 +5,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Contracts
 {
   public interface IChangelogService
   {
-    Result<Changelog> ReadChangelog(
+    public Result<Changelog> ReadChangelog(
       string filePath
     );
   }

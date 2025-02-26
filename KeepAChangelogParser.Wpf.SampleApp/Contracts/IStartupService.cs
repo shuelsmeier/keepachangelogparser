@@ -4,7 +4,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Contracts
 {
   public interface IStartupService
   {
-    void Execute(
+    public void Execute(
       StartupEventArgs startupEventArgs
     );
   }

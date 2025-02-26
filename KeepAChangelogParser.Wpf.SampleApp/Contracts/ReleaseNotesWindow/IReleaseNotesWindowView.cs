@@ -2,14 +2,14 @@
 {
   public interface IReleaseNotesWindowView
   {
-    object DataContext { get; set; }
+    public object DataContext { get; set; }
 
-    void Close();
+    public void Close();
 
-    void Hide();
+    public void Hide();
 
-    void InitializeComponent();
+    public void InitializeComponent();
 
-    bool? ShowDialog();
+    public bool? ShowDialog();
   }
 }

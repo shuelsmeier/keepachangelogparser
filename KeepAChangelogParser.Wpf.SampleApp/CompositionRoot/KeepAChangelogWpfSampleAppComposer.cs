@@ -18,15 +18,15 @@ namespace KeepAChangelogParser.Wpf.SampleApp.CompositionRoot
     {
       _ = Guard.Against.Null(container, nameof(container));
 
-      container.Register(typeof(IReleaseNotesWindowService), typeof(ReleaseNotesWindowService), Lifestyle.Singleton);
-      container.Register(typeof(IReleaseNotesWindowClosedEventCommand), typeof(ReleaseNotesWindowClosedEventCommand), Lifestyle.Singleton);
-      container.Register(typeof(IReleaseNotesWindowClickHyperlinkCommand), typeof(ReleaseNotesWindowClickHyperlinkCommand), Lifestyle.Singleton);
-      container.Register(typeof(IReleaseNotesWindowClickOkCommand), typeof(ReleaseNotesWindowClickOkCommand), Lifestyle.Singleton);
-      container.Register(typeof(IReleaseNotesWindowView), typeof(ReleaseNotesWindowView), Lifestyle.Singleton);
-      container.Register(typeof(IReleaseNotesWindowViewModel), typeof(ReleaseNotesWindowViewModel), Lifestyle.Singleton);
+      container.Register<IReleaseNotesWindowService, ReleaseNotesWindowService>(Lifestyle.Singleton);
+      container.Register<IReleaseNotesWindowClosedEventCommand, ReleaseNotesWindowClosedEventCommand>(Lifestyle.Singleton);
+      container.Register<IReleaseNotesWindowClickHyperlinkCommand, ReleaseNotesWindowClickHyperlinkCommand>(Lifestyle.Singleton);
+      container.Register<IReleaseNotesWindowClickOkCommand, ReleaseNotesWindowClickOkCommand>(Lifestyle.Singleton);
+      container.Register<IReleaseNotesWindowView, ReleaseNotesWindowView>(Lifestyle.Singleton);
+      container.Register<IReleaseNotesWindowViewModel, ReleaseNotesWindowViewModel>(Lifestyle.Singleton);
 
-      container.Register(typeof(IChangelogService), typeof(ChangelogService), Lifestyle.Singleton);
-      container.Register(typeof(IFileService), typeof(FileService), Lifestyle.Singleton);
+      container.Register<IChangelogService, ChangelogService>(Lifestyle.Singleton);
+      container.Register<IFileService, FileService>(Lifestyle.Singleton);
     }
   }
 }
