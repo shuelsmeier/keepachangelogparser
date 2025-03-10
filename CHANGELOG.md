@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- Analyzer messages
+
+### Added
+- Support for .NET Standard 2.0
+- Support for .NET Standard 2.1
+
+### Changed
+- Bump coverlet.msbuild from 6.0.3 to 6.0.4
+- Bump coverlet.collector from 6.0.3 to 6.0.4
+- Bump CSharpFunctionalExtensions from 3.4.3 to 3.5.1
+- Bump Microsoft.NET.Test.Sdk from 17.12.0 to 17.13.0
+- Bump MSTest.TestAdapter from 3.7.0 to 3.8.2
+- Bump MSTest.TestFramework from 3.7.0 to 3.8.2
+- Bump Newtonsoft.Json from 13.0.3 to 13.0.1
+- Bump ReportGenerator from 5.4.3 to 5.4.4
+- Bump Roslynator.Analyzers from 4.12.10 to 4.13.1
+- Bump Roslynator.CodeAnalysis.Analyzers from 4.12.10 to 4.13.1
+- Bump Roslynator.Formatting.Analyzers from 4.12.10 to 4.13.1
+
+### Removed
+- Support for .NET Framework 4.6.1 because it is added by .NET Standard 2.0
+- Support for .NET 5 because it is no longer supported
+
 ## [1.2.6] - 2025-01-01
 
 ### Changed
