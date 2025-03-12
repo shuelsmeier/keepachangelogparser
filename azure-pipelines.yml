@@ -21,8 +21,13 @@ steps:
   displayName: 'Use .NET 8 Core sdk'
   inputs:
     packageType: 'sdk'
+<<<<<<< HEAD
     version: '8.0.x'
     includePreviewVersions: true
+=======
+    version: '9.x'
+    performMultiLevelLookup: true
+>>>>>>> 027c684 (Update azure-pipelines.yml for Azure Pipelines)
 
 - task: NuGetCommand@2
   inputs:
