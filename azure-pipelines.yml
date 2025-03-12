@@ -22,7 +22,7 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '9.x'
-    includePreviewVersions: true
+    performMultiLevelLookup: true
 
 - task: NuGetCommand@2
   inputs:
