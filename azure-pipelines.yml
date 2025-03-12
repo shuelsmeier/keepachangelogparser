@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- main
+- develop
 
 pool:
   vmImage: 'windows-latest'
@@ -18,10 +18,10 @@ steps:
 - task: NuGetToolInstaller@1
 
 - task: UseDotNet@2
-  displayName: 'Use .NET 8 Core sdk'
+  displayName: 'Use .NET 9 Core sdk'
   inputs:
     packageType: 'sdk'
-    version: '8.0.x'
+    version: '9.x'
     includePreviewVersions: true
 
 - task: NuGetCommand@2
@@ -39,11 +39,11 @@ steps:
     packageFeedSelector: 'nugetOrg'
     versionSelector: 'latestStable'
 
-- task: VSTest@2
+- task: VSTest@3
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2:
-      '.\KeepAChangelogParser.Tests\bin\Debug\net8.0\KeepAChangelogParser.Tests.dll'
+      '.\KeepAChangelogParser.Tests\bin\Debug\net9.0\KeepAChangelogParser.Tests.dll'
       #'**\KeepAChangelogParser.Tests.dll'
     vstestLocationMethod: 'version'
     vsTestVersion: 'toolsInstaller'
