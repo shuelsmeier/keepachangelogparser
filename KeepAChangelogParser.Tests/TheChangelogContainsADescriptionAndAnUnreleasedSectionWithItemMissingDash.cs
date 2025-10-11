@@ -48,8 +48,8 @@ namespace KeepAChangelogParser.Tests
         /* 08 */ "## [Unreleased]" + Environment.NewLine +
         /* 09 */ "" + Environment.NewLine +
         /* 10 */ "### Added" + Environment.NewLine +
-        /* 11 */ "- New visual identity by[@tylerfortune8](https://github.com/tylerfortune8)." + Environment.NewLine +
-        /* 12 */ " Version navigation." + Environment.NewLine +
+        /* 11 */ "New visual identity by[@tylerfortune8](https://github.com/tylerfortune8)." + Environment.NewLine +
+        /* 12 */ "- Version navigation." + Environment.NewLine +
         /* 13 */ "" + Environment.NewLine;
     }
 
@@ -57,7 +57,7 @@ namespace KeepAChangelogParser.Tests
     {
       Result<Changelog> expectedParseResult =
         Result.Failure<Changelog>(
-          "No dash. Error parsing text in line 12 / index 1.");
+          "No dash. Error parsing text in line 11 / index 1.");
 
       return expectedParseResult;
     }
