@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Bump Microsoft.NET.Test.Sdk from 17.13.0 to 18.0.0
+- Bump MSTest.TestAdapter from 3.8.3 to 4.0.0
+- Bump MSTest.TestFramework from 3.8.3 to 4.0.0
 
 
 ## [1.2.8] - 2025-10-11
