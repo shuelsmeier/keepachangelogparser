@@ -24,8 +24,8 @@ namespace KeepAChangelogParser.Tests
 
       // Assert
       Assert.AreEqual(
-        actualParseResult.Error,
-        "Text contains mixed line endings CR and LF.");
+        "Text contains mixed line endings CR and LF.",
+        actualParseResult.Error);
     }
 
     private static string createTextToParse()

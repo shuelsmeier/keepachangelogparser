@@ -95,8 +95,12 @@ namespace KeepAChangelogParser
             {
               if (isText(tokenStack))
               {
-                changelogResult = parseDash(changelogResult, tokenStack);
-                changelogResult = parseSpace(changelogResult, tokenStack);
+                if (isDash(tokenStack))
+                {
+                  changelogResult = parseDash(changelogResult, tokenStack);
+                  changelogResult = parseSpace(changelogResult, tokenStack);
+                }
+
                 changelogResult = parseUnreleasedText(changelogResult, tokenStack);
               }
 
@@ -130,8 +134,12 @@ namespace KeepAChangelogParser
             {
               if (isText(tokenStack))
               {
-                changelogResult = parseDash(changelogResult, tokenStack);
-                changelogResult = parseSpace(changelogResult, tokenStack);
+                if (isDash(tokenStack))
+                {
+                  changelogResult = parseDash(changelogResult, tokenStack);
+                  changelogResult = parseSpace(changelogResult, tokenStack);
+                }
+
                 changelogResult = parseText(changelogResult, tokenStack);
               }
 
@@ -178,6 +186,12 @@ namespace KeepAChangelogParser
           SectionCollection[sectionCollectionCount - 1].
             SubSectionCollection[subSectionCollectionCount - 1].
               ItemCollection.Count;
+
+      if (subSectionItemCollectionCount == 0)
+      {
+        return Result.Failure<Changelog>(
+          $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+      }
 
       changelogResult.Value.
         SectionCollection[sectionCollectionCount - 1].
@@ -248,6 +262,12 @@ namespace KeepAChangelogParser
           SectionUnreleased.
             SubSectionCollection[subSectionUnreleasedCollectionCount - 1].
               ItemCollection.Count;
+
+      if (subSectionUnreleasedItemCollectionCount == 0)
+      {
+        return Result.Failure<Changelog>(
+          $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+      }
 
       changelogResult.Value.
         SectionUnreleased.
@@ -545,6 +565,42 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
+        case ChangelogTokenType.Text:
+        case ChangelogTokenType.Version:
+          {
+            return false;
+          }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
+      }
+    }
+
+    private static bool isDash(
+      Stack<ChangelogToken> tokenStack
+    )
+    {
+      ChangelogToken token = tokenStack.Peek();
+
+      switch (token.Type)
+      {
+        case ChangelogTokenType.Dash:
+          {
+            return true;
+          }
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Text:
         case ChangelogTokenType.Version:
           {

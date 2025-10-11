@@ -199,7 +199,7 @@ namespace KeepAChangelogParser.Tests.Extensions
           $"    | {expectedJsonStringLine.PadRight(expectedMaxStringLength, ' ')} | {actualJsonStringLine}{Environment.NewLine}";
       }
 
-      Assert.IsTrue(false, message);
+      Assert.Fail(message);
     }
 
     private static List<string> serializeToJson<T>(
