@@ -304,20 +304,20 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
+        case ChangelogTokenType.Date:
         case ChangelogTokenType.OpenParenthesis:
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.Text:
         case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.Version:
           {
             return true;
           }
-        case ChangelogTokenType.Date:
         case ChangelogTokenType.HeadingOne:
         case ChangelogTokenType.HeadingTwo:
         case ChangelogTokenType.HeadingThree:
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
-        case ChangelogTokenType.Version:
           {
             return false;
           }
@@ -399,6 +399,7 @@ namespace KeepAChangelogParser
             return true;
           }
 
+        case ChangelogTokenType.Date:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.OpenParenthesis:
@@ -406,15 +407,14 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.Text:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.Version:
           {
             return true;
           }
-        case ChangelogTokenType.Date:
         case ChangelogTokenType.HeadingOne:
         case ChangelogTokenType.HeadingTwo:
         case ChangelogTokenType.HeadingThree:
         case ChangelogTokenType.SequenceTerminator:
-        case ChangelogTokenType.Version:
           {
             return false;
           }
@@ -455,20 +455,20 @@ namespace KeepAChangelogParser
 
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Date:
         case ChangelogTokenType.OpenParenthesis:
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
         case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.Version:
           {
             return true;
           }
-        case ChangelogTokenType.Date:
         case ChangelogTokenType.HeadingOne:
         case ChangelogTokenType.HeadingTwo:
         case ChangelogTokenType.HeadingThree:
         case ChangelogTokenType.SequenceTerminator:
-        case ChangelogTokenType.Version:
           {
             return false;
           }
@@ -569,20 +569,20 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
         case ChangelogTokenType.OpenParenthesis:
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
+        case ChangelogTokenType.Version:
+        case ChangelogTokenType.Date:
           {
             return true;
           }
-        case ChangelogTokenType.Date:
-        case ChangelogTokenType.HeadingOne:
-        case ChangelogTokenType.HeadingTwo:
-        case ChangelogTokenType.HeadingThree:
         case ChangelogTokenType.NewLine:
         case ChangelogTokenType.SequenceTerminator:
-        case ChangelogTokenType.Version:
           {
             return false;
           }
@@ -930,10 +930,15 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
+          case ChangelogTokenType.Date:
+          case ChangelogTokenType.HeadingOne:
+          case ChangelogTokenType.HeadingTwo:
+          case ChangelogTokenType.HeadingThree:
           case ChangelogTokenType.OpenParenthesis:
           case ChangelogTokenType.OpenSquareBracket:
           case ChangelogTokenType.Space:
           case ChangelogTokenType.Text:
+          case ChangelogTokenType.Version:
             {
               changelogResult =
                 addTokenValueToText(
@@ -943,13 +948,8 @@ namespace KeepAChangelogParser
               if (changelogResult.IsFailure) { return changelogResult; }
             }
             break;
-          case ChangelogTokenType.Date:
-          case ChangelogTokenType.HeadingOne:
-          case ChangelogTokenType.HeadingTwo:
-          case ChangelogTokenType.HeadingThree:
           case ChangelogTokenType.NewLine:
           case ChangelogTokenType.SequenceTerminator:
-          case ChangelogTokenType.Version:
             {
               return Result.Failure<Changelog>(
                 $"Invalid text. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -1136,10 +1136,15 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
+          case ChangelogTokenType.Date:
+          case ChangelogTokenType.HeadingOne:
+          case ChangelogTokenType.HeadingTwo:
+          case ChangelogTokenType.HeadingThree:
           case ChangelogTokenType.OpenParenthesis:
           case ChangelogTokenType.OpenSquareBracket:
           case ChangelogTokenType.Space:
           case ChangelogTokenType.Text:
+          case ChangelogTokenType.Version:
             {
               changelogResult =
                 addTokenValueToUnreleasedText(
@@ -1149,13 +1154,8 @@ namespace KeepAChangelogParser
               if (changelogResult.IsFailure) { return changelogResult; }
             }
             break;
-          case ChangelogTokenType.Date:
-          case ChangelogTokenType.HeadingOne:
-          case ChangelogTokenType.HeadingTwo:
-          case ChangelogTokenType.HeadingThree:
           case ChangelogTokenType.NewLine:
           case ChangelogTokenType.SequenceTerminator:
-          case ChangelogTokenType.Version:
             {
               return Result.Failure<Changelog>(
                 $"Invalid text. Error parsing text in line {token.LineNumber} / index {token.Index}.");

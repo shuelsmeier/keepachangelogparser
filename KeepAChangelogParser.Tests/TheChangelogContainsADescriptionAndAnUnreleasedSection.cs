@@ -48,9 +48,9 @@ namespace KeepAChangelogParser.Tests
         "" + Environment.NewLine +
         "## [Unreleased]" + Environment.NewLine +
         "" + Environment.NewLine +
-        "### Added" + Environment.NewLine +
+        "### Fixed" + Environment.NewLine +
         "- New visual identity by[@tylerfortune8](https://github.com/tylerfortune8)." + Environment.NewLine +
-        "- Version navigation." + Environment.NewLine +
+        "- Version navigation (#512)." + Environment.NewLine +
         "" + Environment.NewLine;
     }
 
@@ -81,7 +81,7 @@ namespace KeepAChangelogParser.Tests
               {
                 new ChangelogSubSection()
                 {
-                  Type = ChangelogSubSectionType.Added,
+                  Type = ChangelogSubSectionType.Fixed,
                 },
               });
 
@@ -98,7 +98,7 @@ namespace KeepAChangelogParser.Tests
                   },
                   new ChangelogSubSectionItem()
                   {
-                    MarkdownText = "Version navigation."
+                    MarkdownText = "Version navigation (#512)."
                   },
                 });
 
