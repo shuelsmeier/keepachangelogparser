@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump MSTest.TestAdapter from 3.8.3 to 4.0.0
 - Bump MSTest.TestFramework from 3.8.3 to 4.0.0
 - Bump KeepAChangeLogParser from 1.2.7 to 1.2.8
+- Bump Newtonsoft.Json from 13.0.3 to 13.0.4
 
 
 ## [1.2.8] - 2025-10-11
