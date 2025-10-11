@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix line break in lists
 
+### Changed
+
+- Bump Microsoft.NET.Test.Sdk from 17.13.0 to 18.0.0
+
 
 ## [1.2.8] - 2025-10-11
 
