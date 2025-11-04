@@ -26,7 +26,8 @@ namespace KeepAChangelogParser
     /// <inheritdoc/>
     [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     public Result<Changelog> Parse(
-      string text
+      string text,
+      ChangelogVersionType changelogVersionType = ChangelogVersionType.SemanticVersion
     )
     {
       Result<string> determineLineEndingsResult =
@@ -38,7 +39,7 @@ namespace KeepAChangelogParser
       }
 
       IEnumerable<ChangelogToken> tokenCollection =
-        this.changelogTokenizer.Tokenize(text, determineLineEndingsResult.Value);
+        this.changelogTokenizer.Tokenize(text, determineLineEndingsResult.Value, changelogVersionType);
 
 #pragma warning disable IDE0306 // Simplify collection initialization
       Stack<ChangelogToken> tokenStack =
@@ -329,7 +330,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.Text:
         case ChangelogTokenType.NewLine:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return true;
           }
@@ -376,7 +378,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return false;
           }
@@ -427,7 +430,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.Text:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.NewLine:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return true;
           }
@@ -481,7 +485,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
         case ChangelogTokenType.NewLine:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return true;
           }
@@ -527,7 +532,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return false;
           }
@@ -566,7 +572,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return false;
           }
@@ -602,7 +609,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.Space:
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return false;
           }
@@ -632,7 +640,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
         case ChangelogTokenType.Date:
           {
             return true;
@@ -677,7 +686,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.HeadingThree:
         case ChangelogTokenType.NewLine:
         case ChangelogTokenType.SequenceTerminator:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return false;
           }
@@ -754,7 +764,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return Result.Failure<Changelog>(
               $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -803,7 +814,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return Result.Failure<Changelog>(
               $"No date. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -994,7 +1006,8 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.OpenSquareBracket:
           case ChangelogTokenType.Space:
           case ChangelogTokenType.Text:
-          case ChangelogTokenType.Version:
+          case ChangelogTokenType.SemanticVersion:
+          case ChangelogTokenType.MicrosoftVersion:
             {
               changelogResult =
                 addTokenValueToText(
@@ -1085,7 +1098,8 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.HeadingThree:
           case ChangelogTokenType.NewLine:
           case ChangelogTokenType.SequenceTerminator:
-          case ChangelogTokenType.Version:
+          case ChangelogTokenType.SemanticVersion:
+          case ChangelogTokenType.MicrosoftVersion:
             {
               return Result.Failure<Changelog>(
                 $"Invalid title. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -1135,7 +1149,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return Result.Failure<Changelog>(
               $"Invalid text. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -1200,7 +1215,8 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.OpenSquareBracket:
           case ChangelogTokenType.Space:
           case ChangelogTokenType.Text:
-          case ChangelogTokenType.Version:
+          case ChangelogTokenType.SemanticVersion:
+          case ChangelogTokenType.MicrosoftVersion:
             {
               changelogResult =
                 addTokenValueToUnreleasedText(
@@ -1270,7 +1286,8 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.HeadingThree:
           case ChangelogTokenType.NewLine:
           case ChangelogTokenType.SequenceTerminator:
-          case ChangelogTokenType.Version:
+          case ChangelogTokenType.SemanticVersion:
+          case ChangelogTokenType.MicrosoftVersion:
             {
               return Result.Failure<Changelog>(
                 $"Invalid title. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -1297,7 +1314,8 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             changelogResult.Value.
               SectionCollection.

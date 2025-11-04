@@ -1,1 +1,6 @@
-﻿
+﻿#nullable enable
+KeepAChangelogParser.ChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogVersionType changelogVersionType = KeepAChangelogParser.Models.ChangelogVersionType.SemanticVersion) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
+KeepAChangelogParser.IChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogVersionType changelogVersionType = KeepAChangelogParser.Models.ChangelogVersionType.SemanticVersion) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
+KeepAChangelogParser.Models.ChangelogVersionType
+KeepAChangelogParser.Models.ChangelogVersionType.MicrosoftVersion = 1 -> KeepAChangelogParser.Models.ChangelogVersionType
+KeepAChangelogParser.Models.ChangelogVersionType.SemanticVersion = 0 -> KeepAChangelogParser.Models.ChangelogVersionType

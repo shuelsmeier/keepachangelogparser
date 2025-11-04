@@ -2,6 +2,7 @@
 using KeepAChangelogParser.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -24,12 +25,22 @@ namespace KeepAChangelogParser.Services
         new ChangelogTokenDefinition(ChangelogTokenType.OpenSquareBracket, "\\[", 1),
         new ChangelogTokenDefinition(ChangelogTokenType.Space, " ", 1),
         new ChangelogTokenDefinition(ChangelogTokenType.Text, "[^\\[|^\\]|^\\(|^\\)]+", 99),
-        new ChangelogTokenDefinition(ChangelogTokenType.Version, "(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?", 1),
       };
+
+    private readonly ChangelogTokenDefinition semanticVersionChangelogTokenDefinition =
+      new ChangelogTokenDefinition(
+        ChangelogTokenType.SemanticVersion,
+        "(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?", 1);
+
+    private readonly ChangelogTokenDefinition microsoftVersionChangelogTokenDefinition =
+        new ChangelogTokenDefinition(
+          ChangelogTokenType.MicrosoftVersion,
+          "(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?", 1);
 
     public IEnumerable<ChangelogToken> Tokenize(
       string text,
-      string newLine
+      string newLine,
+      ChangelogVersionType changelogVersionType
     )
     {
       if (string.IsNullOrEmpty(text))
@@ -70,7 +81,8 @@ namespace KeepAChangelogParser.Services
             this.findTokenMatches(
               lineNumber,
               lineCollection[lineNumber - 1],
-              startIndex);
+              startIndex,
+              changelogVersionType);
 
 #if NET8_0_OR_GREATER
           List<IGrouping<int, ChangelogTokenMatch>> tokenMatchByStartIndexCollection = [..
@@ -157,13 +169,40 @@ namespace KeepAChangelogParser.Services
     private List<ChangelogTokenMatch> findTokenMatches(
       int lineNumber,
       string text,
-      int startIndex
+      int startIndex,
+      ChangelogVersionType changelogVersionType
     )
     {
       List<ChangelogTokenMatch> tokenMatchCollection =
         new List<ChangelogTokenMatch>();
 
-      foreach (ChangelogTokenDefinition tokenDefinition in this.tokenDefinitionCollection)
+#if NET8_0_OR_GREATER
+      List<ChangelogTokenDefinition> matchTokenDefinitionCollection =
+        [.. this.tokenDefinitionCollection];
+#else
+      List<ChangelogTokenDefinition> matchTokenDefinitionCollection =
+        new List<ChangelogTokenDefinition>(
+          this.tokenDefinitionCollection);
+#endif
+
+      switch (changelogVersionType)
+      {
+        case ChangelogVersionType.MicrosoftVersion:
+          matchTokenDefinitionCollection.Add(this.microsoftVersionChangelogTokenDefinition);
+          break;
+
+        case ChangelogVersionType.SemanticVersion:
+          matchTokenDefinitionCollection.Add(this.semanticVersionChangelogTokenDefinition);
+          break;
+
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(changelogVersionType),
+            (int)changelogVersionType,
+            typeof(ChangelogVersionType));
+      }
+
+      foreach (ChangelogTokenDefinition tokenDefinition in matchTokenDefinitionCollection)
       {
 #if NET8_0_OR_GREATER
         tokenMatchCollection.

@@ -15,6 +15,7 @@
     SequenceTerminator,
     Space,
     Text,
-    Version
+    SemanticVersion,
+    MicrosoftVersion
   }
 }
