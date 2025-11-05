@@ -66,8 +66,8 @@ namespace KeepAChangelogParser.Services
             new ChangelogToken(
               ChangelogTokenType.NewLine,
               newLine,
-              lineNumber,
-              lineCollection[lineNumber - 1].Length);
+              lineNumber - 1,
+              lineCollection[lineNumber - 2].Length);
 
           tokenCollection.
             Add(token);
@@ -121,15 +121,15 @@ namespace KeepAChangelogParser.Services
         new ChangelogToken(
           ChangelogTokenType.NewLine,
           newLine,
-          lineCollection.Count,
-          lineCollection[^1].Length));
+          lineCollection.Count - 1,
+          lineCollection[^2].Length));
 #else
       tokenCollection.Add(
         new ChangelogToken(
           ChangelogTokenType.NewLine,
           newLine,
-          lineCollection.Count,
-          lineCollection[lineCollection.Count - 1].Length));
+          lineCollection.Count - 1,
+          lineCollection[lineCollection.Count - 2].Length));
 #endif
 
       tokenCollection.Add(
@@ -161,7 +161,7 @@ namespace KeepAChangelogParser.Services
           EndIndex = matches[i].Index + matches[i].Length,
           Type = tokenDefinition.Type,
           Value = matches[i].Value,
-          Precedence = tokenDefinition.Precedence
+          Precedence = tokenDefinition.Precedence,
         };
       }
     }
