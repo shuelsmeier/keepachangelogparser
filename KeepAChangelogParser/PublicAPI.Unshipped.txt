@@ -1,6 +1,9 @@
 ﻿#nullable enable
-KeepAChangelogParser.ChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogVersionType changelogVersionType = KeepAChangelogParser.Models.ChangelogVersionType.SemanticVersion) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
-KeepAChangelogParser.IChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogVersionType changelogVersionType = KeepAChangelogParser.Models.ChangelogVersionType.SemanticVersion) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
+KeepAChangelogParser.ChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogVersionType changelogVersionType = KeepAChangelogParser.Models.ChangelogVersionType.SemanticVersion, System.Collections.Generic.List<string!>? customChangelogSubSectionTypeCollection = null) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
+KeepAChangelogParser.IChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogVersionType changelogVersionType = KeepAChangelogParser.Models.ChangelogVersionType.SemanticVersion, System.Collections.Generic.List<string!>? customChangelogSubSectionTypeCollection = null) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
+KeepAChangelogParser.Models.ChangelogSubSection.CustomType.get -> string?
+KeepAChangelogParser.Models.ChangelogSubSection.CustomType.set -> void
+KeepAChangelogParser.Models.ChangelogSubSectionType.Custom = 6 -> KeepAChangelogParser.Models.ChangelogSubSectionType
 KeepAChangelogParser.Models.ChangelogVersionType
 KeepAChangelogParser.Models.ChangelogVersionType.MicrosoftVersion = 1 -> KeepAChangelogParser.Models.ChangelogVersionType
 KeepAChangelogParser.Models.ChangelogVersionType.SemanticVersion = 0 -> KeepAChangelogParser.Models.ChangelogVersionType

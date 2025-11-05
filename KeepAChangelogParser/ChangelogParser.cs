@@ -27,7 +27,8 @@ namespace KeepAChangelogParser
     [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     public Result<Changelog> Parse(
       string text,
-      ChangelogVersionType changelogVersionType = ChangelogVersionType.SemanticVersion
+      ChangelogVersionType changelogVersionType = ChangelogVersionType.SemanticVersion,
+      List<string>? customChangelogSubSectionTypeCollection = null
     )
     {
       Result<string> determineLineEndingsResult =
@@ -51,7 +52,7 @@ namespace KeepAChangelogParser
 
       changelogResult = parseHeadingOne(changelogResult, tokenStack);
       changelogResult = parseSpace(changelogResult, tokenStack);
-      changelogResult = parseTitle(changelogResult, tokenStack);
+      changelogResult = parseTitle(changelogResult, tokenStack, customChangelogSubSectionTypeCollection);
       changelogResult = parseNewLine(changelogResult, tokenStack);
 
       while (isHeadingOneTextOrNewLine(changelogResult, tokenStack))
@@ -128,7 +129,7 @@ namespace KeepAChangelogParser
           {
             changelogResult = parseHeadingThree(changelogResult, tokenStack);
             changelogResult = parseSpace(changelogResult, tokenStack);
-            changelogResult = parseTitle(changelogResult, tokenStack);
+            changelogResult = parseTitle(changelogResult, tokenStack, customChangelogSubSectionTypeCollection);
             changelogResult = parseNewLine(changelogResult, tokenStack);
 
             while (isHeadingThreeTextOrNewLine(changelogResult, tokenStack))
@@ -205,7 +206,8 @@ namespace KeepAChangelogParser
 
     private static Result<Changelog> addTokenValueToTitleOrSetType(
       Result<Changelog> changelogResult,
-      ChangelogToken token
+      ChangelogToken token,
+      List<string>? customChangelogSubSectionTypeCollection
     )
     {
       int sectionCollectionCount =
@@ -227,23 +229,79 @@ namespace KeepAChangelogParser
 
       if (!Enum.TryParse(token.Value, out ChangelogSubSectionType subSectionType))
       {
+        if (customChangelogSubSectionTypeCollection is null)
+        {
+          return Result.Failure<Changelog>(
+            $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        }
+
+        if (!customChangelogSubSectionTypeCollection.Contains(token.Value))
+        {
+          return Result.Failure<Changelog>(
+            $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        }
+
+        subSectionType = ChangelogSubSectionType.Custom;
+      }
+
+      if (customChangelogSubSectionTypeCollection is null && subSectionType == ChangelogSubSectionType.Custom)
+      {
         return Result.Failure<Changelog>(
           $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
       }
 
-      for (int index = 0; index < changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection.Count - 1; index++)
+      switch (subSectionType)
       {
-        if (changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection[index].Type == subSectionType)
-        {
-          return Result.Failure<Changelog>(
-            $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
-        }
+        case ChangelogSubSectionType.Added:
+        case ChangelogSubSectionType.Changed:
+        case ChangelogSubSectionType.Deprecated:
+        case ChangelogSubSectionType.Removed:
+        case ChangelogSubSectionType.Fixed:
+        case ChangelogSubSectionType.Security:
+          {
+            for (int index = 0; index < changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection.Count - 1; index++)
+            {
+              if (changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection[index].Type == subSectionType)
+              {
+                return Result.Failure<Changelog>(
+                  $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+              }
+            }
+          }
+          break;
+
+        case ChangelogSubSectionType.Custom:
+          {
+            for (int index = 0; index < changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection.Count - 1; index++)
+            {
+              if (string.Equals(changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection[index].CustomType, token.Value, StringComparison.Ordinal))
+              {
+                return Result.Failure<Changelog>(
+                  $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+              }
+            }
+          }
+          break;
+
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(subSectionType),
+            (int)subSectionType,
+            typeof(ChangelogSubSectionType));
       }
 
       changelogResult.Value.
         SectionCollection[sectionCollectionCount - 1].
           SubSectionCollection[subSectionCollectionCount - 1].
             Type = subSectionType;
+
+      if (subSectionType == ChangelogSubSectionType.Custom)
+      {
+        changelogResult.Value.
+          SectionCollection[sectionCollectionCount - 1].
+            SubSectionCollection[subSectionCollectionCount - 1].
+              CustomType = token.Value;
+      }
 
       return changelogResult;
     }
@@ -1057,7 +1115,8 @@ namespace KeepAChangelogParser
 
     private static Result<Changelog> parseTitle(
       Result<Changelog> changelogResult,
-      Stack<ChangelogToken> tokenStack
+      Stack<ChangelogToken> tokenStack,
+      List<string>? customChangelogSubSectionTypeCollection
     )
     {
       if (changelogResult.IsFailure) { return changelogResult; }
@@ -1087,7 +1146,8 @@ namespace KeepAChangelogParser
               changelogResult =
                 addTokenValueToTitleOrSetType(
                   changelogResult,
-                  token);
+                  token,
+                  customChangelogSubSectionTypeCollection);
 
               if (changelogResult.IsFailure) { return changelogResult; }
             }
@@ -1245,7 +1305,8 @@ namespace KeepAChangelogParser
 
     private static Result<Changelog> parseUnreleasedTitle(
       Result<Changelog> changelogResult,
-      Stack<ChangelogToken> tokenStack
+      Stack<ChangelogToken> tokenStack,
+      List<string>? customChangelogSubSectionTypeCollection = null
     )
     {
       if (changelogResult.IsFailure) { return changelogResult; }
@@ -1275,7 +1336,8 @@ namespace KeepAChangelogParser
               changelogResult =
                 setUnreleasedType(
                   changelogResult,
-                  token);
+                  token,
+                  customChangelogSubSectionTypeCollection);
 
               if (changelogResult.IsFailure) { return changelogResult; }
             }
@@ -1359,7 +1421,8 @@ namespace KeepAChangelogParser
 
     private static Result<Changelog> setUnreleasedType(
       Result<Changelog> changelogResult,
-      ChangelogToken token
+      ChangelogToken token,
+      List<string>? customChangelogSubSectionTypeCollection
     )
     {
       int subSectionUnreleasedCollectionCount =
@@ -1369,23 +1432,79 @@ namespace KeepAChangelogParser
 
       if (!Enum.TryParse(token.Value, out ChangelogSubSectionType subSectionType))
       {
+        if (customChangelogSubSectionTypeCollection is null)
+        {
+          return Result.Failure<Changelog>(
+            $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        }
+
+        if (!customChangelogSubSectionTypeCollection.Contains(token.Value))
+        {
+          return Result.Failure<Changelog>(
+            $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        }
+
+        subSectionType = ChangelogSubSectionType.Custom;
+      }
+
+      if (customChangelogSubSectionTypeCollection is null && subSectionType == ChangelogSubSectionType.Custom)
+      {
         return Result.Failure<Changelog>(
           $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
       }
 
-      for (int index = 0; index < changelogResult.Value.SectionUnreleased.SubSectionCollection.Count - 1; index++)
+      switch (subSectionType)
       {
-        if (changelogResult.Value.SectionUnreleased.SubSectionCollection[index].Type == subSectionType)
-        {
-          return Result.Failure<Changelog>(
-            $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
-        }
+        case ChangelogSubSectionType.Added:
+        case ChangelogSubSectionType.Changed:
+        case ChangelogSubSectionType.Deprecated:
+        case ChangelogSubSectionType.Removed:
+        case ChangelogSubSectionType.Fixed:
+        case ChangelogSubSectionType.Security:
+          {
+            for (int index = 0; index < changelogResult.Value.SectionUnreleased.SubSectionCollection.Count - 1; index++)
+            {
+              if (changelogResult.Value.SectionUnreleased.SubSectionCollection[index].Type == subSectionType)
+              {
+                return Result.Failure<Changelog>(
+                  $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+              }
+            }
+          }
+          break;
+
+        case ChangelogSubSectionType.Custom:
+          {
+            for (int index = 0; index < changelogResult.Value.SectionUnreleased.SubSectionCollection.Count - 1; index++)
+            {
+              if (string.Equals(changelogResult.Value.SectionUnreleased.SubSectionCollection[index].CustomType, token.Value, StringComparison.Ordinal))
+              {
+                return Result.Failure<Changelog>(
+                  $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+              }
+            }
+          }
+          break;
+
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(subSectionType),
+            (int)subSectionType,
+            typeof(ChangelogSubSectionType));
       }
 
       changelogResult.Value.
         SectionUnreleased.
           SubSectionCollection[subSectionUnreleasedCollectionCount - 1].
             Type = subSectionType;
+
+      if (subSectionType == ChangelogSubSectionType.Custom)
+      {
+        changelogResult.Value.
+          SectionUnreleased.
+            SubSectionCollection[subSectionUnreleasedCollectionCount - 1].
+              CustomType = token.Value;
+      }
 
       return changelogResult;
     }
