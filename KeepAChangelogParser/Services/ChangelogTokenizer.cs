@@ -40,7 +40,7 @@ namespace KeepAChangelogParser.Services
     public IEnumerable<ChangelogToken> Tokenize(
       string text,
       string newLine,
-      ChangelogVersionType changelogVersionType
+      ChangelogParserSettings changelogParserSettings
     )
     {
       if (string.IsNullOrEmpty(text))
@@ -82,7 +82,7 @@ namespace KeepAChangelogParser.Services
               lineNumber,
               lineCollection[lineNumber - 1],
               startIndex,
-              changelogVersionType);
+              changelogParserSettings.ChangelogVersionType);
 
 #if NET8_0_OR_GREATER
           List<IGrouping<int, ChangelogTokenMatch>> tokenMatchByStartIndexCollection = [..

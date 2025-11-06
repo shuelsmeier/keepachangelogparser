@@ -8,7 +8,7 @@ namespace KeepAChangelogParser.Contracts
     public IEnumerable<ChangelogToken> Tokenize(
       string text,
       string newLine,
-      ChangelogVersionType versionType
+      ChangelogParserSettings changelogParserSettings
     );
   }
 }
