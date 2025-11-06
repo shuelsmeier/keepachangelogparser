@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - main
+      - develop
+jobs:
+  generate-docs:
+    runs-on: windows-latest
+    name: Generate Docs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup .NET Core 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "3.1.300"
+      - name: Generate Documentation
+        uses: FuLagann/csharp-docs-generator@v1.0
+        with:
+          build-tasks: dotnet build
+          cleanup-tasks: dotnet clean
+          binaries: KeepAChangelogParser/bin/Debug/net9.0/KeepAChangeLogParser.dll
+          output-path: docs/api
+          user-email: csharp.doc.gen@gmail.com
+          user-name: C# Document Generator
