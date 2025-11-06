@@ -63,7 +63,7 @@ namespace KeepAChangelogParser.Tests
     {
       Result<Changelog> expectedParseResult =
         Result.Failure<Changelog>(
-          "No date. Error parsing text in line 15 / index 0.");
+          "No date. Error parsing text in line 14 / index 13.");
 
       return expectedParseResult;
     }

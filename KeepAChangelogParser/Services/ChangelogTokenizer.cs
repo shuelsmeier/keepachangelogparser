@@ -121,15 +121,15 @@ namespace KeepAChangelogParser.Services
         new ChangelogToken(
           ChangelogTokenType.NewLine,
           newLine,
-          lineCollection.Count - 1,
-          lineCollection[^2].Length));
+          lineCollection.Count,
+          lineCollection[^1].Length));
 #else
       tokenCollection.Add(
         new ChangelogToken(
           ChangelogTokenType.NewLine,
           newLine,
-          lineCollection.Count - 1,
-          lineCollection[lineCollection.Count - 2].Length));
+          lineCollection.Count,
+          lineCollection[lineCollection.Count - 1].Length));
 #endif
 
       tokenCollection.Add(

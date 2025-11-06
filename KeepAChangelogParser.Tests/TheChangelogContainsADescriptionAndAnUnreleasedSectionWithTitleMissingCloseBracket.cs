@@ -57,7 +57,7 @@ namespace KeepAChangelogParser.Tests
     {
       Result<Changelog> expectedParseResult =
         Result.Failure<Changelog>(
-          "No close square bracket. Error parsing text in line 9 / index 0.");
+          "No close square bracket. Error parsing text in line 8 / index 14.");
 
       return expectedParseResult;
     }

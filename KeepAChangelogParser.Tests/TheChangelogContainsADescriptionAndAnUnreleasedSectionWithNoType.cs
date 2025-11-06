@@ -57,7 +57,7 @@ namespace KeepAChangelogParser.Tests
     {
       Result<Changelog> expectedParseResult =
         Result.Failure<Changelog>(
-          "Invalid title. Error parsing text in line 11 / index 75.");
+          "Invalid title. Error parsing text in line 10 / index 4.");
 
       return expectedParseResult;
     }
