@@ -94,18 +94,22 @@ namespace KeepAChangelogParser
             changelogResult = parseUnreleasedTitle(changelogResult, tokenStack);
             changelogResult = parseNewLine(changelogResult, tokenStack);
 
-            while (isHeadingThreeUnreleasedTextOrNewLine(changelogResult, tokenStack, out bool foundDash))
+            while (isHeadingThreeUnreleasedTextOrNewLine(changelogResult, tokenStack))
             {
               if (isText(tokenStack))
               {
+                bool foundDash = false;
+
                 if (isDash(tokenStack))
                 {
+                  foundDash = true;
                   changelogResult = parseDash(changelogResult, tokenStack);
                   changelogResult = parseSpace(changelogResult, tokenStack);
                 }
 
                 if (isNestedDash(tokenStack, out int spaceCount, changelogParserSettings))
                 {
+                  foundDash = true;
                   changelogResult = parseSpace(changelogResult, tokenStack, spaceCount);
                   changelogResult = parseDash(changelogResult, tokenStack);
                   changelogResult = parseSpace(changelogResult, tokenStack);
@@ -140,18 +144,22 @@ namespace KeepAChangelogParser
             changelogResult = parseTitle(changelogResult, tokenStack, changelogParserSettings);
             changelogResult = parseNewLine(changelogResult, tokenStack);
 
-            while (isHeadingThreeTextOrNewLine(changelogResult, tokenStack, out bool foundDash))
+            while (isHeadingThreeTextOrNewLine(changelogResult, tokenStack))
             {
               if (isText(tokenStack))
               {
+                bool foundDash = false;
+
                 if (isDash(tokenStack))
                 {
+                  foundDash = true;
                   changelogResult = parseDash(changelogResult, tokenStack);
                   changelogResult = parseSpace(changelogResult, tokenStack);
                 }
 
                 if (isNestedDash(tokenStack, out int spaceCount, changelogParserSettings))
                 {
+                  foundDash = true;
                   changelogResult = parseSpace(changelogResult, tokenStack, spaceCount);
                   changelogResult = parseDash(changelogResult, tokenStack);
                   changelogResult = parseSpace(changelogResult, tokenStack);
@@ -558,12 +566,9 @@ namespace KeepAChangelogParser
 
     private static bool isHeadingThreeTextOrNewLine(
       Result<Changelog> changelogResult,
-      Stack<ChangelogToken> tokenStack,
-      out bool foundDash
+      Stack<ChangelogToken> tokenStack
     )
     {
-      foundDash = false;
-
       if (changelogResult.IsFailure) { return false; }
 
       ChangelogToken token = tokenStack.Peek();
@@ -571,10 +576,6 @@ namespace KeepAChangelogParser
       switch (token.Type)
       {
         case ChangelogTokenType.Dash:
-          {
-            foundDash = true;
-            return true;
-          }
         case ChangelogTokenType.Date:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
@@ -605,12 +606,9 @@ namespace KeepAChangelogParser
 
     private static bool isHeadingThreeUnreleasedTextOrNewLine(
       Result<Changelog> changelogResult,
-      Stack<ChangelogToken> tokenStack,
-      out bool foundDash
+      Stack<ChangelogToken> tokenStack
     )
     {
-      foundDash = false;
-
       if (changelogResult.IsFailure) { return false; }
 
       ChangelogToken token = tokenStack.Peek();
@@ -618,10 +616,6 @@ namespace KeepAChangelogParser
       switch (token.Type)
       {
         case ChangelogTokenType.Dash:
-          {
-            foundDash = true;
-            return true;
-          }
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Date:
@@ -1436,11 +1430,15 @@ namespace KeepAChangelogParser
             SectionUnreleased.
               SubSectionCollection.Count;
 
-        changelogResult.Value.
-          SectionUnreleased.
-            SubSectionCollection[subSectionCollectionCount - 1].
-              ItemCollection.
-                Add(new ChangelogSubSectionItem());
+        ChangelogSubSectionItemCollection subSectionItemCollection =
+          changelogResult.Value.
+            SectionUnreleased.
+              SubSectionCollection[subSectionCollectionCount - 1].
+                ItemCollection;
+
+        addChangelogSubSectionItem(
+          subSectionItemCollection,
+          spaceCount / 2);
       }
 
       while (true)
