@@ -13,7 +13,11 @@
     /// <summary>
     /// List of changelog sub section items
     /// </summary>
+#if NET6_0_OR_GREATER
+    public ChangelogSubSectionItemCollection ItemCollection { get; init; } = new ChangelogSubSectionItemCollection();
+#else
     public ChangelogSubSectionItemCollection ItemCollection { get; } = new ChangelogSubSectionItemCollection();
+#endif
 
     /// <summary>
     /// Changelog sub section type if type is custom

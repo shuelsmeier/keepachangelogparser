@@ -27,7 +27,11 @@
     /// <value>
     /// The section unreleased.
     /// </value>
+#if NET6_0_OR_GREATER
+    public ChangelogSectionUnreleased SectionUnreleased { get; init; } = new ChangelogSectionUnreleased();
+#else
     public ChangelogSectionUnreleased SectionUnreleased { get; } = new ChangelogSectionUnreleased();
+#endif
 
     /// <summary>
     /// Gets the section collection.
@@ -35,6 +39,10 @@
     /// <value>
     /// The section collection.
     /// </value>
+#if NET6_0_OR_GREATER
+    public ChangelogSectionCollection SectionCollection { get; init; } = new ChangelogSectionCollection();
+#else
     public ChangelogSectionCollection SectionCollection { get; } = new ChangelogSectionCollection();
+#endif
   }
 }
