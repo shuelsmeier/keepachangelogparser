@@ -4,7 +4,7 @@
     {
       "src": [
         {
-          "files": [ "KeepAChangelogParser/bin/Debug/net9.0/KeepAChangeLogParser.dll" ],
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
           "src": "../"
         }
       ],
