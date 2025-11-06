@@ -17,6 +17,7 @@ jobs:
       - name: Generate Documentation
         uses: FuLagann/csharp-docs-generator@v1.0
         with:
+          template: default
           build-tasks: dotnet build
           cleanup-tasks: dotnet clean
           binaries: KeepAChangelogParser/bin/Debug/net9.0/KeepAChangeLogParser.dll
