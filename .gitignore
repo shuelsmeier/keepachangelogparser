@@ -352,3 +352,6 @@ MigrationBackup/
 # Docfx
 docfx/_site
 docfx/groups
+
+# FCC
+fcc-output
