@@ -1,4 +1,10 @@
-- name: Docs
-  href: docs/
-- name: API
-  href: api/
+- name: API (.NET 9.0)
+  href: api/net9.0/KeepAChangelogParser.html
+- name: API (.NET 8.0)
+  href: api/net8.0/KeepAChangelogParser.html
+- name: API (.NET 6.0)
+  href: api/net6.0/KeepAChangelogParser.html
+- name: API (.NET Standard 2.1)
+  href: api/netstandard2.1/KeepAChangelogParser.html
+- name: API (.NET Standard 2.0)
+  href: api/netstandard2.0/KeepAChangelogParser.html

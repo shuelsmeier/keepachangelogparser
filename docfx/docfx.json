@@ -8,17 +8,131 @@
           "src": "../"
         }
       ],
-      "dest": "api"
+      "output": "api/net9.0",
+      "globalNamespaceId": "net9.0",
+      "properties": {
+        "TargetFramework": "net9.0"
+      }
+    },
+    {
+      "src": [
+        {
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
+          "src": "../"
+        }
+      ],
+      "output": "api/net8.0",
+      "globalNamespaceId": "net8.0",
+      "properties": {
+        "TargetFramework": "net8.0"
+      }
+    },
+    {
+      "src": [
+        {
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
+          "src": "../"
+        }
+      ],
+      "output": "api/net6.0",
+      "globalNamespaceId": "net6.0",
+      "properties": {
+        "TargetFramework": "net6.0"
+      }
+    },
+    {
+      "src": [
+        {
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
+          "src": "../"
+        }
+      ],
+      "output": "api/netstandard2.1",
+      "globalNamespaceId": "netstandard2.1",
+      "properties": {
+        "TargetFramework": "netstandard2.1"
+      }
+    },
+    {
+      "src": [
+        {
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
+          "src": "../"
+        }
+      ],
+      "output": "api/netstandard2.0",
+      "globalNamespaceId": "netstandard2.0",
+      "properties": {
+        "TargetFramework": "netstandard2.0"
+      }
     }
   ],
   "build": {
     "content": [
       {
         "files": [
-          "**/*.{md,yml}"
+          "*.{md,yml}"
         ],
+        "src": "api/net9.0",
+        "dest": "api/net9.0",
+        "group": "net9.0",
+        "rootTocPath": "~/toc.html",
         "exclude": [
           "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "*.{md,yml}"
+        ],
+        "src": "api/net8.0",
+        "dest": "api/net8.0",
+        "group": "net8.0",
+        "rootTocPath": "~/toc.html",
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "*.{md,yml}"
+        ],
+        "src": "api/net6.0",
+        "dest": "api/net6.0",
+        "group": "net6.0",
+        "rootTocPath": "~/toc.html",
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "*.{md,yml}"
+        ],
+        "src": "api/netstandard2.1",
+        "dest": "api/netstandard2.1",
+        "group": "netstandard2.1",
+        "rootTocPath": "~/toc.html",
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "*.{md,yml}"
+        ],
+        "src": "api/netstandard2.0",
+        "dest": "api/netstandard2.0",
+        "group": "netstandard2.0",
+        "rootTocPath": "~/toc.html",
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "index.md",
+          "toc.yml"
         ]
       }
     ],
