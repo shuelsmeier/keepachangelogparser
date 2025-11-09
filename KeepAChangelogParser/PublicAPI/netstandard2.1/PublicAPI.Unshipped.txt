@@ -2,6 +2,7 @@
 KeepAChangelogParser.ChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogParserSettings? changelogParserSettings = null) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
 KeepAChangelogParser.IChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogParserSettings? changelogParserSettings = null) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
 KeepAChangelogParser.Models.ChangelogListHandling
+KeepAChangelogParser.Models.ChangelogListHandling.AllowAsterisk = 2 -> KeepAChangelogParser.Models.ChangelogListHandling
 KeepAChangelogParser.Models.ChangelogListHandling.AllowNestedLists = 1 -> KeepAChangelogParser.Models.ChangelogListHandling
 KeepAChangelogParser.Models.ChangelogListHandling.None = 0 -> KeepAChangelogParser.Models.ChangelogListHandling
 KeepAChangelogParser.Models.ChangelogParserSettings

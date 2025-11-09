@@ -4,6 +4,7 @@ KeepAChangelogParser.IChangelogParser.Parse(string! text, KeepAChangelogParser.M
 KeepAChangelogParser.Models.Changelog.SectionCollection.init -> void
 KeepAChangelogParser.Models.Changelog.SectionUnreleased.init -> void
 KeepAChangelogParser.Models.ChangelogListHandling
+KeepAChangelogParser.Models.ChangelogListHandling.AllowAsterisk = 2 -> KeepAChangelogParser.Models.ChangelogListHandling
 KeepAChangelogParser.Models.ChangelogListHandling.AllowNestedLists = 1 -> KeepAChangelogParser.Models.ChangelogListHandling
 KeepAChangelogParser.Models.ChangelogListHandling.None = 0 -> KeepAChangelogParser.Models.ChangelogListHandling
 KeepAChangelogParser.Models.ChangelogParserSettings

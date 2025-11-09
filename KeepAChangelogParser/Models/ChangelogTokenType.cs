@@ -2,6 +2,7 @@
 {
   internal enum ChangelogTokenType
   {
+    Asterisk,
     CloseParenthesis,
     CloseSquareBracket,
     Dash,

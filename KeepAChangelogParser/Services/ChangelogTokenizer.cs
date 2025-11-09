@@ -14,6 +14,7 @@ namespace KeepAChangelogParser.Services
     private readonly List<ChangelogTokenDefinition> tokenDefinitionCollection =
       new List<ChangelogTokenDefinition>()
       {
+        new ChangelogTokenDefinition(ChangelogTokenType.Asterisk, "\\*", 1),
         new ChangelogTokenDefinition(ChangelogTokenType.CloseParenthesis, "\\)", 1),
         new ChangelogTokenDefinition(ChangelogTokenType.CloseSquareBracket, "\\]", 1),
         new ChangelogTokenDefinition(ChangelogTokenType.Dash, "-", 1),

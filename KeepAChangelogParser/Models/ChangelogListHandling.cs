@@ -13,8 +13,12 @@ namespace KeepAChangelogParser.Models
     /// </summary>
     None = 0,
     /// <summary>
-    /// AllowNestedLists
+    /// Allow nested lists
     /// </summary>
-    AllowNestedLists = 1
+    AllowNestedLists = 1,
+    /// <summary>
+    /// Allow asterisk
+    /// </summary>
+    AllowAsterisk = 2,
   }
 }

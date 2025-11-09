@@ -98,24 +98,24 @@ namespace KeepAChangelogParser
             {
               if (isText(tokenStack))
               {
-                bool foundDash = false;
+                bool foundList = false;
 
-                if (isDash(tokenStack))
+                if (isList(tokenStack, changelogParserSettings))
                 {
-                  foundDash = true;
-                  changelogResult = parseDash(changelogResult, tokenStack);
+                  foundList = true;
+                  changelogResult = parseList(changelogResult, tokenStack, changelogParserSettings);
                   changelogResult = parseSpace(changelogResult, tokenStack);
                 }
 
-                if (isNestedDash(tokenStack, out int spaceCount, changelogParserSettings))
+                if (isNestedList(tokenStack, out int spaceCount, changelogParserSettings))
                 {
-                  foundDash = true;
+                  foundList = true;
                   changelogResult = parseSpace(changelogResult, tokenStack, spaceCount);
-                  changelogResult = parseDash(changelogResult, tokenStack);
+                  changelogResult = parseList(changelogResult, tokenStack, changelogParserSettings);
                   changelogResult = parseSpace(changelogResult, tokenStack);
                 }
 
-                changelogResult = parseUnreleasedText(changelogResult, tokenStack, foundDash, spaceCount);
+                changelogResult = parseUnreleasedText(changelogResult, tokenStack, foundList, spaceCount);
               }
 
               changelogResult = parseListTextNewLine(changelogResult, tokenStack);
@@ -148,24 +148,24 @@ namespace KeepAChangelogParser
             {
               if (isText(tokenStack))
               {
-                bool foundDash = false;
+                bool foundList = false;
 
-                if (isDash(tokenStack))
+                if (isList(tokenStack, changelogParserSettings))
                 {
-                  foundDash = true;
-                  changelogResult = parseDash(changelogResult, tokenStack);
+                  foundList = true;
+                  changelogResult = parseList(changelogResult, tokenStack, changelogParserSettings);
                   changelogResult = parseSpace(changelogResult, tokenStack);
                 }
 
-                if (isNestedDash(tokenStack, out int spaceCount, changelogParserSettings))
+                if (isNestedList(tokenStack, out int spaceCount, changelogParserSettings))
                 {
-                  foundDash = true;
+                  foundList = true;
                   changelogResult = parseSpace(changelogResult, tokenStack, spaceCount);
-                  changelogResult = parseDash(changelogResult, tokenStack);
+                  changelogResult = parseList(changelogResult, tokenStack, changelogParserSettings);
                   changelogResult = parseSpace(changelogResult, tokenStack);
                 }
 
-                changelogResult = parseText(changelogResult, tokenStack, foundDash, spaceCount);
+                changelogResult = parseText(changelogResult, tokenStack, foundList, spaceCount);
               }
 
               changelogResult = parseListTextNewLine(changelogResult, tokenStack);
@@ -322,7 +322,7 @@ namespace KeepAChangelogParser
         subSectionType = ChangelogSubSectionType.Custom;
       }
 
-      if (changelogParserSettings.CustomChangelogSubSectionTypeCollection.Count() == 0 && subSectionType == ChangelogSubSectionType.Custom)
+      if (changelogParserSettings.CustomChangelogSubSectionTypeCollection.Count == 0 && subSectionType == ChangelogSubSectionType.Custom)
       {
         return Result.Failure<Changelog>(
           $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -495,6 +495,7 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -539,6 +540,7 @@ namespace KeepAChangelogParser
           {
             return true;
           }
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -575,6 +577,7 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.Dash:
         case ChangelogTokenType.Date:
         case ChangelogTokenType.CloseParenthesis:
@@ -615,6 +618,7 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.Dash:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
@@ -659,6 +663,7 @@ namespace KeepAChangelogParser
           {
             return true;
           }
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -699,6 +704,7 @@ namespace KeepAChangelogParser
           {
             return true;
           }
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -724,8 +730,9 @@ namespace KeepAChangelogParser
       }
     }
 
-    private static bool isDash(
-      Stack<ChangelogToken> tokenStack
+    private static bool isList(
+      Stack<ChangelogToken> tokenStack,
+      ChangelogParserSettings changelogParserSettings
     )
     {
       ChangelogToken token = tokenStack.Peek();
@@ -735,6 +742,10 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.Dash:
           {
             return true;
+          }
+        case ChangelogTokenType.Asterisk:
+          {
+            return changelogParserSettings.ChangelogListHandling.HasFlag(ChangelogListHandling.AllowAsterisk);
           }
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
@@ -769,6 +780,7 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -809,6 +821,7 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -838,7 +851,7 @@ namespace KeepAChangelogParser
       }
     }
 
-    private static bool isNestedDash(
+    private static bool isNestedList(
       Stack<ChangelogToken> tokenStack,
       out int spaceCount,
       ChangelogParserSettings changelogParserSettings
@@ -863,8 +876,11 @@ namespace KeepAChangelogParser
               token = tokenStack.Skip(spaceCount).First();
             }
 
-            return token.Type == ChangelogTokenType.Dash;
+            return changelogParserSettings.ChangelogListHandling.HasFlag(ChangelogListHandling.AllowAsterisk)
+              ? token.Type is ChangelogTokenType.Asterisk || token.Type is ChangelogTokenType.Dash
+              : token.Type is ChangelogTokenType.Dash;
           }
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -943,6 +959,7 @@ namespace KeepAChangelogParser
       {
         case ChangelogTokenType.Dash:
           break;
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Date:
@@ -993,6 +1010,7 @@ namespace KeepAChangelogParser
                 MarkdownDate = token.Value;
           }
           break;
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -1067,6 +1085,53 @@ namespace KeepAChangelogParser
       _ = tokenStack.Pop();
 
       return changelogResult;
+    }
+
+    private static Result<Changelog> parseList(
+      Result<Changelog> changelogResult,
+      Stack<ChangelogToken> tokenStack,
+      ChangelogParserSettings changelogParserSettings
+    )
+    {
+      if (changelogResult.IsFailure) { return changelogResult; }
+
+      ChangelogToken token = tokenStack.Pop();
+
+      switch (token.Type)
+      {
+        case ChangelogTokenType.Dash:
+          return changelogResult;
+        case ChangelogTokenType.Asterisk:
+          if (changelogParserSettings.ChangelogListHandling.HasFlag(ChangelogListHandling.AllowAsterisk))
+          {
+            return changelogResult;
+          }
+          return Result.Failure<Changelog>(
+            $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Text:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
+          {
+            return Result.Failure<Changelog>(
+              $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+          }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
+      }
     }
 
     [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
@@ -1176,6 +1241,7 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Maintainability", "CA1502", Justification = "")]
     private static Result<Changelog> parseText(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack,
@@ -1222,6 +1288,7 @@ namespace KeepAChangelogParser
 
         switch (token.Type)
         {
+          case ChangelogTokenType.Asterisk:
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
@@ -1305,6 +1372,7 @@ namespace KeepAChangelogParser
 
         switch (token.Type)
         {
+          case ChangelogTokenType.Asterisk:
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
@@ -1367,6 +1435,7 @@ namespace KeepAChangelogParser
             changelogResult.Value.SectionUnreleased.MarkdownTitle = token.Value;
           }
           break;
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -1412,6 +1481,7 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Maintainability", "CA1502", Justification = "")]
     private static Result<Changelog> parseUnreleasedText(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack,
@@ -1454,6 +1524,7 @@ namespace KeepAChangelogParser
 
         switch (token.Type)
         {
+          case ChangelogTokenType.Asterisk:
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
@@ -1516,6 +1587,7 @@ namespace KeepAChangelogParser
 
         switch (token.Type)
         {
+          case ChangelogTokenType.Asterisk:
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
@@ -1583,6 +1655,7 @@ namespace KeepAChangelogParser
                 MarkdownVersion = token.Value;
           }
           break;
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
