@@ -1,0 +1,12 @@
+- name: Docs
+  href: docs/
+- name: API (.NET 9.0)
+  href: net9.0/api/
+- name: API (.NET 8.0)
+  href: net8.0/api/
+- name: API (.NET 6.0)
+  href: net8.0/api/
+- name: API (.NET Standard 2.1)
+  href: netstandard2.1/api/
+- name: API (.NET Standard 2.0)
+  href: netstandard2.0/api/

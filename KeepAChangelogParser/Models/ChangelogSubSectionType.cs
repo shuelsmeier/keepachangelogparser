@@ -17,5 +17,7 @@
     Fixed,
     /// <summary>In case of vulnerabilities</summary>
     Security,
+    /// <summary>In case of custom defined type</summary>
+    Custom,
   }
 }

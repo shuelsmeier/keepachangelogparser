@@ -2,6 +2,7 @@
 {
   internal enum ChangelogTokenType
   {
+    Asterisk,
     CloseParenthesis,
     CloseSquareBracket,
     Dash,
@@ -15,6 +16,7 @@
     SequenceTerminator,
     Space,
     Text,
-    Version
+    SemanticVersion,
+    MicrosoftVersion
   }
 }

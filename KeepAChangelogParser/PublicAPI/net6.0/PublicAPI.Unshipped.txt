@@ -1,0 +1,28 @@
+﻿#nullable enable
+KeepAChangelogParser.ChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogParserSettings? changelogParserSettings = null) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
+KeepAChangelogParser.IChangelogParser.Parse(string! text, KeepAChangelogParser.Models.ChangelogParserSettings? changelogParserSettings = null) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
+KeepAChangelogParser.Models.Changelog.SectionCollection.init -> void
+KeepAChangelogParser.Models.Changelog.SectionUnreleased.init -> void
+KeepAChangelogParser.Models.ChangelogListHandling
+KeepAChangelogParser.Models.ChangelogListHandling.AllowAsterisk = 2 -> KeepAChangelogParser.Models.ChangelogListHandling
+KeepAChangelogParser.Models.ChangelogListHandling.AllowNestedLists = 1 -> KeepAChangelogParser.Models.ChangelogListHandling
+KeepAChangelogParser.Models.ChangelogListHandling.None = 0 -> KeepAChangelogParser.Models.ChangelogListHandling
+KeepAChangelogParser.Models.ChangelogParserSettings
+KeepAChangelogParser.Models.ChangelogParserSettings.ChangelogListHandling.get -> KeepAChangelogParser.Models.ChangelogListHandling
+KeepAChangelogParser.Models.ChangelogParserSettings.ChangelogListHandling.set -> void
+KeepAChangelogParser.Models.ChangelogParserSettings.ChangelogParserSettings() -> void
+KeepAChangelogParser.Models.ChangelogParserSettings.ChangelogVersionType.get -> KeepAChangelogParser.Models.ChangelogVersionType
+KeepAChangelogParser.Models.ChangelogParserSettings.ChangelogVersionType.set -> void
+KeepAChangelogParser.Models.ChangelogParserSettings.CustomChangelogSubSectionTypeCollection.get -> System.Collections.ObjectModel.Collection<string!>!
+KeepAChangelogParser.Models.ChangelogParserSettings.CustomChangelogSubSectionTypeCollection.init -> void
+KeepAChangelogParser.Models.ChangelogSection.SubSectionCollection.init -> void
+KeepAChangelogParser.Models.ChangelogSectionUnreleased.SubSectionCollection.init -> void
+KeepAChangelogParser.Models.ChangelogSubSection.CustomType.get -> string?
+KeepAChangelogParser.Models.ChangelogSubSection.CustomType.set -> void
+KeepAChangelogParser.Models.ChangelogSubSection.ItemCollection.init -> void
+KeepAChangelogParser.Models.ChangelogSubSectionItem.ItemCollection.get -> KeepAChangelogParser.Models.ChangelogSubSectionItemCollection!
+KeepAChangelogParser.Models.ChangelogSubSectionItem.ItemCollection.init -> void
+KeepAChangelogParser.Models.ChangelogSubSectionType.Custom = 6 -> KeepAChangelogParser.Models.ChangelogSubSectionType
+KeepAChangelogParser.Models.ChangelogVersionType
+KeepAChangelogParser.Models.ChangelogVersionType.MicrosoftVersion = 1 -> KeepAChangelogParser.Models.ChangelogVersionType
+KeepAChangelogParser.Models.ChangelogVersionType.SemanticVersion = 0 -> KeepAChangelogParser.Models.ChangelogVersionType

@@ -1,9 +1,7 @@
 ﻿#nullable enable
 KeepAChangelogParser.ChangelogParser
 KeepAChangelogParser.ChangelogParser.ChangelogParser() -> void
-KeepAChangelogParser.ChangelogParser.Parse(string! text) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
 KeepAChangelogParser.IChangelogParser
-KeepAChangelogParser.IChangelogParser.Parse(string! text) -> CSharpFunctionalExtensions.Result<KeepAChangelogParser.Models.Changelog!>
 KeepAChangelogParser.Models.Changelog
 KeepAChangelogParser.Models.Changelog.Changelog() -> void
 KeepAChangelogParser.Models.Changelog.MarkdownText.get -> string!

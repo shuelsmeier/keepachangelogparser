@@ -27,6 +27,10 @@
     /// <value>
     /// The sub section collection.
     /// </value>
+#if NET6_0_OR_GREATER
+    public ChangelogSubSectionCollection SubSectionCollection { get; init; } = new ChangelogSubSectionCollection();
+#else
     public ChangelogSubSectionCollection SubSectionCollection { get; } = new ChangelogSubSectionCollection();
+#endif
   }
 }

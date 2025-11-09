@@ -26,9 +26,12 @@ namespace KeepAChangelogParser
     /// <inheritdoc/>
     [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     public Result<Changelog> Parse(
-      string text
+      string text,
+      ChangelogParserSettings? changelogParserSettings = null
     )
     {
+      changelogParserSettings ??= new ChangelogParserSettings();
+
       Result<string> determineLineEndingsResult =
         this.determineLineEndings(text);
 
@@ -38,7 +41,7 @@ namespace KeepAChangelogParser
       }
 
       IEnumerable<ChangelogToken> tokenCollection =
-        this.changelogTokenizer.Tokenize(text, determineLineEndingsResult.Value);
+        this.changelogTokenizer.Tokenize(text, determineLineEndingsResult.Value, changelogParserSettings);
 
 #pragma warning disable IDE0306 // Simplify collection initialization
       Stack<ChangelogToken> tokenStack =
@@ -50,7 +53,7 @@ namespace KeepAChangelogParser
 
       changelogResult = parseHeadingOne(changelogResult, tokenStack);
       changelogResult = parseSpace(changelogResult, tokenStack);
-      changelogResult = parseTitle(changelogResult, tokenStack);
+      changelogResult = parseTitle(changelogResult, tokenStack, changelogParserSettings);
       changelogResult = parseNewLine(changelogResult, tokenStack);
 
       while (isHeadingOneTextOrNewLine(changelogResult, tokenStack))
@@ -95,13 +98,24 @@ namespace KeepAChangelogParser
             {
               if (isText(tokenStack))
               {
-                if (isDash(tokenStack))
+                bool foundList = false;
+
+                if (isList(tokenStack, changelogParserSettings))
                 {
-                  changelogResult = parseDash(changelogResult, tokenStack);
+                  foundList = true;
+                  changelogResult = parseList(changelogResult, tokenStack, changelogParserSettings);
                   changelogResult = parseSpace(changelogResult, tokenStack);
                 }
 
-                changelogResult = parseUnreleasedText(changelogResult, tokenStack);
+                if (isNestedList(tokenStack, out int spaceCount, changelogParserSettings))
+                {
+                  foundList = true;
+                  changelogResult = parseSpace(changelogResult, tokenStack, spaceCount);
+                  changelogResult = parseList(changelogResult, tokenStack, changelogParserSettings);
+                  changelogResult = parseSpace(changelogResult, tokenStack);
+                }
+
+                changelogResult = parseUnreleasedText(changelogResult, tokenStack, foundList, spaceCount);
               }
 
               changelogResult = parseListTextNewLine(changelogResult, tokenStack);
@@ -127,20 +141,31 @@ namespace KeepAChangelogParser
           {
             changelogResult = parseHeadingThree(changelogResult, tokenStack);
             changelogResult = parseSpace(changelogResult, tokenStack);
-            changelogResult = parseTitle(changelogResult, tokenStack);
+            changelogResult = parseTitle(changelogResult, tokenStack, changelogParserSettings);
             changelogResult = parseNewLine(changelogResult, tokenStack);
 
             while (isHeadingThreeTextOrNewLine(changelogResult, tokenStack))
             {
               if (isText(tokenStack))
               {
-                if (isDash(tokenStack))
+                bool foundList = false;
+
+                if (isList(tokenStack, changelogParserSettings))
                 {
-                  changelogResult = parseDash(changelogResult, tokenStack);
+                  foundList = true;
+                  changelogResult = parseList(changelogResult, tokenStack, changelogParserSettings);
                   changelogResult = parseSpace(changelogResult, tokenStack);
                 }
 
-                changelogResult = parseText(changelogResult, tokenStack);
+                if (isNestedList(tokenStack, out int spaceCount, changelogParserSettings))
+                {
+                  foundList = true;
+                  changelogResult = parseSpace(changelogResult, tokenStack, spaceCount);
+                  changelogResult = parseList(changelogResult, tokenStack, changelogParserSettings);
+                  changelogResult = parseSpace(changelogResult, tokenStack);
+                }
+
+                changelogResult = parseText(changelogResult, tokenStack, foundList, spaceCount);
               }
 
               changelogResult = parseListTextNewLine(changelogResult, tokenStack);
@@ -159,9 +184,35 @@ namespace KeepAChangelogParser
       return Result.Success(changelogResult.Value);
     }
 
+    private static void addChangelogSubSectionItem(
+      ChangelogSubSectionItemCollection subSectionItemCollection,
+      int level
+    )
+    {
+      if (level > 0)
+      {
+#if NETSTANDARD2_0
+        addChangelogSubSectionItem(
+          subSectionItemCollection.Last().ItemCollection,
+          --level);
+#else
+        addChangelogSubSectionItem(
+          subSectionItemCollection[^1].ItemCollection,
+          --level);
+#endif
+
+        return;
+      }
+
+      subSectionItemCollection.Add(
+        new ChangelogSubSectionItem());
+    }
+
+
     private static Result<Changelog> addTokenValueToText(
       Result<Changelog> changelogResult,
-      ChangelogToken token
+      ChangelogToken token,
+      int spaceCount = 0
     )
     {
       int sectionCollectionCount =
@@ -193,18 +244,54 @@ namespace KeepAChangelogParser
           $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
       }
 
-      changelogResult.Value.
-        SectionCollection[sectionCollectionCount - 1].
-          SubSectionCollection[subSectionCollectionCount - 1].
-            ItemCollection[subSectionItemCollectionCount - 1].
-              MarkdownText += token.Value;
+      ChangelogSubSectionItemCollection subSectionItemCollection =
+        changelogResult.Value.
+          SectionCollection[sectionCollectionCount - 1].
+            SubSectionCollection[subSectionCollectionCount - 1].
+              ItemCollection;
+
+      addTokenValueToText(
+        subSectionItemCollection,
+        token,
+        spaceCount / 2);
 
       return changelogResult;
     }
 
+    private static void addTokenValueToText(
+      ChangelogSubSectionItemCollection subSectionItemCollection,
+      ChangelogToken token,
+      int level
+    )
+    {
+      if (level > 0)
+      {
+#if NETSTANDARD2_0
+        addTokenValueToText(
+          subSectionItemCollection.Last().ItemCollection,
+          token,
+          --level);
+#else
+        addTokenValueToText(
+              subSectionItemCollection[^1].ItemCollection,
+              token,
+              --level);
+#endif
+
+        return;
+      }
+
+#if NETSTANDARD2_0
+      subSectionItemCollection.Last().MarkdownText += token.Value;
+#else
+      subSectionItemCollection[^1].MarkdownText += token.Value;
+#endif
+    }
+
     private static Result<Changelog> addTokenValueToTitleOrSetType(
       Result<Changelog> changelogResult,
-      ChangelogToken token
+      ChangelogToken token,
+      ChangelogParserSettings changelogParserSettings
     )
     {
       int sectionCollectionCount =
@@ -226,17 +313,59 @@ namespace KeepAChangelogParser
 
       if (!Enum.TryParse(token.Value, out ChangelogSubSectionType subSectionType))
       {
+        if (!changelogParserSettings.CustomChangelogSubSectionTypeCollection.Contains(token.Value))
+        {
+          return Result.Failure<Changelog>(
+            $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        }
+
+        subSectionType = ChangelogSubSectionType.Custom;
+      }
+
+      if (changelogParserSettings.CustomChangelogSubSectionTypeCollection.Count == 0 && subSectionType == ChangelogSubSectionType.Custom)
+      {
         return Result.Failure<Changelog>(
           $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
       }
 
-      for (int index = 0; index < changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection.Count - 1; index++)
+      switch (subSectionType)
       {
-        if (changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection[index].Type == subSectionType)
-        {
-          return Result.Failure<Changelog>(
-            $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
-        }
+        case ChangelogSubSectionType.Added:
+        case ChangelogSubSectionType.Changed:
+        case ChangelogSubSectionType.Deprecated:
+        case ChangelogSubSectionType.Removed:
+        case ChangelogSubSectionType.Fixed:
+        case ChangelogSubSectionType.Security:
+          {
+            for (int index = 0; index < changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection.Count - 1; index++)
+            {
+              if (changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection[index].Type == subSectionType)
+              {
+                return Result.Failure<Changelog>(
+                  $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+              }
+            }
+          }
+          break;
+
+        case ChangelogSubSectionType.Custom:
+          {
+            for (int index = 0; index < changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection.Count - 1; index++)
+            {
+              if (string.Equals(changelogResult.Value.SectionCollection[sectionCollectionCount - 1].SubSectionCollection[index].CustomType, token.Value, StringComparison.Ordinal))
+              {
+                return Result.Failure<Changelog>(
+                  $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+              }
+            }
+          }
+          break;
+
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(subSectionType),
+            (int)subSectionType,
+            typeof(ChangelogSubSectionType));
       }
 
       changelogResult.Value.
@@ -244,12 +373,21 @@ namespace KeepAChangelogParser
           SubSectionCollection[subSectionCollectionCount - 1].
             Type = subSectionType;
 
+      if (subSectionType == ChangelogSubSectionType.Custom)
+      {
+        changelogResult.Value.
+          SectionCollection[sectionCollectionCount - 1].
+            SubSectionCollection[subSectionCollectionCount - 1].
+              CustomType = token.Value;
+      }
+
       return changelogResult;
     }
 
     private static Result<Changelog> addTokenValueToUnreleasedText(
       Result<Changelog> changelogResult,
-      ChangelogToken token
+      ChangelogToken token,
+      int spaceCount
     )
     {
       int subSectionUnreleasedCollectionCount =
@@ -269,13 +407,49 @@ namespace KeepAChangelogParser
           $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
       }
 
-      changelogResult.Value.
-        SectionUnreleased.
-          SubSectionCollection[subSectionUnreleasedCollectionCount - 1].
-            ItemCollection[subSectionUnreleasedItemCollectionCount - 1].
-              MarkdownText += token.Value;
+      ChangelogSubSectionItemCollection subSectionItemCollection =
+        changelogResult.Value.
+          SectionUnreleased.
+            SubSectionCollection[subSectionUnreleasedCollectionCount - 1].
+              ItemCollection;
+
+      addTokenValueToUnreleasedText(
+        subSectionItemCollection,
+        token,
+        spaceCount / 2);
 
       return changelogResult;
+
+    }
+
+    private static void addTokenValueToUnreleasedText(
+      ChangelogSubSectionItemCollection subSectionItemCollection,
+      ChangelogToken token,
+      int level
+    )
+    {
+      if (level > 0)
+      {
+#if NETSTANDARD2_0
+        addTokenValueToUnreleasedText(
+          subSectionItemCollection.Last().ItemCollection,
+          token,
+          --level);
+#else
+        addTokenValueToUnreleasedText(
+              subSectionItemCollection[^1].ItemCollection,
+              token,
+              --level);
+#endif
+
+        return;
+      }
+
+#if NETSTANDARD2_0
+      subSectionItemCollection.Last().MarkdownText += token.Value;
+#else
+      subSectionItemCollection[^1].MarkdownText += token.Value;
+#endif
     }
 
     private Result<string> determineLineEndings(
@@ -321,6 +495,7 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -329,7 +504,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.Text:
         case ChangelogTokenType.NewLine:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return true;
           }
@@ -364,6 +540,7 @@ namespace KeepAChangelogParser
           {
             return true;
           }
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -376,7 +553,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return false;
           }
@@ -399,26 +577,8 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.Dash:
-          {
-            int sectionCollectionCount =
-              changelogResult.Value.
-                SectionCollection.Count;
-
-            int subSectionCollectionCount =
-              changelogResult.Value.
-                SectionCollection[sectionCollectionCount - 1].
-                  SubSectionCollection.Count;
-
-            changelogResult.Value.
-                SectionCollection[sectionCollectionCount - 1].
-                  SubSectionCollection[subSectionCollectionCount - 1].
-                    ItemCollection.
-                      Add(new ChangelogSubSectionItem());
-
-            return true;
-          }
-
         case ChangelogTokenType.Date:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
@@ -427,7 +587,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.Text:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.NewLine:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return true;
           }
@@ -457,22 +618,8 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.Dash:
-          {
-            int subSectionCollectionCount =
-              changelogResult.Value.
-                SectionUnreleased.
-                  SubSectionCollection.Count;
-
-            changelogResult.Value.
-              SectionUnreleased.
-                SubSectionCollection[subSectionCollectionCount - 1].
-                  ItemCollection.
-                    Add(new ChangelogSubSectionItem());
-
-            return true;
-          }
-
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Date:
@@ -481,7 +628,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
         case ChangelogTokenType.NewLine:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return true;
           }
@@ -515,6 +663,7 @@ namespace KeepAChangelogParser
           {
             return true;
           }
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -527,7 +676,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return false;
           }
@@ -554,6 +704,7 @@ namespace KeepAChangelogParser
           {
             return true;
           }
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -566,7 +717,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return false;
           }
@@ -578,8 +730,9 @@ namespace KeepAChangelogParser
       }
     }
 
-    private static bool isDash(
-      Stack<ChangelogToken> tokenStack
+    private static bool isList(
+      Stack<ChangelogToken> tokenStack,
+      ChangelogParserSettings changelogParserSettings
     )
     {
       ChangelogToken token = tokenStack.Peek();
@@ -589,6 +742,10 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.Dash:
           {
             return true;
+          }
+        case ChangelogTokenType.Asterisk:
+          {
+            return changelogParserSettings.ChangelogListHandling.HasFlag(ChangelogListHandling.AllowAsterisk);
           }
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
@@ -602,7 +759,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.Space:
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return false;
           }
@@ -622,6 +780,7 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -632,7 +791,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
         case ChangelogTokenType.Date:
           {
             return true;
@@ -661,6 +821,7 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -677,7 +838,63 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.HeadingThree:
         case ChangelogTokenType.NewLine:
         case ChangelogTokenType.SequenceTerminator:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
+          {
+            return false;
+          }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
+      }
+    }
+
+    private static bool isNestedList(
+      Stack<ChangelogToken> tokenStack,
+      out int spaceCount,
+      ChangelogParserSettings changelogParserSettings
+    )
+    {
+      spaceCount = 0;
+
+      if (!changelogParserSettings.ChangelogListHandling.HasFlag(ChangelogListHandling.AllowNestedLists))
+      {
+        return false;
+      }
+
+      ChangelogToken token = tokenStack.Peek();
+
+      switch (token.Type)
+      {
+        case ChangelogTokenType.Space:
+          {
+            while (token.Type == ChangelogTokenType.Space)
+            {
+              spaceCount++;
+              token = tokenStack.Skip(spaceCount).First();
+            }
+
+            return changelogParserSettings.ChangelogListHandling.HasFlag(ChangelogListHandling.AllowAsterisk)
+              ? token.Type is ChangelogTokenType.Asterisk || token.Type is ChangelogTokenType.Dash
+              : token.Type is ChangelogTokenType.Dash;
+          }
+        case ChangelogTokenType.Asterisk:
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Dash:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.Text:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.SequenceTerminator:
           {
             return false;
           }
@@ -742,6 +959,7 @@ namespace KeepAChangelogParser
       {
         case ChangelogTokenType.Dash:
           break;
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Date:
@@ -754,7 +972,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return Result.Failure<Changelog>(
               $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -791,6 +1010,7 @@ namespace KeepAChangelogParser
                 MarkdownDate = token.Value;
           }
           break;
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -803,7 +1023,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
         case ChangelogTokenType.Text:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return Result.Failure<Changelog>(
               $"No date. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -864,6 +1085,53 @@ namespace KeepAChangelogParser
       _ = tokenStack.Pop();
 
       return changelogResult;
+    }
+
+    private static Result<Changelog> parseList(
+      Result<Changelog> changelogResult,
+      Stack<ChangelogToken> tokenStack,
+      ChangelogParserSettings changelogParserSettings
+    )
+    {
+      if (changelogResult.IsFailure) { return changelogResult; }
+
+      ChangelogToken token = tokenStack.Pop();
+
+      switch (token.Type)
+      {
+        case ChangelogTokenType.Dash:
+          return changelogResult;
+        case ChangelogTokenType.Asterisk:
+          if (changelogParserSettings.ChangelogListHandling.HasFlag(ChangelogListHandling.AllowAsterisk))
+          {
+            return changelogResult;
+          }
+          return Result.Failure<Changelog>(
+            $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        case ChangelogTokenType.CloseParenthesis:
+        case ChangelogTokenType.CloseSquareBracket:
+        case ChangelogTokenType.Date:
+        case ChangelogTokenType.HeadingOne:
+        case ChangelogTokenType.HeadingTwo:
+        case ChangelogTokenType.HeadingThree:
+        case ChangelogTokenType.NewLine:
+        case ChangelogTokenType.OpenParenthesis:
+        case ChangelogTokenType.OpenSquareBracket:
+        case ChangelogTokenType.SequenceTerminator:
+        case ChangelogTokenType.Space:
+        case ChangelogTokenType.Text:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
+          {
+            return Result.Failure<Changelog>(
+              $"No dash. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+          }
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(token.Type),
+            (int)token.Type,
+            typeof(ChangelogTokenType));
+      }
     }
 
     [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
@@ -945,30 +1213,67 @@ namespace KeepAChangelogParser
     [SuppressMessage("Style", "IDE0046", Justification = "Simplification of if statement makes code unreadable")]
     private static Result<Changelog> parseSpace(
       Result<Changelog> changelogResult,
-      Stack<ChangelogToken> tokenStack
+      Stack<ChangelogToken> tokenStack,
+      int spaceCount = 1
     )
     {
       if (changelogResult.IsFailure) { return changelogResult; }
 
-      ChangelogToken token = tokenStack.Pop();
-
-      if (token.Type != ChangelogTokenType.Space)
+      if (spaceCount > 1 && spaceCount % 2 != 0)
       {
+        ChangelogToken token = tokenStack.Peek();
+
         return Result.Failure<Changelog>(
-          $"No space. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+          $"Nested dash is not prepended with an equal number of spaces. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+      }
+
+      for (int spaceIndex = 0; spaceIndex < spaceCount; spaceIndex++)
+      {
+        ChangelogToken token = tokenStack.Pop();
+
+        if (token.Type != ChangelogTokenType.Space)
+        {
+          return Result.Failure<Changelog>(
+            $"No space. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        }
       }
 
       return changelogResult;
     }
 
+    [SuppressMessage("Maintainability", "CA1502", Justification = "")]
     private static Result<Changelog> parseText(
       Result<Changelog> changelogResult,
-      Stack<ChangelogToken> tokenStack
+      Stack<ChangelogToken> tokenStack,
+      bool addSubSectionItem = false,
+      int spaceCount = 0
     )
     {
       if (changelogResult.IsFailure) { return changelogResult; }
 
       bool first = true;
+
+      if (addSubSectionItem)
+      {
+        int sectionCollectionCount =
+          changelogResult.Value.
+            SectionCollection.Count;
+
+        int subSectionCollectionCount =
+          changelogResult.Value.
+            SectionCollection[sectionCollectionCount - 1].
+              SubSectionCollection.Count;
+
+        ChangelogSubSectionItemCollection subSectionItemCollection =
+          changelogResult.Value.
+              SectionCollection[sectionCollectionCount - 1].
+                SubSectionCollection[subSectionCollectionCount - 1].
+                  ItemCollection;
+
+        addChangelogSubSectionItem(
+          subSectionItemCollection,
+          spaceCount / 2);
+      }
 
       while (true)
       {
@@ -983,6 +1288,7 @@ namespace KeepAChangelogParser
 
         switch (token.Type)
         {
+          case ChangelogTokenType.Asterisk:
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
@@ -994,12 +1300,14 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.OpenSquareBracket:
           case ChangelogTokenType.Space:
           case ChangelogTokenType.Text:
-          case ChangelogTokenType.Version:
+          case ChangelogTokenType.SemanticVersion:
+          case ChangelogTokenType.MicrosoftVersion:
             {
               changelogResult =
                 addTokenValueToText(
                   changelogResult,
-                  token);
+                  token,
+                  spaceCount);
 
               if (changelogResult.IsFailure) { return changelogResult; }
             }
@@ -1044,7 +1352,8 @@ namespace KeepAChangelogParser
 
     private static Result<Changelog> parseTitle(
       Result<Changelog> changelogResult,
-      Stack<ChangelogToken> tokenStack
+      Stack<ChangelogToken> tokenStack,
+      ChangelogParserSettings changelogParserSettings
     )
     {
       if (changelogResult.IsFailure) { return changelogResult; }
@@ -1063,6 +1372,7 @@ namespace KeepAChangelogParser
 
         switch (token.Type)
         {
+          case ChangelogTokenType.Asterisk:
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
@@ -1074,7 +1384,8 @@ namespace KeepAChangelogParser
               changelogResult =
                 addTokenValueToTitleOrSetType(
                   changelogResult,
-                  token);
+                  token,
+                  changelogParserSettings);
 
               if (changelogResult.IsFailure) { return changelogResult; }
             }
@@ -1085,7 +1396,8 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.HeadingThree:
           case ChangelogTokenType.NewLine:
           case ChangelogTokenType.SequenceTerminator:
-          case ChangelogTokenType.Version:
+          case ChangelogTokenType.SemanticVersion:
+          case ChangelogTokenType.MicrosoftVersion:
             {
               return Result.Failure<Changelog>(
                 $"Invalid title. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -1123,6 +1435,7 @@ namespace KeepAChangelogParser
             changelogResult.Value.SectionUnreleased.MarkdownTitle = token.Value;
           }
           break;
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -1135,7 +1448,8 @@ namespace KeepAChangelogParser
         case ChangelogTokenType.OpenSquareBracket:
         case ChangelogTokenType.SequenceTerminator:
         case ChangelogTokenType.Space:
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             return Result.Failure<Changelog>(
               $"Invalid text. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -1167,14 +1481,35 @@ namespace KeepAChangelogParser
       return changelogResult;
     }
 
+    [SuppressMessage("Maintainability", "CA1502", Justification = "")]
     private static Result<Changelog> parseUnreleasedText(
       Result<Changelog> changelogResult,
-      Stack<ChangelogToken> tokenStack
+      Stack<ChangelogToken> tokenStack,
+      bool addSubSectionItem,
+      int spaceCount
     )
     {
       if (changelogResult.IsFailure) { return changelogResult; }
 
       bool first = true;
+
+      if (addSubSectionItem)
+      {
+        int subSectionCollectionCount =
+          changelogResult.Value.
+            SectionUnreleased.
+              SubSectionCollection.Count;
+
+        ChangelogSubSectionItemCollection subSectionItemCollection =
+          changelogResult.Value.
+            SectionUnreleased.
+              SubSectionCollection[subSectionCollectionCount - 1].
+                ItemCollection;
+
+        addChangelogSubSectionItem(
+          subSectionItemCollection,
+          spaceCount / 2);
+      }
 
       while (true)
       {
@@ -1189,6 +1524,7 @@ namespace KeepAChangelogParser
 
         switch (token.Type)
         {
+          case ChangelogTokenType.Asterisk:
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
@@ -1200,12 +1536,14 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.OpenSquareBracket:
           case ChangelogTokenType.Space:
           case ChangelogTokenType.Text:
-          case ChangelogTokenType.Version:
+          case ChangelogTokenType.SemanticVersion:
+          case ChangelogTokenType.MicrosoftVersion:
             {
               changelogResult =
                 addTokenValueToUnreleasedText(
                   changelogResult,
-                  token);
+                  token,
+                  spaceCount);
 
               if (changelogResult.IsFailure) { return changelogResult; }
             }
@@ -1229,7 +1567,8 @@ namespace KeepAChangelogParser
 
     private static Result<Changelog> parseUnreleasedTitle(
       Result<Changelog> changelogResult,
-      Stack<ChangelogToken> tokenStack
+      Stack<ChangelogToken> tokenStack,
+      List<string>? customChangelogSubSectionTypeCollection = null
     )
     {
       if (changelogResult.IsFailure) { return changelogResult; }
@@ -1248,6 +1587,7 @@ namespace KeepAChangelogParser
 
         switch (token.Type)
         {
+          case ChangelogTokenType.Asterisk:
           case ChangelogTokenType.CloseParenthesis:
           case ChangelogTokenType.CloseSquareBracket:
           case ChangelogTokenType.Dash:
@@ -1259,7 +1599,8 @@ namespace KeepAChangelogParser
               changelogResult =
                 setUnreleasedType(
                   changelogResult,
-                  token);
+                  token,
+                  customChangelogSubSectionTypeCollection);
 
               if (changelogResult.IsFailure) { return changelogResult; }
             }
@@ -1270,7 +1611,8 @@ namespace KeepAChangelogParser
           case ChangelogTokenType.HeadingThree:
           case ChangelogTokenType.NewLine:
           case ChangelogTokenType.SequenceTerminator:
-          case ChangelogTokenType.Version:
+          case ChangelogTokenType.SemanticVersion:
+          case ChangelogTokenType.MicrosoftVersion:
             {
               return Result.Failure<Changelog>(
                 $"Invalid title. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -1297,7 +1639,8 @@ namespace KeepAChangelogParser
 
       switch (token.Type)
       {
-        case ChangelogTokenType.Version:
+        case ChangelogTokenType.SemanticVersion:
+        case ChangelogTokenType.MicrosoftVersion:
           {
             changelogResult.Value.
               SectionCollection.
@@ -1312,6 +1655,7 @@ namespace KeepAChangelogParser
                 MarkdownVersion = token.Value;
           }
           break;
+        case ChangelogTokenType.Asterisk:
         case ChangelogTokenType.CloseParenthesis:
         case ChangelogTokenType.CloseSquareBracket:
         case ChangelogTokenType.Dash:
@@ -1341,7 +1685,8 @@ namespace KeepAChangelogParser
 
     private static Result<Changelog> setUnreleasedType(
       Result<Changelog> changelogResult,
-      ChangelogToken token
+      ChangelogToken token,
+      List<string>? customChangelogSubSectionTypeCollection
     )
     {
       int subSectionUnreleasedCollectionCount =
@@ -1351,23 +1696,79 @@ namespace KeepAChangelogParser
 
       if (!Enum.TryParse(token.Value, out ChangelogSubSectionType subSectionType))
       {
+        if (customChangelogSubSectionTypeCollection is null)
+        {
+          return Result.Failure<Changelog>(
+            $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        }
+
+        if (!customChangelogSubSectionTypeCollection.Contains(token.Value))
+        {
+          return Result.Failure<Changelog>(
+            $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+        }
+
+        subSectionType = ChangelogSubSectionType.Custom;
+      }
+
+      if (customChangelogSubSectionTypeCollection is null && subSectionType == ChangelogSubSectionType.Custom)
+      {
         return Result.Failure<Changelog>(
           $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
       }
 
-      for (int index = 0; index < changelogResult.Value.SectionUnreleased.SubSectionCollection.Count - 1; index++)
+      switch (subSectionType)
       {
-        if (changelogResult.Value.SectionUnreleased.SubSectionCollection[index].Type == subSectionType)
-        {
-          return Result.Failure<Changelog>(
-            $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
-        }
+        case ChangelogSubSectionType.Added:
+        case ChangelogSubSectionType.Changed:
+        case ChangelogSubSectionType.Deprecated:
+        case ChangelogSubSectionType.Removed:
+        case ChangelogSubSectionType.Fixed:
+        case ChangelogSubSectionType.Security:
+          {
+            for (int index = 0; index < changelogResult.Value.SectionUnreleased.SubSectionCollection.Count - 1; index++)
+            {
+              if (changelogResult.Value.SectionUnreleased.SubSectionCollection[index].Type == subSectionType)
+              {
+                return Result.Failure<Changelog>(
+                  $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+              }
+            }
+          }
+          break;
+
+        case ChangelogSubSectionType.Custom:
+          {
+            for (int index = 0; index < changelogResult.Value.SectionUnreleased.SubSectionCollection.Count - 1; index++)
+            {
+              if (string.Equals(changelogResult.Value.SectionUnreleased.SubSectionCollection[index].CustomType, token.Value, StringComparison.Ordinal))
+              {
+                return Result.Failure<Changelog>(
+                  $"Subsection type already exists. Error parsing text in line {token.LineNumber} / index {token.Index}.");
+              }
+            }
+          }
+          break;
+
+        default:
+          throw new InvalidEnumArgumentException(
+            nameof(subSectionType),
+            (int)subSectionType,
+            typeof(ChangelogSubSectionType));
       }
 
       changelogResult.Value.
         SectionUnreleased.
           SubSectionCollection[subSectionUnreleasedCollectionCount - 1].
             Type = subSectionType;
+
+      if (subSectionType == ChangelogSubSectionType.Custom)
+      {
+        changelogResult.Value.
+          SectionUnreleased.
+            SubSectionCollection[subSectionUnreleasedCollectionCount - 1].
+              CustomType = token.Value;
+      }
 
       return changelogResult;
     }

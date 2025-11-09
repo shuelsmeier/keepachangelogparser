@@ -348,3 +348,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Docfx
+docfx/_site
+docfx/groups
+
+# FCC
+fcc-output

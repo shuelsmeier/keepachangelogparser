@@ -1,0 +1,183 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
+          "src": "../"
+        }
+      ],
+      "output": "groups/net9.0/api",
+      "globalNamespaceId": "net9.0",
+      "properties": {
+        "TargetFramework": "net9.0"
+      }
+    },
+    {
+      "src": [
+        {
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
+          "src": "../"
+        }
+      ],
+      "output": "groups/net8.0/api",
+      "globalNamespaceId": "net8.0",
+      "properties": {
+        "TargetFramework": "net8.0"
+      }
+    },
+    {
+      "src": [
+        {
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
+          "src": "../"
+        }
+      ],
+      "output": "groups/net6.0/api",
+      "globalNamespaceId": "net6.0",
+      "properties": {
+        "TargetFramework": "net6.0"
+      }
+    },
+    {
+      "src": [
+        {
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
+          "src": "../"
+        }
+      ],
+      "output": "groups/netstandard2.1/api",
+      "globalNamespaceId": "netstandard2.1",
+      "properties": {
+        "TargetFramework": "netstandard2.1"
+      }
+    },
+    {
+      "src": [
+        {
+          "files": [ "KeepAChangelogParser/KeepAChangeLogParser.csproj" ],
+          "src": "../"
+        }
+      ],
+      "output": "groups/netstandard2.0/api",
+      "globalNamespaceId": "netstandard2.0",
+      "properties": {
+        "TargetFramework": "netstandard2.0"
+      }
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md",
+          "**.yml"
+        ],
+        "src": "groups/net9.0",
+        "group": "net9.0",
+        "rootTocPath": "net9.0/toc.html",
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md",
+          "**.yml"
+        ],
+        "src": "groups/net8.0",
+        "group": "net8.0",
+        "rootTocPath": "net8.0/toc.html",
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md",
+          "**.yml"
+        ],
+        "src": "groups/net6.0",
+        "group": "net6.0",
+        "rootTocPath": "net6.0/toc.html",
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md",
+          "**.yml"
+        ],
+        "src": "groups/netstandard2.1",
+        "group": "netstandard2.1",
+        "rootTocPath": "netstandard2.1/toc.html",
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md",
+          "**.yml"
+        ],
+        "src": "groups/netstandard2.0",
+        "group": "netstandard2.0",
+        "rootTocPath": "netstandard2.0/toc.html",
+        "exclude": [
+          "_site/**"
+        ]
+      },
+      {
+        "files": [
+          "index.md",
+          "toc.yml",
+          "docs/getting-started.md",
+          "docs/index.md",
+          "docs/toc.yml"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "KeepAChangelogParser",
+      "_appTitle": "KeepAChangelogParser",
+      "_enableSearch": true,
+      "pdf": false
+    },
+    "groups": {
+      "net9.0": {
+        "dest": "net9.0"
+      },
+      "net8.0": {
+        "dest": "net8.0"
+      },
+      "net6.0": {
+        "dest": "net6.0"
+      },
+      "netstandard2.1": {
+        "dest": "netstandard2.1"
+      },
+      "netstandard2.0": {
+        "dest": "netstandard2.0"
+      }
+    }
+  }
+}

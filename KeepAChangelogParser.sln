@@ -15,12 +15,77 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CHANGELOG.md = CHANGELOG.md
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
+		.github\workflows\generate-docs.yml = .github\workflows\generate-docs.yml
 		LICENSE = LICENSE
 		.github\workflows\publish.yml = .github\workflows\publish.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepAChangelogParser.Wpf.SampleApp", "KeepAChangelogParser.Wpf.SampleApp\KeepAChangelogParser.Wpf.SampleApp.csproj", "{D04AD2D9-BFE0-440B-A101-36E53E8CE998}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docfx", "docfx", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\docfx.json = docfx\docfx.json
+		docfx\index.md = docfx\index.md
+		docfx\toc.yml = docfx\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{33299AE0-425A-4FA0-807C-FE3CCF9726B7}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\docs\getting-started.md = docfx\docs\getting-started.md
+		docfx\docs\toc.yml = docfx\docs\toc.yml
+		docfx\docs\index.md = docfx\docs\index.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "groups", "groups", "{60006F65-F1DB-4FE2-9919-5DF7023C2460}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net9.0", "net9.0", "{61E631AA-6271-4BB7-A63A-493B326CF722}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\groups\net9.0\api\index.md = docfx\groups\net9.0\api\index.md
+		docfx\groups\net9.0\toc.yml = docfx\groups\net9.0\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net8.0", "net8.0", "{9938AEB6-0989-4A51-8D90-F7F35F83520E}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\groups\net8.0\toc.yml = docfx\groups\net8.0\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net6.0", "net6.0", "{6E1BA283-1307-42DB-9613-240CE705B258}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\groups\net6.0\toc.yml = docfx\groups\net6.0\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netstandard2.1", "netstandard2.1", "{A1983B2C-C9AE-4EA9-A1A9-6056B0072D8D}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\groups\netstandard2.1\toc.yml = docfx\groups\netstandard2.1\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netstandard2.0", "netstandard2.0", "{C5E664C7-9C3F-448B-AE8A-FE19EF7BF963}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\groups\netstandard2.0\toc.yml = docfx\groups\netstandard2.0\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{47E4299A-2A82-4B85-B73B-BA43C0D86B6E}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\groups\net6.0\api\index.md = docfx\groups\net6.0\api\index.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{E27C1F68-532F-420E-BE35-6D40B00C5EF7}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\groups\net8.0\api\index.md = docfx\groups\net8.0\api\index.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{157D2F4C-34BB-4C8B-9698-565EEF471EA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{23D6DE72-4E57-4E96-AB2F-A72EBBE3CC14}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\groups\netstandard2.0\api\index.md = docfx\groups\netstandard2.0\api\index.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{3F3AA6C7-8468-49FA-99A0-109387C334FF}"
+	ProjectSection(SolutionItems) = preProject
+		docfx\groups\netstandard2.1\api\index.md = docfx\groups\netstandard2.1\api\index.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +114,20 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33299AE0-425A-4FA0-807C-FE3CCF9726B7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{60006F65-F1DB-4FE2-9919-5DF7023C2460} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{61E631AA-6271-4BB7-A63A-493B326CF722} = {60006F65-F1DB-4FE2-9919-5DF7023C2460}
+		{9938AEB6-0989-4A51-8D90-F7F35F83520E} = {60006F65-F1DB-4FE2-9919-5DF7023C2460}
+		{6E1BA283-1307-42DB-9613-240CE705B258} = {60006F65-F1DB-4FE2-9919-5DF7023C2460}
+		{A1983B2C-C9AE-4EA9-A1A9-6056B0072D8D} = {60006F65-F1DB-4FE2-9919-5DF7023C2460}
+		{C5E664C7-9C3F-448B-AE8A-FE19EF7BF963} = {60006F65-F1DB-4FE2-9919-5DF7023C2460}
+		{47E4299A-2A82-4B85-B73B-BA43C0D86B6E} = {6E1BA283-1307-42DB-9613-240CE705B258}
+		{E27C1F68-532F-420E-BE35-6D40B00C5EF7} = {9938AEB6-0989-4A51-8D90-F7F35F83520E}
+		{157D2F4C-34BB-4C8B-9698-565EEF471EA8} = {61E631AA-6271-4BB7-A63A-493B326CF722}
+		{23D6DE72-4E57-4E96-AB2F-A72EBBE3CC14} = {C5E664C7-9C3F-448B-AE8A-FE19EF7BF963}
+		{3F3AA6C7-8468-49FA-99A0-109387C334FF} = {A1983B2C-C9AE-4EA9-A1A9-6056B0072D8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FE20180-9CAC-4377-8761-36CCE96E9E6E}
