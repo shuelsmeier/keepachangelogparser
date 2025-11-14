@@ -75,9 +75,35 @@ namespace KeepAChangelogParser.Tests.Comparer
     {
       int result;
 
+      if ((result = compare(x.Type, y.Type)) != 0) { return result; }
+      if ((result = compare(x.CustomType, y.CustomType)) != 0) { return result; }
       if ((result = this.compare(x.ItemCollection, y.ItemCollection)) != 0) { return result; }
 
       return result;
+    }
+
+    private static int compare(
+      ChangelogSubSectionType x,
+      ChangelogSubSectionType y
+    )
+    {
+      return string.CompareOrdinal(Enum.GetName(x), Enum.GetName(y));
+    }
+
+    private static int compare(
+      string? x,
+      string? y
+    )
+    {
+      if (x == null && y != null) { return 1; }
+      if (x != null && y == null) { return -1; }
+
+      if (x != null && y != null)
+      {
+        return string.CompareOrdinal(x, y);
+      }
+
+      return 0;
     }
 
     private int compare(

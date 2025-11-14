@@ -91,7 +91,7 @@ namespace KeepAChangelogParser
           {
             changelogResult = parseUnreleasedHeadingThree(changelogResult, tokenStack);
             changelogResult = parseSpace(changelogResult, tokenStack);
-            changelogResult = parseUnreleasedTitle(changelogResult, tokenStack);
+            changelogResult = parseUnreleasedTitle(changelogResult, tokenStack, changelogParserSettings);
             changelogResult = parseNewLine(changelogResult, tokenStack);
 
             while (isHeadingThreeUnreleasedTextOrNewLine(changelogResult, tokenStack))
@@ -1568,7 +1568,7 @@ namespace KeepAChangelogParser
     private static Result<Changelog> parseUnreleasedTitle(
       Result<Changelog> changelogResult,
       Stack<ChangelogToken> tokenStack,
-      List<string>? customChangelogSubSectionTypeCollection = null
+      ChangelogParserSettings changelogParserSettings
     )
     {
       if (changelogResult.IsFailure) { return changelogResult; }
@@ -1600,7 +1600,7 @@ namespace KeepAChangelogParser
                 setUnreleasedType(
                   changelogResult,
                   token,
-                  customChangelogSubSectionTypeCollection);
+                  changelogParserSettings);
 
               if (changelogResult.IsFailure) { return changelogResult; }
             }
@@ -1686,7 +1686,7 @@ namespace KeepAChangelogParser
     private static Result<Changelog> setUnreleasedType(
       Result<Changelog> changelogResult,
       ChangelogToken token,
-      List<string>? customChangelogSubSectionTypeCollection
+      ChangelogParserSettings changelogParserSettings
     )
     {
       int subSectionUnreleasedCollectionCount =
@@ -1696,13 +1696,7 @@ namespace KeepAChangelogParser
 
       if (!Enum.TryParse(token.Value, out ChangelogSubSectionType subSectionType))
       {
-        if (customChangelogSubSectionTypeCollection is null)
-        {
-          return Result.Failure<Changelog>(
-            $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
-        }
-
-        if (!customChangelogSubSectionTypeCollection.Contains(token.Value))
+        if (!changelogParserSettings.CustomChangelogSubSectionTypeCollection.Contains(token.Value))
         {
           return Result.Failure<Changelog>(
             $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");
@@ -1711,7 +1705,7 @@ namespace KeepAChangelogParser
         subSectionType = ChangelogSubSectionType.Custom;
       }
 
-      if (customChangelogSubSectionTypeCollection is null && subSectionType == ChangelogSubSectionType.Custom)
+      if (changelogParserSettings.CustomChangelogSubSectionTypeCollection.Count == 0 && subSectionType == ChangelogSubSectionType.Custom)
       {
         return Result.Failure<Changelog>(
           $"Invalid subsection type. Error parsing text in line {token.LineNumber} / index {token.Index}.");

@@ -30,6 +30,7 @@ namespace KeepAChangelogParser.Wpf.SampleApp.Services.ReleaseNotesWindow
         case ChangelogSubSectionType.Fixed: { return "#00a825"; }
         case ChangelogSubSectionType.Removed: { return "#bc0e00"; }
         case ChangelogSubSectionType.Security: { return "#bc00a8"; }
+        case ChangelogSubSectionType.Custom: { return "#bc00a9"; }
         default:
           {
             throw new InvalidEnumArgumentException(
