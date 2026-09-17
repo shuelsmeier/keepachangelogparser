@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.10.35027.167
+# Visual Studio Version 18
+VisualStudioVersion = 18.10.12201.205 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepAChangelogParser", "KeepAChangelogParser\KeepAChangelogParser.csproj", "{10BB7C8D-7F0F-4618-A2B3-73CB414F4392}"
 EndProject
@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
 		.github\workflows\generate-docs.yml = .github\workflows\generate-docs.yml
+		global.json = global.json
 		LICENSE = LICENSE
 		.github\workflows\publish.yml = .github\workflows\publish.yml
 		README.md = README.md
@@ -33,8 +34,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{33299AE0-425A-4FA0-807C-FE3CCF9726B7}"
 	ProjectSection(SolutionItems) = preProject
 		docfx\docs\getting-started.md = docfx\docs\getting-started.md
-		docfx\docs\toc.yml = docfx\docs\toc.yml
 		docfx\docs\index.md = docfx\docs\index.md
+		docfx\docs\toc.yml = docfx\docs\toc.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "groups", "groups", "{60006F65-F1DB-4FE2-9919-5DF7023C2460}"
