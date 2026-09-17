@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-09-17
+
+### Added
+
+- Target framework updated to .NET 10 (net10.0, net10.0-windows)
+
+### Changed
+
+- NuGet dependencies updated across all projects
+- Copyright year set to 2026 in KeepAChangelogParser.csproj
+- Solution updated for VS 2022 v18; added global.json reference
+- global.json SDK version set to 10.0.401
+- Reformatted PublicAPI files (no API changes)
+
+### Removed
+
+- Support for .NET 6.0 removed (EOL)
+
 ## [2.0.1] - 2025-11-14
 
 ### Fixed
